@@ -13,10 +13,9 @@ public class DatabaseContract {
             + FilmContract.TABLE_NAME + "("
             + FilmContract._ID + " INTEGER PRIMARY KEY,"
             + FilmContract.TITOLO + " TEXT,"
-            + FilmContract.DURATA + " TEXT,"
+            + FilmContract.DURATA + " INTEGER,"
             + FilmContract.GENERE + " TEXT,"
-            + FilmContract.DESCRIZIONE + " TEXT,"
-            + FilmContract.IMMAGINE + " BLOB)";
+            + FilmContract.DESCRIZIONE + " TEXT)";
 
     static final String DELETE_TABLE_FILM = "DROP TABLE "
             + FilmContract.TABLE_NAME + " IF EXIST";
@@ -43,7 +42,7 @@ public class DatabaseContract {
             + ProgrammazioneContract.ORA + " TEXT)";
 
     static final String DELETE_TABLE_PROGRAMMAZIONE = "DROP TABLE "
-            + FilmContract.TABLE_NAME + " IF EXIST";
+            + ProgrammazioneContract.TABLE_NAME + " IF EXIST";
 
     class ProgrammazioneContract {
         static final String TABLE_NAME = "programmazione";
@@ -102,10 +101,10 @@ public class DatabaseContract {
             + PostiPrenotatiContract.NUMERO_POSTO + " INTEGER)";
 
     static final String DELETE_TABLE_POSTI_PRENOTATI = "DROP TABLE "
-            + PrenotazioneContract.TABLE_NAME + " IF EXIST";
+            + PostiPrenotatiContract.TABLE_NAME + " IF EXIST";
 
     class PostiPrenotatiContract {
-        static final String TABLE_NAME = "prenotazione";
+        static final String TABLE_NAME = "postiPrenotati";
         static final String _ID = "_id";
         static final String ID_PRENOTAZIONE = "idUtente";
         static final String NUMERO_POSTO = "numeroPosto";
