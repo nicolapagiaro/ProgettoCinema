@@ -23,11 +23,20 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(DatabaseContract.CREATE_TABLE_FILM);
+        db.execSQL(DatabaseContract.CREATE_TABLE_PROGRAMMAZIONE);
+        db.execSQL(DatabaseContract.CREATE_TABLE_SALA);
+        db.execSQL(DatabaseContract.CREATE_TABLE_PRENOTAZIONE);
+        db.execSQL(DatabaseContract.CREATE_TABLE_POSTI_PRENOTATI);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(DatabaseContract.DELETE_TABLE_FILM);
+        db.execSQL(DatabaseContract.DELETE_TABLE_PROGRAMMAZIONE);
+        db.execSQL(DatabaseContract.DELETE_TABLE_SALA);
+        db.execSQL(DatabaseContract.DELETE_TABLE_PRENOTAZIONE);
+        db.execSQL(DatabaseContract.DELETE_TABLE_POSTI_PRENOTATI);
+
         onCreate(db);
     }
 }
