@@ -4,7 +4,7 @@ package com.grupppofigo.progettocinema.database;
  * Classe che contiene tutte le specifiche del database
  * Created by Nicola on 28/03/2018.
  */
-public class DatabaseContract {
+class DatabaseContract {
 
     /**
      * Specifiche della tabella del FILM
