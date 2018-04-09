@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.grupppofigo.progettocinema.entities.Film;
 import com.grupppofigo.progettocinema.database.DatabaseContract.FilmContract;
 import com.grupppofigo.progettocinema.database.DatabaseContract.SalaContract;
+import com.grupppofigo.progettocinema.database.DatabaseContract.ProgrammazioneContract;
+import com.grupppofigo.progettocinema.entities.Programmazione;
 import com.grupppofigo.progettocinema.entities.Sala;
 
 import java.util.ArrayList;
@@ -169,7 +171,7 @@ public class Queries {
 
         s.setId(c.getInt(c.getColumnIndex(SalaContract._ID)));
         s.setNome(c.getString(c.getColumnIndex(SalaContract.NOME)));
-        s.setId(c.getInt(c.getColumnIndex(SalaContract.NUMERO_POSTI)));
+        s.setnPosti(c.getInt(c.getColumnIndex(SalaContract.NUMERO_POSTI)));
 
         return s;
     }
@@ -185,6 +187,117 @@ public class Queries {
         cv.put(SalaContract._ID, s.getId());
         cv.put(SalaContract.NOME, s.getNome());
         cv.put(SalaContract.NUMERO_POSTI, s.getnPosti());
+
+        return cv;
+    }
+
+    /**
+     * Aggiunge una programmazione al database
+     * @param p programmazione
+     */
+    public static void addProgrammazione(Programmazione p) {
+        SQLiteDatabase d = mDb.getWritableDatabase();
+
+        ContentValues cv = programmazioneToContentValues(p);
+        // tolgo l'id
+        cv.remove(ProgrammazioneContract._ID);
+
+        d.beginTransaction();
+        try {
+            d.insert(ProgrammazioneContract.TABLE_NAME,
+                    null,
+                    cv);
+            d.setTransactionSuccessful();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            d.endTransaction();
+        }
+    }
+
+    /**
+     * Restituisce tutte le programmazioni dal database
+     * @return le programmazioni dal database
+     */
+    public static ArrayList<Programmazione> getAllProgrammaziones() {
+        SQLiteDatabase d = mDb.getReadableDatabase();
+        ArrayList<Programmazione> res = new ArrayList<>();
+
+        Cursor c = d.query(ProgrammazioneContract.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        while (c.moveToNext()) {
+            res.add(programmazioneFromContentValues(c));
+        }
+
+        c.close();
+        return res;
+    }
+
+    /**
+     * Metodo che restituisce una programmazione dato un id
+     * @param id id della programmazione
+     * @return la programmazione se esiste
+     */
+    public static Programmazione getProgrammmazione(int id) {
+        SQLiteDatabase d = mDb.getReadableDatabase();
+        String[] args = {String.valueOf(id)};
+
+        Cursor c = d.query(ProgrammazioneContract.TABLE_NAME,
+                null,
+                ProgrammazioneContract._ID + "=?",
+                args,
+                null,
+                null,
+                null);
+
+        Programmazione p = null;
+
+        while (c.moveToNext()) {
+            p = programmazioneFromContentValues(c);
+        }
+
+        c.close();
+        return p;
+    }
+
+    /**
+     * Converte un contentvalues in programmazione
+     * @param c cursore
+     * @return una programmazione
+     */
+    private static Programmazione programmazioneFromContentValues(Cursor c) {
+        Programmazione p = new Programmazione();
+
+        p.setId(c.getInt(c.getColumnIndex(ProgrammazioneContract._ID)));
+        p.setIdFilm(c.getInt(c.getColumnIndex(ProgrammazioneContract.ID_FILM)));
+        p.setIdSala(c.getInt(c.getColumnIndex(ProgrammazioneContract.ID_SALA)));
+        p.setData(c.getString(c.getColumnIndex(ProgrammazioneContract.DATA)));
+        p.setOra(c.getString(c.getColumnIndex(ProgrammazioneContract.ORA)));
+
+        return p;
+    }
+
+    /**
+     * Converte un oggett Programmazione in un contentvalues
+     * @param p programmazione
+     * @return contentvalues
+     */
+    private static ContentValues programmazioneToContentValues(Programmazione p) {
+        ContentValues cv = new ContentValues();
+
+        cv.put(ProgrammazioneContract._ID, p.getId());
+        cv.put(ProgrammazioneContract.ID_FILM, p.getIdFilm());
+        cv.put(ProgrammazioneContract.ID_SALA, p.getIdSala());
+        cv.put(ProgrammazioneContract.DATA, p.getData());
+        cv.put(ProgrammazioneContract.ORA, p.getOra());
 
         return cv;
     }
