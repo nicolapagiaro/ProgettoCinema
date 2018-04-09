@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.grupppofigo.progettocinema.entities.Film;
 import com.grupppofigo.progettocinema.database.DatabaseContract.FilmContract;
+import com.grupppofigo.progettocinema.database.DatabaseContract.SalaContract;
 import com.grupppofigo.progettocinema.entities.Sala;
 
 import java.util.ArrayList;
@@ -113,6 +114,78 @@ public class Queries {
      * @param s sala da aggiunger
      */
     public static void addSala(Sala s) {
+        SQLiteDatabase d = mDb.getWritableDatabase();
 
+        ContentValues cv = salaToContentValues(s);
+        // tolgo l'id
+        cv.remove(SalaContract._ID);
+
+        d.beginTransaction();
+        try {
+            d.insert(SalaContract.TABLE_NAME,
+                    null,
+                    cv);
+            d.setTransactionSuccessful();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            d.endTransaction();
+        }
+    }
+
+    /**
+     * Restituisce una lista di sale
+     * @return una lista di sale
+     */
+    public static ArrayList<Sala> getAllSalas() {
+        SQLiteDatabase d = mDb.getReadableDatabase();
+        ArrayList<Sala> res = new ArrayList<>();
+
+        Cursor c = d.query(SalaContract.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        while (c.moveToNext()) {
+            res.add(salaFromCursor(c));
+        }
+
+        c.close();
+        return res;
+    }
+
+    /**
+     * Dal cursore prende un oggetto sala
+     * @param c cursore
+     * @return oggetto sala
+     */
+    private static Sala salaFromCursor(Cursor c) {
+        Sala s = new Sala();
+
+        s.setId(c.getInt(c.getColumnIndex(SalaContract._ID)));
+        s.setNome(c.getString(c.getColumnIndex(SalaContract.NOME)));
+        s.setId(c.getInt(c.getColumnIndex(SalaContract.NUMERO_POSTI)));
+
+        return s;
+    }
+
+    /**
+     * Converte un oggetto sala in un oggetto contentvalues
+     * @param s oggetto sala
+     * @return oggetto contentvalues
+     */
+    private static ContentValues salaToContentValues(Sala s) {
+        ContentValues cv = new ContentValues();
+
+        cv.put(SalaContract._ID, s.getId());
+        cv.put(SalaContract.NOME, s.getNome());
+        cv.put(SalaContract.NUMERO_POSTI, s.getnPosti());
+
+        return cv;
     }
 }
