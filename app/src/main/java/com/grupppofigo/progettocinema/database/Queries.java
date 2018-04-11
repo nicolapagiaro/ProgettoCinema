@@ -9,10 +9,12 @@ import com.grupppofigo.progettocinema.entities.Film;
 import com.grupppofigo.progettocinema.database.DatabaseContract.FilmContract;
 import com.grupppofigo.progettocinema.database.DatabaseContract.SalaContract;
 import com.grupppofigo.progettocinema.database.DatabaseContract.ProgrammazioneContract;
+import com.grupppofigo.progettocinema.entities.PostoPrenotato;
 import com.grupppofigo.progettocinema.entities.Programmazione;
 import com.grupppofigo.progettocinema.entities.Sala;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Classe con tutti i metodi che fanno le query al database
@@ -162,6 +164,51 @@ public class Queries {
     }
 
     /**
+     * Preleva una sala dato un id
+     * @param idProgrammazione id della programmazione
+     * @return oggetto sala o null
+     */
+    public static Sala getSalaFromId(int idProgrammazione) {
+        SQLiteDatabase d = mDb.getReadableDatabase();
+        Sala s = null;
+
+        // prendo l'id della sala associata
+        String[] args = {idProgrammazione+""};
+        Cursor cProgrammazione = d.query(ProgrammazioneContract.TABLE_NAME,
+                null,
+                ProgrammazioneContract._ID + " = ?",
+                args,
+                null,
+                null,
+                null);
+
+        int idSala = 0;
+        if(cProgrammazione.moveToNext()) {
+            idSala = cProgrammazione.getInt(cProgrammazione.getColumnIndex(ProgrammazioneContract.ID_SALA));
+        }
+
+        cProgrammazione.close();
+
+
+        // prendo la sala dall'id
+        String[] args1 = {idSala+""};
+        Cursor c = d.query(SalaContract.TABLE_NAME,
+                null,
+                SalaContract._ID + " = ?",
+                args1,
+                null,
+                null,
+                null);
+
+        if(c.moveToNext()) {
+            s = salaFromCursor(c);
+        }
+
+        c.close();
+        return s;
+    }
+
+    /**
      * Dal cursore prende un oggetto sala
      * @param c cursore
      * @return oggetto sala
@@ -300,5 +347,86 @@ public class Queries {
         cv.put(ProgrammazioneContract.ORA, p.getOra());
 
         return cv;
+    }
+
+    /**
+     * Aggiunge un PostoPrenotati al database
+     * @param pp postiprenotati
+     */
+    public static void addPostoPrenotato(PostoPrenotato pp) {
+        SQLiteDatabase d = mDb.getWritableDatabase();
+
+        ContentValues cv = postiPrenotatiToCV(pp);
+        // tolgo l'id
+        cv.remove(DatabaseContract.PostiPrenotatiContract._ID);
+
+        d.beginTransaction();
+        try {
+            d.insert(DatabaseContract.PostiPrenotatiContract.TABLE_NAME,
+                    null,
+                    cv);
+            d.setTransactionSuccessful();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            d.endTransaction();
+        }
+    }
+
+    /**
+     * Converte un oggetto PostoPrenotato to contentvalues
+     * @param pp posti prenotati oggetto
+     * @return oggetto contentValues
+     */
+    private static ContentValues postiPrenotatiToCV(PostoPrenotato pp) {
+        ContentValues cv = new ContentValues();
+
+        cv.put(DatabaseContract.PostiPrenotatiContract._ID, pp.getId());
+        cv.put(DatabaseContract.PostiPrenotatiContract.ID_PRENOTAZIONE, pp.getIdPrenotazione());
+        cv.put(DatabaseContract.PostiPrenotatiContract.NUMERO_POSTO, pp.getNumeroPosto());
+
+        return cv;
+    }
+
+    /**
+     * Converte un cursore in un postoPrenotato
+     * @param c cursore
+     * @return un posto prenotato
+     */
+    private static PostoPrenotato postoPrenotatoFromCursor(Cursor c) {
+        PostoPrenotato p = new PostoPrenotato();
+
+        p.setId(c.getInt(c.getColumnIndex(DatabaseContract.PostiPrenotatiContract._ID)));
+        p.setIdPrenotazione(c.getInt(c.getColumnIndex(DatabaseContract.PostiPrenotatiContract.ID_PRENOTAZIONE)));
+        p.setNumeroPosto(c.getInt(c.getColumnIndex(DatabaseContract.PostiPrenotatiContract.NUMERO_POSTO)));
+
+        return p;
+    }
+
+    /**
+     * Preleva una lista di posti prenotati per quella programmazione
+     * @return la lista di posti prenotati per quella programmazione
+     */
+    public static ArrayList<PostoPrenotato> getPostiPrenotati(int idPrenotazione) {
+        SQLiteDatabase d = mDb.getReadableDatabase();
+        ArrayList<PostoPrenotato> pp = new ArrayList<>();
+        String[] args = {idPrenotazione + ""};
+
+        Cursor c = d.query(DatabaseContract.PostiPrenotatiContract.TABLE_NAME,
+                null,
+                DatabaseContract.PostiPrenotatiContract.ID_PRENOTAZIONE + "=?",
+                args,
+                null,
+                null,
+                null);
+
+        while (c.moveToNext()) {
+            pp.add(postoPrenotatoFromCursor(c));
+        }
+
+        c.close();
+        return pp;
     }
 }
