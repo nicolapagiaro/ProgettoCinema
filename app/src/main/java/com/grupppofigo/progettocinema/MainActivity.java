@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         // recyclerview set up
         GridLayoutManager recyclerGrid = new GridLayoutManager(getApplicationContext(), GRID_SPAN_COUNT);
+        // se la sala non ha i posti multipli di 8
         final int span = currentSala.getnPosti() % GRID_SPAN_COUNT;
         recyclerGrid.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
