@@ -4,12 +4,14 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
 import com.grupppofigo.progettocinema.entities.Film;
 import com.grupppofigo.progettocinema.database.DatabaseContract.FilmContract;
 import com.grupppofigo.progettocinema.database.DatabaseContract.SalaContract;
 import com.grupppofigo.progettocinema.database.DatabaseContract.ProgrammazioneContract;
 import com.grupppofigo.progettocinema.entities.PostoPrenotato;
+import com.grupppofigo.progettocinema.entities.Prenotazione;
 import com.grupppofigo.progettocinema.entities.Programmazione;
 import com.grupppofigo.progettocinema.entities.Sala;
 
@@ -407,26 +409,136 @@ public class Queries {
 
     /**
      * Preleva una lista di posti prenotati per quella programmazione
+     * @param idProgrammazione id della programmazione passata
      * @return la lista di posti prenotati per quella programmazione
      */
-    public static ArrayList<PostoPrenotato> getPostiPrenotati(int idPrenotazione) {
+    public static ArrayList<Integer> getPostiPrenotati(int idProgrammazione) {
         SQLiteDatabase d = mDb.getReadableDatabase();
-        ArrayList<PostoPrenotato> pp = new ArrayList<>();
-        String[] args = {idPrenotazione + ""};
+        ArrayList<Integer> pp = new ArrayList<>();
+        String[] args = {idProgrammazione + ""};
 
-        Cursor c = d.query(DatabaseContract.PostiPrenotatiContract.TABLE_NAME,
+        // prendo tutte le prenotazioni per quealla programmazione
+        Cursor c = d.query(DatabaseContract.PrenotazioneContract.TABLE_NAME,
                 null,
-                DatabaseContract.PostiPrenotatiContract.ID_PRENOTAZIONE + "=?",
+                DatabaseContract.PrenotazioneContract.ID_PROGRAMMAZIONE + "=?",
                 args,
                 null,
                 null,
                 null);
 
+        // per ogni prenotazione mi tiro fuori i posti prenotati
         while (c.moveToNext()) {
-            pp.add(postoPrenotatoFromCursor(c));
+            int idPrenotazione = c.getInt(c.getColumnIndex(DatabaseContract.PrenotazioneContract._ID));
+
+            // prendo tutti i posti prenotati da quella prenotazione
+            pp.addAll(postiPrenotatiByPrenotazione(idPrenotazione));
         }
 
         c.close();
         return pp;
+    }
+
+    /**
+     * Prente tutti posti prenotati da una prenotazione
+     * @param idPrenotazione id della prenotazione
+     * @return lista di posti occupati
+     */
+    private static ArrayList<Integer> postiPrenotatiByPrenotazione(int idPrenotazione) {
+        ArrayList<Integer> res = new ArrayList<>();
+        SQLiteDatabase d = mDb.getReadableDatabase();
+        String[] args = {idPrenotazione + ""};
+
+        Cursor c = d.query(DatabaseContract.PostiPrenotatiContract.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        while (c.moveToNext()) {
+            res.add(c.getInt(c.getColumnIndex(DatabaseContract.PostiPrenotatiContract.NUMERO_POSTO)));
+        }
+
+        c.close();
+        return res;
+    }
+
+    /**
+     * Aggiunge la prenotazione corrente al database
+     * @param p oggetto prenotazione
+     */
+    public static long addPrenotazione(Prenotazione p) {
+        SQLiteDatabase d = mDb.getWritableDatabase();
+        long id = 0;
+
+        ContentValues cv = prenotazioneToCV(p);
+        // tolgo l'id perchè e autogenerato
+        cv.remove(DatabaseContract.PrenotazioneContract._ID);
+
+        try {
+            id = d.insert(DatabaseContract.PrenotazioneContract.TABLE_NAME,
+                    null,
+                    cv);
+        }
+        catch (SQLiteException ex) {
+            ex.printStackTrace();
+        }
+
+        return id;
+    }
+
+    /**
+     * Converte un oggetto Prenotazione in contentValues
+     * @param p oggetto prenotazione
+     * @return un contentvalues
+     */
+    private static ContentValues prenotazioneToCV(Prenotazione p) {
+        ContentValues cv = new ContentValues();
+
+        cv.put(DatabaseContract.PrenotazioneContract._ID, p.getId());
+        cv.put(DatabaseContract.PrenotazioneContract.ID_PROGRAMMAZIONE, p.getIdProgrammazione());
+        cv.put(DatabaseContract.PrenotazioneContract.ID_UTENTE, p.getIdUtente());
+
+        return cv;
+    }
+
+    /**
+     * Restituisce una lista di prenotazioni
+     * @return lista di prenotazioni
+     */
+    public static ArrayList<Prenotazione> getAllPrenotazioni() {
+        SQLiteDatabase d = mDb.getReadableDatabase();
+        ArrayList<Prenotazione> res = new ArrayList<>();
+
+        Cursor c = d.query(DatabaseContract.PrenotazioneContract.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        while (c.moveToNext()) {
+            res.add(prenotazioneFromCursor(c));
+        }
+
+        c.close();
+        return res;
+    }
+
+    /**
+     * Converte il cursore in una prentoazione
+     * @param c cursore
+     * @return una prenotazione
+     */
+    private static Prenotazione prenotazioneFromCursor(Cursor c) {
+        Prenotazione p = new Prenotazione();
+
+        p.setId(c.getInt(c.getColumnIndex(DatabaseContract.PrenotazioneContract._ID)));
+        p.setIdProgrammazione(c.getInt(c.getColumnIndex(DatabaseContract.PrenotazioneContract.ID_PROGRAMMAZIONE)));
+        p.setIdUtente(c.getInt(c.getColumnIndex(DatabaseContract.PrenotazioneContract.ID_UTENTE)));
+
+        return p;
     }
 }

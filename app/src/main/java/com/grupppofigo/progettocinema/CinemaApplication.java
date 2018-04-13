@@ -1,6 +1,7 @@
 package com.grupppofigo.progettocinema;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.grupppofigo.progettocinema.database.DataStore;
 

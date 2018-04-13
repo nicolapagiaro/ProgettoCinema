@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Seleziona i posti</string>
+
+    <string name="error_posti_max">Puoi selezionare massimo 4 posti</string>
 </resources>

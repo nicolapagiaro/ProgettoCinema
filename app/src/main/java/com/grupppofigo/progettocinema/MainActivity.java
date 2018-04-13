@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import com.grupppofigo.progettocinema.database.Queries;
 import com.grupppofigo.progettocinema.entities.Film;
 import com.grupppofigo.progettocinema.entities.PostoPrenotato;
+import com.grupppofigo.progettocinema.entities.Prenotazione;
 import com.grupppofigo.progettocinema.entities.Programmazione;
 import com.grupppofigo.progettocinema.entities.Sala;
 
@@ -27,12 +28,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    /**
+     * Span del grid della lista dei posti
+     */
     private static final int GRID_SPAN_COUNT = 9;
+
+    /**
+     * Gestione degli extra
+     */
     private static final int EXTRA_DEFAULT_VALUE = -1;
-    private static final String EXTRA_NAME = "idProgrammazione";
+    private static final String PROGRAMMAZIONE_EXTRA_NAME = "idProgrammazione";
+    private static final String UTENTE_EXTRA_NAME = "idUtente";
+
+    /**
+     * Gestione della prenotazione
+     */
     private ArrayList<Integer> postiDaPrenotare;
-    private ArrayList<PostoPrenotato> postiPrenotati;
-    private int idProgrammazione;
+    private ArrayList<Integer> postiPrenotati;
+
+    /**
+     * Extras passati
+     */
+    private int idProgrammazione, idUtente;
 
     /**
      * Tipi di oggetti della recyclerview
@@ -47,9 +64,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // id della programmazione passata dall'activity prima
-        idProgrammazione = getIntent().getIntExtra(EXTRA_NAME, EXTRA_DEFAULT_VALUE);
+        idProgrammazione = getIntent().getIntExtra(PROGRAMMAZIONE_EXTRA_NAME, EXTRA_DEFAULT_VALUE);
         /*if(idProgrammazione == EXTRA_DEFAULT_VALUE) {
             // errore idProgrammazione non passata
+            finish();
+        }*/
+
+        // id dell'utente passata dall'activity prima
+        idUtente = getIntent().getIntExtra(UTENTE_EXTRA_NAME, EXTRA_DEFAULT_VALUE);
+        /*if(idUtente == EXTRA_DEFAULT_VALUE) {
+            // errore idUtente non passato
             finish();
         }*/
 
@@ -60,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Program", Queries.getProgrammmazione(0).toString());*/
 
         // prendo i riferimenti
-        Button mBtnAvanti = findViewById(R.id.btnAvanti);
+        final Button mBtnAvanti = findViewById(R.id.btnAvanti);
         RecyclerView r = findViewById(R.id.mainR);
 
         postiDaPrenotare = new ArrayList<>();
@@ -84,12 +108,17 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                // registro la PRENOTAZIONE
+                long idPrenotazione = Queries.addPrenotazione(new Prenotazione(0,idProgrammazione, idUtente));
+
                 // faccio una lista di posti prenotati
                 ArrayList<PostoPrenotato> ps = new ArrayList<>();
                 for(Integer i : postiDaPrenotare) {
-                    PostoPrenotato p = new PostoPrenotato(0, idProgrammazione, i);
+                    PostoPrenotato p = new PostoPrenotato(0, (int) idPrenotazione, i);
                     Queries.addPostoPrenotato(p);
                 }
+
+                mBtnAvanti.setClickable(false);
             }
         });
     }
@@ -177,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
                             // se ha gia selezionato 4 posti
                             if(postiDaPrenotare.size() == 4) {
                                 Snackbar snack = Snackbar.make(findViewById(R.id.main_container),
-                                        "Puoi selezionare massimo 4 posti", Snackbar.LENGTH_LONG);
+                                        R.string.error_posti_max, Snackbar.LENGTH_LONG);
                                 snack.show();
                                 return;
                             }
@@ -211,8 +240,8 @@ public class MainActivity extends AppCompatActivity {
          */
         private int getPostoType(int nPosto) {
             // posti gia prenotati BLOCCATII
-            for(PostoPrenotato p : postiPrenotati) {
-                if(nPosto == p.getNumeroPosto())
+            for(Integer p : postiPrenotati) {
+                if(nPosto == p)
                     return POSTO_OCCUPATO;
             }
 
