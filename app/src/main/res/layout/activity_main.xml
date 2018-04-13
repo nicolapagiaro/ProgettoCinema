@@ -19,7 +19,8 @@
         app:layout_constraintBottom_toTopOf="@+id/btnContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivCinema" />
+        app:layout_constraintTop_toBottomOf="@+id/ivCinema"
+        android:overScrollMode="never"/>
 
     <FrameLayout
         android:id="@+id/btnContainer"
@@ -48,6 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cinema" />
+        app:srcCompat="@drawable/cinema"
+        android:contentDescription="@string/img_content_descriptor" />
 
 </android.support.constraint.ConstraintLayout>

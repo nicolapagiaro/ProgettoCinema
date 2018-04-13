@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Span del grid della lista dei posti
      */
-    private static final int GRID_SPAN_COUNT = 9;
+    private static final int GRID_SPAN_COUNT = 8;
 
     /**
      * Gestione degli extra
@@ -91,13 +91,27 @@ public class MainActivity extends AppCompatActivity {
         idProgrammazione = 0;
 
         // sala associata
-        Sala currentSala = Queries.getSalaFromId(idProgrammazione);
+        final Sala currentSala = Queries.getSalaFromId(idProgrammazione);
 
         // posti già prenotati per quella programmazione
         postiPrenotati = Queries.getPostiPrenotati(idProgrammazione);
 
-        // recyclerview
-        r.setLayoutManager(new GridLayoutManager(getApplicationContext(), GRID_SPAN_COUNT));
+        // recyclerview set up
+        GridLayoutManager recyclerGrid = new GridLayoutManager(getApplicationContext(), GRID_SPAN_COUNT);
+        final int span = currentSala.getnPosti() % GRID_SPAN_COUNT;
+        recyclerGrid.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if(position < span) {
+                    return GRID_SPAN_COUNT / span;
+                }
+                else {
+                    return 1;
+                }
+            }
+        });
+
+        r.setLayoutManager(recyclerGrid);
         r.setAdapter(new Adpter(currentSala, this));
         // per non far reciclare gli oggetti togglabili
         r.getRecycledViewPool().setMaxRecycledViews(POSTO_PRENOTATO, 0);
