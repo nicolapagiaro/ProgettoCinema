@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context="com.grupppofigo.progettocinema.MainActivity"
+    tools:context="com.grupppofigo.progettocinema.PostiActivity"
     tools:layout_editor_absoluteY="81dp">
 
     <android.support.v7.widget.RecyclerView

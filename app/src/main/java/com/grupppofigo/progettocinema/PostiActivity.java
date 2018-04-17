@@ -1,7 +1,6 @@
 package com.grupppofigo.progettocinema;
 
 import android.content.Context;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -9,25 +8,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.grupppofigo.progettocinema.database.Queries;
-import com.grupppofigo.progettocinema.entities.Film;
 import com.grupppofigo.progettocinema.entities.PostoPrenotato;
 import com.grupppofigo.progettocinema.entities.Prenotazione;
-import com.grupppofigo.progettocinema.entities.Programmazione;
 import com.grupppofigo.progettocinema.entities.Sala;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class PostiActivity extends AppCompatActivity {
     /**
      * Span del grid della lista dei posti
      */
@@ -61,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_posti);
 
         // id della programmazione passata dall'activity prima
         idProgrammazione = getIntent().getIntExtra(PROGRAMMAZIONE_EXTRA_NAME, EXTRA_DEFAULT_VALUE);
@@ -98,22 +92,8 @@ public class MainActivity extends AppCompatActivity {
 
         // recyclerview set up
         GridLayoutManager recyclerGrid = new GridLayoutManager(getApplicationContext(), GRID_SPAN_COUNT);
-        // se la sala non ha i posti multipli di 8
-        final int span = currentSala.getnPosti() % GRID_SPAN_COUNT;
-        recyclerGrid.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                if(position < span) {
-                    return GRID_SPAN_COUNT / span;
-                }
-                else {
-                    return 1;
-                }
-            }
-        });
-
         r.setLayoutManager(recyclerGrid);
-        r.setAdapter(new Adpter(currentSala, this));
+        r.setAdapter(new PostiAdapter(currentSala, this));
         // per non far reciclare gli oggetti togglabili
         r.getRecycledViewPool().setMaxRecycledViews(POSTO_PRENOTATO, 0);
         r.getRecycledViewPool().setMaxRecycledViews(POSTO_LIBERO, 0);
@@ -141,11 +121,11 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Adapter della RecyclerView
      */
-    class Adpter extends RecyclerView.Adapter<Adpter.AdapterViewHolder> {
+    class PostiAdapter extends RecyclerView.Adapter<PostiAdapter.AdapterViewHolder> {
         private Sala s;
         private Context cx;
 
-        Adpter(Sala s, Context cx) {
+        PostiAdapter(Sala s, Context cx) {
             this.s = s;
             this.cx = cx;
         }
@@ -157,19 +137,19 @@ public class MainActivity extends AppCompatActivity {
             switch (viewType) {
                 case POSTO_LIBERO:
                     viewHolder = new AdapterViewHolder(LayoutInflater.from(parent.getContext())
-                                                        .inflate(R.layout.item, null));
+                                                        .inflate(R.layout.posti_list_item, null));
                     viewHolder.isOccupato = false;
                     viewHolder.onClick();
                     break;
                 case POSTO_OCCUPATO:
                     viewHolder = new AdapterViewHolder(LayoutInflater.from(parent.getContext())
-                            .inflate(R.layout.item, null));
+                            .inflate(R.layout.posti_list_item, null));
                     // metto l'icona occupata
                     viewHolder.icon.setImageResource(R.drawable.ic_cadrega_occupata);
                     break;
                 case POSTO_PRENOTATO:
                     viewHolder = new AdapterViewHolder(LayoutInflater.from(parent.getContext())
-                            .inflate(R.layout.item, null));
+                            .inflate(R.layout.posti_list_item, null));
                     // metto il colore occupato
                     viewHolder.icon.setImageResource(R.drawable.ic_cadrega);
                     DrawableCompat.setTint(viewHolder.icon.getDrawable(), ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
