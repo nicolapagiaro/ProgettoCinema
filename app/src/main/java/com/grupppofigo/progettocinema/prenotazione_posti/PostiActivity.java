@@ -1,34 +1,20 @@
 package com.grupppofigo.progettocinema.prenotazione_posti;
 
-import android.content.Context;
-import android.os.Handler;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.grupppofigo.progettocinema.R;
-import com.grupppofigo.progettocinema.entities.Film;
-import com.grupppofigo.progettocinema.entities.Genere;
-import com.grupppofigo.progettocinema.entities.Programmazione;
-import com.grupppofigo.progettocinema.queries.FilmQueries;
+import com.grupppofigo.progettocinema.extras.ExtrasDefinition;
 import com.grupppofigo.progettocinema.queries.PostoPrenotatoQueries;
 import com.grupppofigo.progettocinema.queries.PrenotazioneQueries;
-import com.grupppofigo.progettocinema.queries.ProgrammazioneQueries;
 import com.grupppofigo.progettocinema.queries.SalaQueries;
 import com.grupppofigo.progettocinema.entities.PostoPrenotato;
 import com.grupppofigo.progettocinema.entities.Prenotazione;
 import com.grupppofigo.progettocinema.entities.Sala;
-import com.grupppofigo.progettocinema.queries.SessioneQueries;
 
 import java.util.ArrayList;
 
@@ -41,16 +27,9 @@ public class PostiActivity extends AppCompatActivity {
      */ 
     private static final int GRID_SPAN_COUNT = 8;
 
-    /**
-     * Gestione degli extra
-     */
-    private static final int EXTRA_DEFAULT_VALUE = -1;
-    private static final String PROGRAMMAZIONE_EXTRA_NAME = "idProgrammazione";
-    private static final String UTENTE_EXTRA_NAME = "idUtente";
-
-    /**
-     * Gestione della prenotazione
-     */
+     /**
+      * Gestione della prenotazione
+      */
     private ArrayList<Integer> postiDaPrenotare;
 
     /**
@@ -58,22 +37,20 @@ public class PostiActivity extends AppCompatActivity {
      */
     private int idProgrammazione, idUtente;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posti);
 
         // id della programmazione passata dall'activity prima
-        idProgrammazione = getIntent().getIntExtra(PROGRAMMAZIONE_EXTRA_NAME, EXTRA_DEFAULT_VALUE);
+        idProgrammazione = getIntent().getIntExtra(ExtrasDefinition.ID_PROGRAMMAZIONE, ExtrasDefinition.EXTRA_DEFAULT_VALUE);
         /*if(idProgrammazione == EXTRA_DEFAULT_VALUE) {
             // errore idProgrammazione non passata
             finish();
         }*/
 
         // id dell'utente passata dall'activity prima
-        idUtente = getIntent().getIntExtra(UTENTE_EXTRA_NAME, EXTRA_DEFAULT_VALUE);
+        idUtente = getIntent().getIntExtra(ExtrasDefinition.ID_UTENTE, ExtrasDefinition.EXTRA_DEFAULT_VALUE);
         /*if(idUtente == EXTRA_DEFAULT_VALUE) {
             // errore idUtente non passato
             finish();

@@ -10,14 +10,16 @@ public class Film {
     private int durata;
     private Genere genere;
     private String descrizione;
+    private int voto;
     private String immagine;
 
-    public Film(int id, String titolo, int durata, Genere genere, String descrizione, String immagine) {
+    public Film(int id, String titolo, int durata, Genere genere, String descrizione, int voto, String immagine) {
         this.id = id;
         this.titolo = titolo;
         this.durata = durata;
         this.genere = genere;
         this.descrizione = descrizione;
+        this.voto = voto;
         this.immagine = immagine;
     }
 
@@ -25,6 +27,14 @@ public class Film {
      * Costruttore vuoto
      */
     public Film() {
+    }
+
+    public int getVoto() {
+        return voto;
+    }
+
+    public void setVoto(int voto) {
+        this.voto = voto;
     }
 
     public String getImmagine() {

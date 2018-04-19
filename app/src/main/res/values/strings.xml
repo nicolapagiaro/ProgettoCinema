@@ -1,6 +1,16 @@
 <resources>
-    <string name="app_name">Seleziona i posti</string>
+    <string name="app_name">Cinema YE</string>
     <string name="img_content_descriptor">cinema_screen</string>
 
+    <!-- SEZIONE LOGIN -->
+    <string name="accedi_prompt">Accedi</string>
+    <string name="registra_prompt">Registrati</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_password_repeat">Conferma password</string>
+    <string name="prompt_nome">Nome</string>
+    <string name="prompt_cognome">Cognome</string>
+
+    <!-- SEZIONE SELEZIONE POSTI -->
     <string name="error_posti_max">Puoi selezionare massimo 4 posti</string>
 </resources>

@@ -22,11 +22,11 @@ public class SessioneQueries {
      * Crea una sessione nel database mettendo una data e tempo di inizio
      * @return l'id della sessione creata
      */
-    public static long startSession() {
+    public static long startSession(int idUtente) {
         long id = 0;
         SQLiteDatabase d = mDb.getWritableDatabase();
 
-        ContentValues cv = sessioneToCV(0,String.valueOf(System.currentTimeMillis()), null);
+        ContentValues cv = sessioneToCV(0,String.valueOf(System.currentTimeMillis()), null, idUtente);
         cv.remove(SessioniContract.END_SESSION);
         cv.remove(SessioniContract._ID);
 
@@ -49,7 +49,8 @@ public class SessioneQueries {
     public static void endSession(long idSession) {
         SQLiteDatabase d = mDb.getWritableDatabase();
 
-        ContentValues cv = sessioneToCV(idSession,null, String.valueOf(System.currentTimeMillis()));
+        ContentValues cv = sessioneToCV(idSession,null, String.valueOf(System.currentTimeMillis()), 0);
+        cv.remove(SessioniContract.ID_UTENTE);
         cv.remove(SessioniContract.START_SESSION);
         Log.d("CV", cv.toString());
 
@@ -70,12 +71,13 @@ public class SessioneQueries {
      * @param endTime end time
      * @return oggetto content values
      */
-    private static ContentValues sessioneToCV(long id, String startTime, String endTime) {
+    private static ContentValues sessioneToCV(long id, String startTime, String endTime, int idUtente) {
         ContentValues cv = new ContentValues();
 
         cv.put(SessioniContract._ID, id);
         cv.put(SessioniContract.START_SESSION, startTime);
         cv.put(SessioniContract.END_SESSION, endTime);
+        cv.put(SessioniContract.ID_UTENTE, idUtente);
         return cv;
     }
 

@@ -7,10 +7,13 @@ import android.database.sqlite.SQLiteException;
 
 import com.grupppofigo.progettocinema.database.DBHelper;
 import com.grupppofigo.progettocinema.database.DataStore;
+import com.grupppofigo.progettocinema.database.DatabaseContract.UtentiContract;
 import com.grupppofigo.progettocinema.database.DatabaseContract;
 import com.grupppofigo.progettocinema.entities.Utente;
 
 import java.util.ArrayList;
+
+import static com.grupppofigo.progettocinema.database.DatabaseContract.ID_NOT_FOUND;
 
 /**
  * Classe per le query per gli Utenti
@@ -98,5 +101,56 @@ public class UtenteQueries {
         u.setPassw(c.getString(c.getColumnIndex(DatabaseContract.UtentiContract.PASSW)));
 
         return u;
+    }
+
+    /**
+     * Metodo che effettua il login dell'utente, cioè verifica se c'è un utente
+     * passato
+     * @return restituisce un ID se c'è o -1 se non c'è
+     */
+    public static long loginUtente(String email, String pssw) {
+        long id = ID_NOT_FOUND;
+        SQLiteDatabase d = mDb.getReadableDatabase();
+
+        Cursor c = d.query(UtentiContract.TABLE_NAME,
+                null,
+                UtentiContract.EMAIL + "=? and " + UtentiContract.PASSW + "=?",
+                new String[]{email, pssw},
+                null,
+                null,
+                null);
+
+        if(c.moveToNext()) {
+            id = c.getInt(c.getColumnIndex(UtentiContract._ID));
+        }
+
+        c.close();
+        return id;
+    }
+
+    /**
+     * Metodo che restituisce la password di un utente registrato se se l'è
+     * dimenticata
+     * @param email email dell'utente
+     * @return una stringa con la PASSWORD o NULL se niente
+     */
+    public static String forgotPassword(String email) {
+        String pssw = null;
+        SQLiteDatabase d = mDb.getReadableDatabase();
+
+        Cursor c = d.query(UtentiContract.TABLE_NAME,
+                null,
+                UtentiContract.EMAIL + "=?",
+                new String[] {email},
+                null,
+                null,
+                null);
+
+        if(c.moveToNext()) {
+            pssw = c.getString(c.getColumnIndex(UtentiContract.PASSW));
+        }
+
+        c.close();
+        return pssw;
     }
 }

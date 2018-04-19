@@ -5,4 +5,11 @@
     <color name="colorAccent">#488AFF</color>
 
     <color name="background">#263238</color>
+
+    <!-- colore dei testi -->
+    <color name="primaryTextColorWhite">#ffffff</color>
+    <color name="primaryTextColorBlack">#DE000000</color>
+
+    <color name="secondaryTextColorWhite">#8affffff</color>
+    <color name="secondaryTextColorBlack">#8A000000</color>
 </resources>

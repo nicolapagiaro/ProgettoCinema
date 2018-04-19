@@ -5,6 +5,7 @@ package com.grupppofigo.progettocinema.database;
  * Created by Nicola on 28/03/2018.
  */
 public class DatabaseContract {
+    public static final int ID_NOT_FOUND = -1;
 
     /**
      * Specifiche della tabella SESSIONI
@@ -13,7 +14,8 @@ public class DatabaseContract {
             + SessioniContract.TABLE_NAME + "("
             + SessioniContract._ID + " INTEGER PRIMARY KEY, "
             + SessioniContract.START_SESSION + " TEXT NOT NULL, "
-            + SessioniContract.END_SESSION + " TEXT)";
+            + SessioniContract.END_SESSION + " TEXT,"
+            + SessioniContract.ID_UTENTE + " INTEGER)";
 
     static final String DELETE_TABLE_SESSIONI = "DROP TABLE "
             + SessioniContract.TABLE_NAME + " IF EXIST";
@@ -23,6 +25,7 @@ public class DatabaseContract {
         public static final String _ID = "_id";
         public static final String START_SESSION = "startSession";
         public static final String END_SESSION = "endSession";
+        public static final String ID_UTENTE = "idUtente";
     }
 
     /**
@@ -76,6 +79,7 @@ public class DatabaseContract {
             + FilmContract.DURATA + " INTEGER,"
             + FilmContract.ID_GENERE + " INTEGER,"
             + FilmContract.DESCRIZIONE + " TEXT,"
+            + FilmContract.VOTO + " INTEGER,"
             + FilmContract.IMMAGINE + " TEXT)";
 
     static final String DELETE_TABLE_FILM = "DROP TABLE "
@@ -88,6 +92,7 @@ public class DatabaseContract {
         public static final String DURATA = "durata";
         public static final String ID_GENERE = "idGenere";
         public static final String DESCRIZIONE = "descrizione";
+        public static final String VOTO = "voto";
         public static final String IMMAGINE = "immagine";
     }
 

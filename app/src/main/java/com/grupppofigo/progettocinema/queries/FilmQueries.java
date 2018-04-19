@@ -90,6 +90,7 @@ public class FilmQueries {
         cv.put(DatabaseContract.FilmContract.DURATA, f.getDurata());
         cv.put(DatabaseContract.FilmContract.DESCRIZIONE, f.getDescrizione());
         cv.put(DatabaseContract.FilmContract.ID_GENERE, f.getGenere().getId());
+        cv.put(DatabaseContract.FilmContract.VOTO, f.getVoto());
         cv.put(DatabaseContract.FilmContract.IMMAGINE, f.getImmagine());
 
         return cv;
@@ -108,6 +109,7 @@ public class FilmQueries {
         f.setDurata(c.getInt(c.getColumnIndex(DatabaseContract.FilmContract.DURATA)));
         f.setDescrizione(c.getString(c.getColumnIndex(DatabaseContract.FilmContract.DESCRIZIONE)));
         f.setImmagine(c.getString(c.getColumnIndex(DatabaseContract.FilmContract.IMMAGINE)));
+        f.setVoto(c.getInt(c.getColumnIndex(DatabaseContract.FilmContract.VOTO)));
 
         return f;
     }

@@ -6,14 +6,24 @@ public class Sessione implements Serializable {
     private int id;
     private String startSessione;
     private String endSession;
+    private int idUtente;
 
-    public Sessione(int id, String startSessione, String endSession) {
+    public Sessione(int id, String startSessione, String endSession, int idUtente) {
         this.id = id;
         this.startSessione = startSessione;
         this.endSession = endSession;
+        this.idUtente = idUtente;
     }
 
     public Sessione() {
+    }
+
+    public int getIdUtente() {
+        return idUtente;
+    }
+
+    public void setIdUtente(int idUtente) {
+        this.idUtente = idUtente;
     }
 
     public int getId() {
