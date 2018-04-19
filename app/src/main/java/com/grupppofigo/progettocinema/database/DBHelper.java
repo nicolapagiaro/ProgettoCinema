@@ -14,14 +14,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /**
      * Costruttore parametrico
-     * @param context
+     * @param context context
      */
-    public DBHelper(Context context) {
+    DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(DatabaseContract.CREATE_TABLE_SESSIONI);
+        db.execSQL(DatabaseContract.CREATE_TABLE_UTENTI);
+        db.execSQL(DatabaseContract.CREATE_TABLE_GENERI);
         db.execSQL(DatabaseContract.CREATE_TABLE_FILM);
         db.execSQL(DatabaseContract.CREATE_TABLE_PROGRAMMAZIONE);
         db.execSQL(DatabaseContract.CREATE_TABLE_SALA);
@@ -31,6 +34,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(DatabaseContract.DELETE_TABLE_SESSIONI);
+        db.execSQL(DatabaseContract.DELETE_TABLE_UTENTI);
+        db.execSQL(DatabaseContract.DELETE_TABLE_NEGERI);
         db.execSQL(DatabaseContract.DELETE_TABLE_FILM);
         db.execSQL(DatabaseContract.DELETE_TABLE_PROGRAMMAZIONE);
         db.execSQL(DatabaseContract.DELETE_TABLE_SALA);

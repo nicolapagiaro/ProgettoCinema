@@ -4,7 +4,67 @@ package com.grupppofigo.progettocinema.database;
  * Classe che contiene tutte le specifiche del database
  * Created by Nicola on 28/03/2018.
  */
-class DatabaseContract {
+public class DatabaseContract {
+
+    /**
+     * Specifiche della tabella SESSIONI
+     */
+    static final String CREATE_TABLE_SESSIONI = "CREATE TABLE "
+            + SessioniContract.TABLE_NAME + "("
+            + SessioniContract._ID + " INTEGER PRIMARY KEY, "
+            + SessioniContract.START_SESSION + " TEXT NOT NULL, "
+            + SessioniContract.END_SESSION + " TEXT)";
+
+    static final String DELETE_TABLE_SESSIONI = "DROP TABLE "
+            + SessioniContract.TABLE_NAME + " IF EXIST";
+
+    public  class SessioniContract {
+        public static final String TABLE_NAME = "sessioni";
+        public static final String _ID = "_id";
+        public static final String START_SESSION = "startSession";
+        public static final String END_SESSION = "endSession";
+    }
+
+    /**
+     * Specifiche della tabella UTENTI
+     */
+    static final String CREATE_TABLE_UTENTI = "CREATE TABLE "
+            + UtentiContract.TABLE_NAME + "("
+            + UtentiContract._ID + " INTEGER PRIMARY KEY,"
+            + UtentiContract.NOME + " TEXT NOT NULL,"
+            + UtentiContract.COGNOME + " TEXT NOT NULL,"
+            + UtentiContract.EMAIL + " TEXT NOT NULL,"
+            + UtentiContract.PASSW + " TEXT NOT NULL)";
+
+    static final String DELETE_TABLE_UTENTI = "DROP TABLE "
+            + UtentiContract.TABLE_NAME + " IF EXIST";
+
+    public class UtentiContract {
+        public static final String TABLE_NAME = "utenti";
+        public static final String _ID = "_id";
+        public  static final String NOME = "nome";
+        public  static final String COGNOME = "cognome";
+        public  static final String EMAIL = "email";
+        public static final String PASSW = "passw";
+    }
+
+    /**
+     * Specifiche della tabella GENERI
+     */
+    static final String CREATE_TABLE_GENERI = "CREATE TABLE "
+            + GeneriContract.TABLE_NAME + "("
+            + GeneriContract._ID + " INTEGER PRIMARY KEY,"
+            + GeneriContract.NOME + " TEXT NOT NULL)";
+
+    static final String DELETE_TABLE_NEGERI = "DROP TABLE "
+            + GeneriContract.TABLE_NAME + " IF EXIST";
+
+    public  class GeneriContract {
+        public static final String TABLE_NAME = "generi";
+        public static final String _ID = "_id";
+        public static final String NOME = "nome";
+    }
+
 
     /**
      * Specifiche della tabella del FILM
@@ -14,20 +74,21 @@ class DatabaseContract {
             + FilmContract._ID + " INTEGER PRIMARY KEY,"
             + FilmContract.TITOLO + " TEXT,"
             + FilmContract.DURATA + " INTEGER,"
-            + FilmContract.GENERE + " TEXT,"
-            + FilmContract.DESCRIZIONE + " TEXT)";
+            + FilmContract.ID_GENERE + " INTEGER,"
+            + FilmContract.DESCRIZIONE + " TEXT,"
+            + FilmContract.IMMAGINE + " TEXT)";
 
     static final String DELETE_TABLE_FILM = "DROP TABLE "
             + FilmContract.TABLE_NAME + " IF EXIST";
 
-    class FilmContract {
-        static final String TABLE_NAME = "film";
-        static final String _ID = "_id";
-        static final String TITOLO = "titolo";
-        static final String DURATA = "durata";
-        static final String GENERE = "genere";
-        static final String DESCRIZIONE = "descrizione";
-        static final String IMMAGINE = "immagine";
+    public class FilmContract {
+        public static final String TABLE_NAME = "film";
+        public static final String _ID = "_id";
+        public static final String TITOLO = "titolo";
+        public static final String DURATA = "durata";
+        public static final String ID_GENERE = "idGenere";
+        public static final String DESCRIZIONE = "descrizione";
+        public static final String IMMAGINE = "immagine";
     }
 
     /**
@@ -44,13 +105,13 @@ class DatabaseContract {
     static final String DELETE_TABLE_PROGRAMMAZIONE = "DROP TABLE "
             + ProgrammazioneContract.TABLE_NAME + " IF EXIST";
 
-    class ProgrammazioneContract {
-        static final String TABLE_NAME = "programmazione";
-        static final String _ID = "_id";
-        static final String ID_FILM = "idFilm";
-        static final String ID_SALA = "idSala";
-        static final String DATA = "data";
-        static final String ORA = "ora";
+    public class ProgrammazioneContract {
+        public static final String TABLE_NAME = "programmazione";
+        public static final String _ID = "_id";
+        public static final String ID_FILM = "idFilm";
+        public static final String ID_SALA = "idSala";
+        public static final String DATA = "data";
+        public static final String ORA = "ora";
     }
 
     /**
@@ -65,11 +126,11 @@ class DatabaseContract {
     static final String DELETE_TABLE_SALA = "DROP TABLE "
             + SalaContract.TABLE_NAME + " IF EXIST";
 
-    class SalaContract {
-        static final String TABLE_NAME = "sala";
-        static final String _ID = "_id";
-        static final String NOME = "nome";
-        static final String NUMERO_POSTI = "numeroPosti";
+    public class SalaContract {
+        public  static final String TABLE_NAME = "sala";
+        public static final String _ID = "_id";
+        public static final String NOME = "nome";
+        public static final String NUMERO_POSTI = "numeroPosti";
     }
 
     /**
@@ -84,11 +145,11 @@ class DatabaseContract {
     static final String DELETE_TABLE_PRENOTAZIONE = "DROP TABLE "
             + PrenotazioneContract.TABLE_NAME + " IF EXIST";
 
-    class PrenotazioneContract {
-        static final String TABLE_NAME = "prenotazione";
-        static final String _ID = "_id";
-        static final String ID_UTENTE = "idUtente";
-        static final String ID_PROGRAMMAZIONE = "idProgrammazione";
+    public class PrenotazioneContract {
+        public static final String TABLE_NAME = "prenotazione";
+        public static final String _ID = "_id";
+        public static final String ID_UTENTE = "idUtente";
+        public static final String ID_PROGRAMMAZIONE = "idProgrammazione";
     }
 
     /**
@@ -103,11 +164,11 @@ class DatabaseContract {
     static final String DELETE_TABLE_POSTI_PRENOTATI = "DROP TABLE "
             + PostiPrenotatiContract.TABLE_NAME + " IF EXIST";
 
-    class PostiPrenotatiContract {
-        static final String TABLE_NAME = "postiPrenotati";
-        static final String _ID = "_id";
-        static final String ID_PRENOTAZIONE = "idUtente";
-        static final String NUMERO_POSTO = "numeroPosto";
+    public class PostiPrenotatiContract {
+        public static final String TABLE_NAME = "postiPrenotati";
+        public static final String _ID = "_id";
+        public static final String ID_PRENOTAZIONE = "idUtente";
+        public static final String NUMERO_POSTO = "numeroPosto";
     }
 
 }

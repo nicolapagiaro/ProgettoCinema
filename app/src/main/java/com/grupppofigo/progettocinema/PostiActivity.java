@@ -1,6 +1,7 @@
 package com.grupppofigo.progettocinema;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -8,23 +9,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.grupppofigo.progettocinema.database.Queries;
+import com.grupppofigo.progettocinema.entities.Film;
+import com.grupppofigo.progettocinema.entities.Genere;
+import com.grupppofigo.progettocinema.queries.PostoPrenotatoQueries;
+import com.grupppofigo.progettocinema.queries.PrenotazioneQueries;
+import com.grupppofigo.progettocinema.queries.SalaQueries;
 import com.grupppofigo.progettocinema.entities.PostoPrenotato;
 import com.grupppofigo.progettocinema.entities.Prenotazione;
 import com.grupppofigo.progettocinema.entities.Sala;
+import com.grupppofigo.progettocinema.queries.SessioneQueries;
 
 import java.util.ArrayList;
 
 public class PostiActivity extends AppCompatActivity {
     /**
      * Span del grid della lista dei posti
-     */
+     */ 
     private static final int GRID_SPAN_COUNT = 8;
 
     /**
@@ -71,11 +78,12 @@ public class PostiActivity extends AppCompatActivity {
             finish();
         }*/
 
-        /*ArrayList<Film> f = Queries.getAllFilms();
-        ArrayList<Programmazione> ps = Queries.getAllProgrammaziones();
-        Log.d("Lista dei film", f.toString());
-        Log.d("Lista program", ps.toString());
-        Log.d("Program", Queries.getProgrammmazione(0).toString());*/
+        //ArrayList<Film> f = FilmQueries.getAllFilms();
+        //ArrayList<Programmazione> ps = Queries.getAllProgrammaziones();
+        //Log.d("Lista dei film", f.toString());
+       // Log.d("Lista program", ps.toString());
+       // Log.d("Program", Queries.getProgrammmazione(0).toString());
+       // Log.d("Lista generi", Queries.getAllGeneri().toString());
 
         // prendo i riferimenti
         final Button mBtnAvanti = findViewById(R.id.btnAvanti);
@@ -85,15 +93,15 @@ public class PostiActivity extends AppCompatActivity {
         idProgrammazione = 0;
 
         // sala associata
-        final Sala currentSala = Queries.getSalaFromId(idProgrammazione);
+        final Sala currentSala = SalaQueries.getSalaFromId(idProgrammazione);
 
         // posti già prenotati per quella programmazione
-        postiPrenotati = Queries.getPostiPrenotati(idProgrammazione);
+        postiPrenotati = PostoPrenotatoQueries.getPostiPrenotati(idProgrammazione);
 
         // recyclerview set up
         GridLayoutManager recyclerGrid = new GridLayoutManager(getApplicationContext(), GRID_SPAN_COUNT);
         r.setLayoutManager(recyclerGrid);
-        r.setAdapter(new PostiAdapter(currentSala, this));
+        //r.setAdapter(new PostiAdapter(currentSala, this));
         // per non far reciclare gli oggetti togglabili
         r.getRecycledViewPool().setMaxRecycledViews(POSTO_PRENOTATO, 0);
         r.getRecycledViewPool().setMaxRecycledViews(POSTO_LIBERO, 0);
@@ -104,13 +112,13 @@ public class PostiActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // registro la PRENOTAZIONE
-                long idPrenotazione = Queries.addPrenotazione(new Prenotazione(0,idProgrammazione, idUtente));
+                long idPrenotazione = PrenotazioneQueries.addPrenotazione(new Prenotazione(0,idProgrammazione, idUtente));
 
                 // faccio una lista di posti prenotati
                 ArrayList<PostoPrenotato> ps = new ArrayList<>();
                 for(Integer i : postiDaPrenotare) {
                     PostoPrenotato p = new PostoPrenotato(0, (int) idPrenotazione, i);
-                    Queries.addPostoPrenotato(p);
+                    PostoPrenotatoQueries.addPostoPrenotato(p);
                 }
 
                 mBtnAvanti.setClickable(false);

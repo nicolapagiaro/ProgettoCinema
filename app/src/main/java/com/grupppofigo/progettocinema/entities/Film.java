@@ -8,29 +8,31 @@ public class Film {
     private int id;
     private String titolo;
     private int durata;
-    private String genere;
+    private Genere genere;
     private String descrizione;
+    private String immagine;
 
-    /**
-     * Costruttore parametrico
-     * @param id
-     * @param titolo
-     * @param durata
-     * @param genere
-     * @param descrizione
-     */
-    public Film(int id, String titolo, int durata, String genere, String descrizione) {
+    public Film(int id, String titolo, int durata, Genere genere, String descrizione, String immagine) {
         this.id = id;
         this.titolo = titolo;
         this.durata = durata;
         this.genere = genere;
         this.descrizione = descrizione;
+        this.immagine = immagine;
     }
 
     /**
      * Costruttore vuoto
      */
     public Film() {
+    }
+
+    public String getImmagine() {
+        return immagine;
+    }
+
+    public void setImmagine(String immagine) {
+        this.immagine = immagine;
     }
 
     public int getId() {
@@ -57,11 +59,11 @@ public class Film {
         this.durata = durata;
     }
 
-    public String getGenere() {
+    public Genere getGenere() {
         return genere;
     }
 
-    public void setGenere(String genere) {
+    public void setGenere(Genere genere) {
         this.genere = genere;
     }
 
