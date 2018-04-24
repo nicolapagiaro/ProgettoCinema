@@ -22,11 +22,11 @@ public class SessioneQueries {
      * Crea una sessione nel database mettendo una data e tempo di inizio
      * @return l'id della sessione creata
      */
-    public static long startSession(int idUtente) {
+    public static long startSession(int idUtente, long startTime) {
         long id = 0;
         SQLiteDatabase d = mDb.getWritableDatabase();
 
-        ContentValues cv = sessioneToCV(0,String.valueOf(System.currentTimeMillis()), null, idUtente);
+        ContentValues cv = sessioneToCV(0,String.valueOf(startTime), null, idUtente);
         cv.remove(SessioniContract.END_SESSION);
         cv.remove(SessioniContract._ID);
 

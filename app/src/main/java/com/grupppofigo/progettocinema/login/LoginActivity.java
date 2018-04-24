@@ -2,20 +2,16 @@ package com.grupppofigo.progettocinema.login;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,24 +19,22 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.database.DatabaseContract;
 import com.grupppofigo.progettocinema.extras.ExtrasDefinition;
+import com.grupppofigo.progettocinema.lista_film.MainActivity;
 import com.grupppofigo.progettocinema.prenotazione_posti.PostiActivity;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
 import com.grupppofigo.progettocinema.queries.UtenteQueries;
-
 
 public class LoginActivity extends AppCompatActivity {
     EditText mMail, mPassword, inputMail;
     Button mAccedi;
     TextView mRegistrati, getPsw;
     ConstraintLayout constraintLayout;
-    String mail, pssw, verificaMail, verificaPassword, token, pswOttenuta, emailIns;
-    long t;
-    int stToken;
+    String mail, pssw, verificaMail, verificaPassword, pswOttenuta, emailIns;
+    Long token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                                 String pssw = UtenteQueries.forgotPassword(emailIns);
 
                                 if (pssw != null) {
-                                    Snackbar.make(view, "La tua Password è: "+pswOttenuta, Snackbar.LENGTH_LONG)
+                                    Snackbar.make(view, "La tua Password è: " + pswOttenuta, Snackbar.LENGTH_LONG)
                                             .show();
                                 } else {
                                     Snackbar.make(view, "Questa mail non esiste!", Snackbar.LENGTH_LONG)
@@ -117,14 +111,16 @@ public class LoginActivity extends AppCompatActivity {
                     long id = UtenteQueries.loginUtente(mail, pssw);
                     if(id != DatabaseContract.ID_NOT_FOUND) {
                         // l'utente c'è registro la sessione
-                        SessioneQueries.startSession((int) id);
+                        long startTime = System.currentTimeMillis();
+                        token = SessioneQueries.startSession((int) id, startTime);
 
                         // faccio partire l'altra activity
-                        Intent postLoginAct = new Intent(LoginActivity.this, PostiActivity.class);
-                        postLoginAct.putExtra(ExtrasDefinition.START_SESSION, String.valueOf(t));
+                        Intent postLoginAct = new Intent(LoginActivity.this, MainActivity.class);
+                        postLoginAct.putExtra(ExtrasDefinition.START_SESSION, String.valueOf(startTime));
                         postLoginAct.putExtra(ExtrasDefinition.ID_TOKEN, token);
                         postLoginAct.putExtra(ExtrasDefinition.ID_UTENTE, (int) id);
                         startActivity(postLoginAct);
+                        finish();
                     }
                 }
             }
@@ -136,6 +132,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(registerIntent);
+                finish();
             }
         });
     }

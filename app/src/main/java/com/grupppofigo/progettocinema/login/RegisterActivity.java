@@ -23,6 +23,9 @@ import android.widget.Toast;
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.entities.Utente;
 import com.grupppofigo.progettocinema.extras.ExtrasDefinition;
+import com.grupppofigo.progettocinema.lista_film.MainActivity;
+import com.grupppofigo.progettocinema.prenotazione_posti.PostiActivity;
+import com.grupppofigo.progettocinema.queries.SessioneQueries;
 import com.grupppofigo.progettocinema.queries.UtenteQueries;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -82,9 +85,13 @@ public class RegisterActivity extends AppCompatActivity {
                     psw = mPassword.getText().toString();
 
                     int id = (int) UtenteQueries.addUtente(new Utente(0, nom, cog, email, psw));
+                    long startTime = System.currentTimeMillis();
+                    long idSession = SessioneQueries.startSession(id, startTime);
 
-                    Intent toPostLog = new Intent(RegisterActivity.this, LoginActivity.class);
+                    Intent toPostLog = new Intent(RegisterActivity.this, MainActivity.class);
                     toPostLog.putExtra(ExtrasDefinition.ID_UTENTE, id);
+                    toPostLog.putExtra(ExtrasDefinition.START_SESSION, String.valueOf(startTime));
+                    toPostLog.putExtra(ExtrasDefinition.ID_TOKEN, idSession);
                     startActivity(toPostLog);
                     finish();
                 }

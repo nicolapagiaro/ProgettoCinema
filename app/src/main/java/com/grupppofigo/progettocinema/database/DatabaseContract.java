@@ -18,7 +18,7 @@ public class DatabaseContract {
             + SessioniContract.ID_UTENTE + " INTEGER)";
 
     static final String DELETE_TABLE_SESSIONI = "DROP TABLE "
-            + SessioniContract.TABLE_NAME + " IF EXIST";
+            + SessioniContract.TABLE_NAME;
 
     public  class SessioniContract {
         public static final String TABLE_NAME = "sessioni";
@@ -40,7 +40,7 @@ public class DatabaseContract {
             + UtentiContract.PASSW + " TEXT NOT NULL)";
 
     static final String DELETE_TABLE_UTENTI = "DROP TABLE "
-            + UtentiContract.TABLE_NAME + " IF EXIST";
+            + UtentiContract.TABLE_NAME;
 
     public class UtentiContract {
         public static final String TABLE_NAME = "utenti";
@@ -60,7 +60,7 @@ public class DatabaseContract {
             + GeneriContract.NOME + " TEXT NOT NULL)";
 
     static final String DELETE_TABLE_NEGERI = "DROP TABLE "
-            + GeneriContract.TABLE_NAME + " IF EXIST";
+            + GeneriContract.TABLE_NAME;
 
     public  class GeneriContract {
         public static final String TABLE_NAME = "generi";
@@ -83,7 +83,7 @@ public class DatabaseContract {
             + FilmContract.IMMAGINE + " TEXT)";
 
     static final String DELETE_TABLE_FILM = "DROP TABLE "
-            + FilmContract.TABLE_NAME + " IF EXIST";
+            + FilmContract.TABLE_NAME;
 
     public class FilmContract {
         public static final String TABLE_NAME = "film";
@@ -108,7 +108,7 @@ public class DatabaseContract {
             + ProgrammazioneContract.ORA + " TEXT)";
 
     static final String DELETE_TABLE_PROGRAMMAZIONE = "DROP TABLE "
-            + ProgrammazioneContract.TABLE_NAME + " IF EXIST";
+            + ProgrammazioneContract.TABLE_NAME;
 
     public class ProgrammazioneContract {
         public static final String TABLE_NAME = "programmazione";
@@ -129,7 +129,7 @@ public class DatabaseContract {
             + SalaContract.NUMERO_POSTI + " INTEGER)";
 
     static final String DELETE_TABLE_SALA = "DROP TABLE "
-            + SalaContract.TABLE_NAME + " IF EXIST";
+            + SalaContract.TABLE_NAME;
 
     public class SalaContract {
         public  static final String TABLE_NAME = "sala";
@@ -148,7 +148,7 @@ public class DatabaseContract {
             + PrenotazioneContract.ID_PROGRAMMAZIONE + " INTEGER)";
 
     static final String DELETE_TABLE_PRENOTAZIONE = "DROP TABLE "
-            + PrenotazioneContract.TABLE_NAME + " IF EXIST";
+            + PrenotazioneContract.TABLE_NAME;
 
     public class PrenotazioneContract {
         public static final String TABLE_NAME = "prenotazione";
@@ -167,7 +167,7 @@ public class DatabaseContract {
             + PostiPrenotatiContract.NUMERO_POSTO + " INTEGER)";
 
     static final String DELETE_TABLE_POSTI_PRENOTATI = "DROP TABLE "
-            + PostiPrenotatiContract.TABLE_NAME + " IF EXIST";
+            + PostiPrenotatiContract.TABLE_NAME;
 
     public class PostiPrenotatiContract {
         public static final String TABLE_NAME = "postiPrenotati";

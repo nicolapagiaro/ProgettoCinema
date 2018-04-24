@@ -1,23 +1,33 @@
 package com.grupppofigo.progettocinema.prenotazione_posti;
 
+import android.content.Intent;
+import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.extras.ExtrasDefinition;
+import com.grupppofigo.progettocinema.extras.SessionValidator;
+import com.grupppofigo.progettocinema.login.LoginActivity;
 import com.grupppofigo.progettocinema.queries.PostoPrenotatoQueries;
 import com.grupppofigo.progettocinema.queries.PrenotazioneQueries;
 import com.grupppofigo.progettocinema.queries.SalaQueries;
 import com.grupppofigo.progettocinema.entities.PostoPrenotato;
 import com.grupppofigo.progettocinema.entities.Prenotazione;
 import com.grupppofigo.progettocinema.entities.Sala;
+import com.grupppofigo.progettocinema.queries.SessioneQueries;
+import com.grupppofigo.progettocinema.queries.UtenteQueries;
+import com.grupppofigo.progettocinema.riassunto.ResumeActivity;
 
 import java.util.ArrayList;
 
+import static com.grupppofigo.progettocinema.extras.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
 import static com.grupppofigo.progettocinema.prenotazione_posti.PostiAdapter.POSTO_LIBERO;
 import static com.grupppofigo.progettocinema.prenotazione_posti.PostiAdapter.POSTO_PRENOTATO;
 
@@ -36,32 +46,43 @@ public class PostiActivity extends AppCompatActivity {
      * Extras passati
      */
     private int idProgrammazione, idUtente;
+    private long idSessione;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posti);
 
+        // id sessione
+        idSessione =  getIntent().getIntExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
+        if(idSessione == EXTRA_DEFAULT_VALUE) {
+            finishSession();
+        }
+
+        // start della sessione
+        String startSession = getIntent().getStringExtra(ExtrasDefinition.START_SESSION);
+        if(startSession == null) {
+            finishSession();
+        }
+        else if(SessionValidator.isExpired(startSession)){
+            // se è scaduta la registro e chiudo tutto
+            SessioneQueries.endSession(idSessione);
+            finishSession();
+        }
+
         // id della programmazione passata dall'activity prima
-        idProgrammazione = getIntent().getIntExtra(ExtrasDefinition.ID_PROGRAMMAZIONE, ExtrasDefinition.EXTRA_DEFAULT_VALUE);
+        idProgrammazione = getIntent().getIntExtra(ExtrasDefinition.ID_PROGRAMMAZIONE, EXTRA_DEFAULT_VALUE);
         /*if(idProgrammazione == EXTRA_DEFAULT_VALUE) {
             // errore idProgrammazione non passata
-            finish();
+           finishSession();
         }*/
 
         // id dell'utente passata dall'activity prima
-        idUtente = getIntent().getIntExtra(ExtrasDefinition.ID_UTENTE, ExtrasDefinition.EXTRA_DEFAULT_VALUE);
-        /*if(idUtente == EXTRA_DEFAULT_VALUE) {
-            // errore idUtente non passato
-            finish();
-        }*/
-
-        //ArrayList<Film> f = FilmQueries.getAllFilms();
-        //ArrayList<Programmazione> ps = Queries.getAllProgrammaziones();
-        //Log.d("Lista dei film", f.toString());
-        //Log.d("Lista program", ps.toString());
-        //Log.d("Program", Queries.getProgrammmazione(0).toString());
-        //Log.d("Lista generi", Queries.getAllGeneri().toString());
+        idUtente = getIntent().getIntExtra(ExtrasDefinition.ID_UTENTE, EXTRA_DEFAULT_VALUE);
+        if(idUtente == EXTRA_DEFAULT_VALUE) {
+            // errore idUtente non passato passo al login
+            finishSession();
+        }
 
         // prendo i riferimenti
         final Button mBtnAvanti = findViewById(R.id.btnAvanti);
@@ -100,8 +121,36 @@ public class PostiActivity extends AppCompatActivity {
                     PostoPrenotatoQueries.addPostoPrenotato(p);
                 }
 
-                mBtnAvanti.setClickable(false);
+                // faccio partire l'activity di riassunto
+                Intent riassunto = new Intent(getApplicationContext(), ResumeActivity.class);
+                riassunto.putExtra(ExtrasDefinition.ID_UTENTE, idUtente);
+                riassunto.putExtra(ExtrasDefinition.ID_TOKEN, idSessione);
+                riassunto.putExtra(ExtrasDefinition.ID_PRENOTAZIONE, idPrenotazione);
+                riassunto.putExtra(ExtrasDefinition.ID_PROGRAMMAZIONE, idProgrammazione);
+                startActivity(riassunto);
+
+                finish();
             }
         });
+    }
+
+    /**
+     * Metodo che fa finire la sessione e riporta al LOGIN
+     */
+    private void finishSession() {
+        Snackbar snack = Snackbar.make(findViewById(R.id.main_container),
+                R.string.err_session_finished, Snackbar.LENGTH_LONG);
+        snack.show();
+
+        int delayTime = 1000;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(login);
+                // finisco l'activity
+                finish();
+            }
+        }, delayTime);
     }
 }

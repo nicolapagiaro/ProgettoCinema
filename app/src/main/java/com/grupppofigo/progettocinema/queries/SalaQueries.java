@@ -115,6 +115,33 @@ public class SalaQueries {
     }
 
     /**
+     * Preleva una sala dato un id della sala
+     * @param idSala id della sala
+     * @return oggetto sala o null
+     */
+    public static Sala getSala(int idSala) {
+        SQLiteDatabase d = mDb.getReadableDatabase();
+        Sala s = null;
+
+        // prendo la sala dall'id
+        String[] args1 = {idSala+""};
+        Cursor c = d.query(DatabaseContract.SalaContract.TABLE_NAME,
+                null,
+                DatabaseContract.SalaContract._ID + " = ?",
+                args1,
+                null,
+                null,
+                null);
+
+        if(c.moveToNext()) {
+            s = salaFromCursor(c);
+        }
+
+        c.close();
+        return s;
+    }
+
+    /**
      * Dal cursore prende un oggetto sala
      * @param c cursore
      * @return oggetto sala

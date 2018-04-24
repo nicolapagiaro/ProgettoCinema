@@ -76,6 +76,35 @@ public class FilmQueries {
         return res;
     }
 
+    /**
+     * Restituisce una lista di film
+     * @return lista di film
+     */
+    public static Film getFilm(int idFilm) {
+        SQLiteDatabase d = mDb.getReadableDatabase();
+        Film res = null;
+
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+        builder.setTables(DatabaseContract.FilmContract.TABLE_NAME + " INNER JOIN " + DatabaseContract.GeneriContract.TABLE_NAME
+                + " ON " + DatabaseContract.FilmContract.ID_GENERE + "=" + DatabaseContract.GeneriContract.TABLE_NAME
+                + "." + DatabaseContract.GeneriContract._ID);
+
+        Cursor c = builder.query(d,
+                null,
+                DatabaseContract.FilmContract._ID + "=?",
+                new String[]{idFilm+""},
+                null,
+                null,
+                null);
+
+        while (c.moveToNext()) {
+            res = filmFromCursor(c);
+        }
+
+        c.close();
+        return res;
+    }
+
 
     /**
      * Converte l'oggetto film in un oggetto contentvalues

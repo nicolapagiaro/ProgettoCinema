@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">Cinema YE</string>
+    <string name="app_name">Cinema</string>
     <string name="img_content_descriptor">cinema_screen</string>
+    <string name="err_session_finished">Sessione scaduta</string>
+
+    <!-- SEZIONE SPLASH SCREEN -->
+    <string name="splash_welcome">Developed and designed by ITS Padova</string>
 
     <!-- SEZIONE LOGIN -->
     <string name="accedi_prompt">Accedi</string>
@@ -10,7 +14,17 @@
     <string name="prompt_password_repeat">Conferma password</string>
     <string name="prompt_nome">Nome</string>
     <string name="prompt_cognome">Cognome</string>
+    <string name="prompt_policy">Accetto i termini del contratto</string>
 
     <!-- SEZIONE SELEZIONE POSTI -->
+    <string name="btn_next_label">Avanti</string>
     <string name="error_posti_max">Puoi selezionare massimo 4 posti</string>
+
+    <!-- SEZIONE RIASSUNTO PRENOTAZIONE -->
+    <string name="tvTitoloLabel">Titolo</string>
+    <string name="tvPostiPrenotatiLabel">Posti prenotati</string>
+    <string name="tvIdSessioneLabel">ID sessione</string>
+    <string name="btn_buy_label">Acquista</string>
+    <string name="tvDurataFilm">%1$d minuti</string>
+    <string name="tvNumeroPosto">Posto %1$d</string>
 </resources>

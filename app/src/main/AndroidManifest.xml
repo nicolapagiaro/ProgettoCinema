@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.grupppofigo.progettocinema">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:name=".CinemaApplication"
         android:allowBackup="true"
@@ -23,7 +26,11 @@
         <activity android:name=".login.LoginActivity" />
         <!-- /LOGIN -->
 
+        <activity android:name=".lista_film.MainActivity" />
+
         <activity android:name=".prenotazione_posti.PostiActivity" />
+
+        <activity android:name=".riassunto.ResumeActivity" />
 
     </application>
 
