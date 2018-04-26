@@ -7,13 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.grupppofigo.progettocinema.R;
-import com.grupppofigo.progettocinema.extras.ExtrasDefinition;
-import com.grupppofigo.progettocinema.extras.SessionValidator;
+import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
+import com.grupppofigo.progettocinema.helpers.SessionValidator;
 import com.grupppofigo.progettocinema.login.LoginActivity;
 import com.grupppofigo.progettocinema.queries.PostoPrenotatoQueries;
 import com.grupppofigo.progettocinema.queries.PrenotazioneQueries;
@@ -22,12 +21,11 @@ import com.grupppofigo.progettocinema.entities.PostoPrenotato;
 import com.grupppofigo.progettocinema.entities.Prenotazione;
 import com.grupppofigo.progettocinema.entities.Sala;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
-import com.grupppofigo.progettocinema.queries.UtenteQueries;
 import com.grupppofigo.progettocinema.riassunto.ResumeActivity;
 
 import java.util.ArrayList;
 
-import static com.grupppofigo.progettocinema.extras.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
+import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
 import static com.grupppofigo.progettocinema.prenotazione_posti.PostiAdapter.POSTO_LIBERO;
 import static com.grupppofigo.progettocinema.prenotazione_posti.PostiAdapter.POSTO_PRENOTATO;
 

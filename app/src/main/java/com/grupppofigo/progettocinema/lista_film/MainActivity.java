@@ -10,17 +10,18 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.grupppofigo.progettocinema.R;
+import com.grupppofigo.progettocinema.SessionExpired;
 import com.grupppofigo.progettocinema.entities.Film;
-import com.grupppofigo.progettocinema.extras.ExtrasDefinition;
-import com.grupppofigo.progettocinema.extras.SessionValidator;
-import com.grupppofigo.progettocinema.login.LoginActivity;
+import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
+import com.grupppofigo.progettocinema.helpers.SessionValidator;
+import com.grupppofigo.progettocinema.helpers.SnackBar;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
 
 import java.lang.*;
 import java.util.ArrayList;
 
-import static com.grupppofigo.progettocinema.extras.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
+import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,14 +76,16 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra(ExtrasDefinition.START_SESSION, startSession);
                     startActivity(intent);*/
 
-                    Snackbar.make(findViewById(R.id.mainContainer),
-                            films.get(position).getTitolo() + " selezionato",
-                            Snackbar.LENGTH_SHORT).show();
+                    SnackBar.with(getApplicationContext())
+                            .show(findViewById(R.id.mainContainer),
+                                    films.get(position).getTitolo() + " selezionato",
+                                    Snackbar.LENGTH_SHORT);
                 }
                 else {
-                    Snackbar.make(findViewById(R.id.mainContainer),
-                            R.string.error_film_click,
-                            Snackbar.LENGTH_SHORT).show();
+                    SnackBar.with(getApplicationContext())
+                            .show(findViewById(R.id.mainContainer),
+                                    R.string.error_film_click,
+                                    Snackbar.LENGTH_SHORT);
                 }
             }
         });
@@ -92,17 +95,12 @@ public class MainActivity extends AppCompatActivity {
      * Metodo che fa finire la sessione e riporta al LOGIN
      */
     private void finishSession() {
-        Snackbar snack = Snackbar.make(findViewById(R.id.mainContainer),
-                R.string.err_session_finished, Snackbar.LENGTH_LONG);
-        snack.show();
-
         int delayTime = 1000;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(login);
-                // finisco l'activity
+                Intent s = new Intent(getApplicationContext(), SessionExpired.class);
+                startActivity(s);
                 finish();
             }
         }, delayTime);

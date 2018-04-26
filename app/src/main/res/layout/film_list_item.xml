@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="192dp"
-            android:background="#ECEFF1"
+            android:background="@color/cardBackground"
             android:orientation="horizontal"
             android:weightSum="3">
 
@@ -66,12 +66,12 @@
                     android:layout_height="1dp"
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="24dp"
+                    android:contentDescription="@string/img_content_descriptor"
                     app:layout_constraintBottom_toTopOf="@+id/rb_stelle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_durata"
-                    app:srcCompat="@color/dividerColor"
-                    android:contentDescription="@string/img_content_descriptor" />
+                    app:srcCompat="@color/dividerColor" />
 
                 <RatingBar
                     android:id="@+id/rb_stelle"
@@ -96,7 +96,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:contentDescription="@string/img_content_descriptor"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop" />
 
         </LinearLayout>
 

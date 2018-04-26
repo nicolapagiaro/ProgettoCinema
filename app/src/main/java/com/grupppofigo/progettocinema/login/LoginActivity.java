@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
@@ -12,13 +11,11 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.method.PasswordTransformationMethod;
 import android.text.style.ForegroundColorSpan;
 import android.util.Patterns;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -28,7 +25,8 @@ import android.widget.TextView;
 
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.database.DatabaseContract;
-import com.grupppofigo.progettocinema.extras.ExtrasDefinition;
+import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
+import com.grupppofigo.progettocinema.helpers.SnackBar;
 import com.grupppofigo.progettocinema.lista_film.MainActivity;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
 import com.grupppofigo.progettocinema.queries.UtenteQueries;
@@ -53,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.editTextPassword);
         Button mAccedi = findViewById(R.id.buttonAccedi);
         TextView mRegistrati = findViewById(R.id.linkRegistrati);
-        TextView getPsw = findViewById(R.id.textGetPsw);
+        final TextView getPsw = findViewById(R.id.textGetPsw);
 
         mPassword.setTransformationMethod(new PasswordTransformationMethod());
 
@@ -87,6 +85,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if(validateInput()){
+                    hideSoftKeyboard(LoginActivity.this);
+
                     long id = UtenteQueries.loginUtente(mail, pssw);
 
                     if(id != DatabaseContract.ID_NOT_FOUND) {
@@ -104,7 +104,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     else {
                         // l'utente non c'è
-                        Snackbar.make(constraintLayout, R.string.err_user_not_found, Snackbar.LENGTH_SHORT).show();
+                        SnackBar.with(getApplicationContext())
+                                .show(constraintLayout, R.string.err_user_not_found, Snackbar.LENGTH_SHORT);
                     }
                 }
             }

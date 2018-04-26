@@ -12,8 +12,8 @@ import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.entities.Film;
 import com.grupppofigo.progettocinema.entities.Programmazione;
 import com.grupppofigo.progettocinema.entities.Sala;
-import com.grupppofigo.progettocinema.extras.ExtrasDefinition;
-import com.grupppofigo.progettocinema.extras.SessionValidator;
+import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
+import com.grupppofigo.progettocinema.helpers.SessionValidator;
 import com.grupppofigo.progettocinema.login.LoginActivity;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
 import com.grupppofigo.progettocinema.queries.PostoPrenotatoQueries;
@@ -23,7 +23,7 @@ import com.grupppofigo.progettocinema.queries.SessioneQueries;
 
 import java.util.ArrayList;
 
-import static com.grupppofigo.progettocinema.extras.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
+import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
 
 public class ResumeActivity extends AppCompatActivity {
 

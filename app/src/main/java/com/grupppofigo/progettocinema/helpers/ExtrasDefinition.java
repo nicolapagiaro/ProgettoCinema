@@ -1,4 +1,4 @@
-package com.grupppofigo.progettocinema.extras;
+package com.grupppofigo.progettocinema.helpers;
 
 /**
  * Classe con la definizione del nome degli EXTRAS

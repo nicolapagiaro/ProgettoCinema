@@ -1,6 +1,4 @@
-package com.grupppofigo.progettocinema.extras;
-
-import android.util.Log;
+package com.grupppofigo.progettocinema.helpers;
 
 /**
  * Classe per validare la sessione dell'utente

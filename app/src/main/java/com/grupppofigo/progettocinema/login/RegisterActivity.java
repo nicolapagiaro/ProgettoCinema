@@ -15,10 +15,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.entities.Utente;
-import com.grupppofigo.progettocinema.extras.ExtrasDefinition;
+import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
+import com.grupppofigo.progettocinema.helpers.SnackBar;
 import com.grupppofigo.progettocinema.lista_film.MainActivity;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
 import com.grupppofigo.progettocinema.queries.UtenteQueries;
@@ -30,7 +30,10 @@ public class RegisterActivity extends AppCompatActivity {
     public static final int MIN_CHAR_NOME_COGNOME = 4;
     public static final int MIN_CHAR_PASSW = 5;
 
-    private String psw, pswConf, nome, cognome, email;
+    private String psw;
+    private String nome;
+    private String cognome;
+    private String email;
     private EditText mNome, mCognome, mEmail, mPassword, mConfPassword;
     private CheckBox contratto;
     private ConstraintLayout constraintLayout;
@@ -149,7 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         // controllo la seconda password
-        pswConf = mConfPassword.getText().toString().trim();
+        String pswConf = mConfPassword.getText().toString().trim();
         TextInputLayout layoutPsswConf = findViewById(R.id.textInputPasswConf);
         if (!pswConf.equals(psw)) {
             layoutPsswConf.setErrorEnabled(true);
@@ -163,7 +166,8 @@ public class RegisterActivity extends AppCompatActivity {
         // check box del contratto
         if (!contratto.isChecked()) {
             if(errCount == 0)
-                Snackbar.make(constraintLayout, R.string.must_accept_contrat, Snackbar.LENGTH_LONG).show();
+                SnackBar.with(getApplicationContext())
+                        .show(constraintLayout, R.string.must_accept_contrat, Snackbar.LENGTH_SHORT);
             errCount++;
         }
 
