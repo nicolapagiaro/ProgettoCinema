@@ -13,12 +13,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.SessionExpired;
 import com.grupppofigo.progettocinema.entities.Film;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
 import com.grupppofigo.progettocinema.helpers.SessionValidator;
+import com.grupppofigo.progettocinema.helpers.SnackBar;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
 import com.grupppofigo.progettocinema.riassunto.ResumeActivity;
@@ -27,6 +29,7 @@ import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
+import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.ID_PROGRAMMAZIONE;
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.ID_TOKEN;
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.ID_UTENTE;
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.START_SESSION;
@@ -50,6 +53,18 @@ public class DescrizioneActivity extends AppCompatActivity {
         Toolbar t = findViewById(R.id.toolbar);
         if(t != null) {
             t.setTitle(R.string.film_details_title);
+            setSupportActionBar(t);
+
+            //this line shows back button
+            if(getSupportActionBar() != null)
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+            t.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
         }
 
         // id sessione
@@ -140,11 +155,13 @@ public class DescrizioneActivity extends AppCompatActivity {
         mSumbit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent resume = new Intent(getApplicationContext(), ResumeActivity.class);
+                /*Intent resume = new Intent(getApplicationContext(), ResumeActivity.class);
                 resume.putExtra(START_SESSION, startSession);
                 resume.putExtra(ID_TOKEN, idSessione);
                 resume.putExtra(ID_UTENTE, idUtente);
-                startActivity(resume);
+                resume.putExtra(ID_PROGRAMMAZIONE, 0);
+                startActivity(resume);*/
+                Toast.makeText(getApplicationContext(), "Prenota", Toast.LENGTH_SHORT).show();
             }
         });
     }
