@@ -34,33 +34,32 @@ public class ResumeActivity extends AppCompatActivity {
 
         // id sessione
         int idSessione = getIntent().getIntExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
-        if(idSessione == EXTRA_DEFAULT_VALUE) {
-            finishSession();
+        if (idSessione == EXTRA_DEFAULT_VALUE) {
+            SessionValidator.finishSession(this, idSessione);
         }
 
         // start della sessione
         String startSession = getIntent().getStringExtra(ExtrasDefinition.START_SESSION);
-        if(startSession == null) {
-            finishSession();
-        }
-        else if(SessionValidator.isExpired(startSession)){
+        if (startSession == null) {
+            SessionValidator.finishSession(this, idSessione);
+        } else if (SessionValidator.isExpired(startSession)) {
             // se è scaduta la registro e chiudo tutto
             SessioneQueries.endSession(idSessione);
-            finishSession();
+            SessionValidator.finishSession(this, idSessione);
         }
 
         // id della programmazione
         int idProgrammazione = getIntent().getIntExtra(ExtrasDefinition.ID_PROGRAMMAZIONE, EXTRA_DEFAULT_VALUE);
-        /*if(idProgrammazione == EXTRA_DEFAULT_VALUE) {
+        if (idProgrammazione == EXTRA_DEFAULT_VALUE) {
             // errore idProgrammazione non passata
-           finishSession();
-        }*/
+            SessionValidator.finishSession(this, idSessione);
+        }
 
         // id dell'utente passata dall'activity prima
         int idUtente = getIntent().getIntExtra(ExtrasDefinition.ID_UTENTE, EXTRA_DEFAULT_VALUE);
-        if(idUtente == EXTRA_DEFAULT_VALUE) {
+        if (idUtente == EXTRA_DEFAULT_VALUE) {
             // errore idUtente non passato passo al login
-            finishSession();
+            SessionValidator.finishSession(this, idSessione);
         }
 
         // riempio lo schermo con i dati
@@ -71,11 +70,11 @@ public class ResumeActivity extends AppCompatActivity {
         TextView tvOra = findViewById(R.id.tvOrario);
 
         Programmazione pr = ProgrammazioneQueries.getProgrammmazione(idProgrammazione);
-        Film  film = FilmQueries.getFilm(pr.getIdFilm());
+        Film film = FilmQueries.getFilm(pr.getIdFilm());
         Sala s = SalaQueries.getSala(pr.getIdSala());
         ArrayList<Integer> posti = PostoPrenotatoQueries.getPostiPrenotati(pr.getId());
 
-        if(film != null) {
+        if (film != null) {
             tvTitolo.setText(film.getTitolo());
             tvGenere.setText(film.getGenere().getNome());
             tvDurata.setText(getString(R.string.tvDurataFilm, film.getDurata()));
@@ -87,25 +86,5 @@ public class ResumeActivity extends AppCompatActivity {
         ListView lista = findViewById(R.id.list);
         CustomListView customListView = new CustomListView(this, R.layout.resume_posto_item, posti, s);
         lista.setAdapter(customListView);
-    }
-
-    /**
-     * Metodo che fa finire la sessione e riporta al LOGIN
-     */
-    private void finishSession() {
-        Snackbar snack = Snackbar.make(findViewById(R.id.resumeContainer),
-                R.string.err_session_finished, Snackbar.LENGTH_LONG);
-        snack.show();
-
-        int delayTime = 1000;
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(login);
-                // finisco l'activity
-                finish();
-            }
-        }, delayTime);
     }
 }

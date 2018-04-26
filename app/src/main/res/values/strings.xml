@@ -38,7 +38,8 @@
     <string name="error_film_click">Non disponibile</string>
 
     <!-- SEZIONE DETTAGLI FILM -->
-    <string name="film_details_title">Dettagli film</string>
+    <string name="film_details_title">Dettaglio film</string>
+    <string name="btnPrenota">Prenota</string>
 
     <!-- SEZIONE SELEZIONE POSTI -->
     <string name="posti_title">Seleziona i posti</string>

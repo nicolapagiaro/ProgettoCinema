@@ -7,6 +7,7 @@
     <color name="background">#263238</color>
     <color name="dividerColor">#1f000000</color>
     <color name="cardBackground">#ECEFF1</color>
+    <color name="image_toolbar_mask">#24000000</color>
 
     <!-- colore dei testi -->
     <color name="primaryTextColorWhite">#ffffff</color>

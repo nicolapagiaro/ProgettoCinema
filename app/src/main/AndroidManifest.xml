@@ -34,6 +34,10 @@
         <activity
             android:name=".prenotazione_posti.PostiActivity"
             android:label="@string/posti_title" />
+
+        <activity android:name=".film_details.DescrizioneActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".riassunto.ResumeActivity"
             android:label="@string/resume_title" />

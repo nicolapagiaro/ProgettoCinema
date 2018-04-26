@@ -1,5 +1,13 @@
 package com.grupppofigo.progettocinema.helpers;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Handler;
+
+import com.grupppofigo.progettocinema.SessionExpired;
+import com.grupppofigo.progettocinema.database.DatabaseContract;
+import com.grupppofigo.progettocinema.queries.SessioneQueries;
+
 /**
  * Classe per validare la sessione dell'utente
  */
@@ -17,5 +25,25 @@ public class SessionValidator {
     public static boolean isExpired(String startSession) {
         long s = Long.parseLong(startSession);
         return (System.currentTimeMillis() - s) >= EXPIRED_TIME;
+    }
+
+    /**
+     * Funzione che termina la sessione corrente e ti mostra la schermatina
+     * @param activity activity
+     */
+    public static void finishSession(final Activity activity, long idSession) {
+        if(idSession != DatabaseContract.ID_NOT_FOUND) {
+            SessioneQueries.endSession(idSession);
+        }
+
+        int delayTime = 1000;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent s = new Intent(activity, SessionExpired.class);
+                activity.startActivity(s);
+                activity.finish();
+            }
+        }, delayTime);
     }
 }

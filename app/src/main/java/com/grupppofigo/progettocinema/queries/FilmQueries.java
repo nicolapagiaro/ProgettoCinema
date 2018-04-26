@@ -91,7 +91,7 @@ public class FilmQueries {
 
         Cursor c = builder.query(d,
                 null,
-                DatabaseContract.FilmContract._ID + "=?",
+                DatabaseContract.FilmContract.TABLE_NAME + "." + DatabaseContract.FilmContract._ID + "=?",
                 new String[]{idFilm+""},
                 null,
                 null,
@@ -132,13 +132,14 @@ public class FilmQueries {
      */
     private static Film filmFromCursor(Cursor c) {
         Film f = new Film();
-        f.setId(c.getInt(c.getColumnIndex(DatabaseContract.FilmContract._ID)));
+        f.setId(c.getInt(0));
         f.setTitolo(c.getString(c.getColumnIndex(DatabaseContract.FilmContract.TITOLO)));
-        f.setGenere(GenereQueries.genereFromCursor(c));
         f.setDurata(c.getInt(c.getColumnIndex(DatabaseContract.FilmContract.DURATA)));
         f.setDescrizione(c.getString(c.getColumnIndex(DatabaseContract.FilmContract.DESCRIZIONE)));
         f.setImmagine(c.getString(c.getColumnIndex(DatabaseContract.FilmContract.IMMAGINE)));
         f.setVoto(c.getInt(c.getColumnIndex(DatabaseContract.FilmContract.VOTO)));
+
+        f.setGenere(GenereQueries.genereFromCursor(c));
 
         return f;
     }

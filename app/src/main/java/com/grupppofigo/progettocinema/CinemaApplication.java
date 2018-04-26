@@ -38,7 +38,6 @@ public class CinemaApplication extends Application {
         GenereQueries.addGenere(g2);
         GenereQueries.addGenere(g3);
 
-
         // film random
         Film f1 = new Film(0,
                 "The Avenger",
@@ -49,14 +48,6 @@ public class CinemaApplication extends Application {
                 "https://i.annihil.us/u/prod/marvel/i/mg/6/50/521f70b81f7d3/portrait_incredible.jpg");
 
         Film f2 = new Film(0,
-                "Tron (2010)",
-                127,
-                new Genere(1,""),
-                "Film figo futuristico, remake",
-                5,
-                "https://i0.wp.com/www.cinezapping.com/wp-content/uploads/2010/12/Loc_Tron_300dpi.jpg?fit=620%2C886&ssl=1");
-
-        Film f3 = new Film(0,
                 "Tre uomini ed una gamba",
                 101,
                 new Genere(3,""),
@@ -66,6 +57,5 @@ public class CinemaApplication extends Application {
 
         FilmQueries.addFilm(f1);
         FilmQueries.addFilm(f2);
-        FilmQueries.addFilm(f3);
     }
 }

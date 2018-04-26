@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * Adapter per la listview di film
- */
-public class AdapterFilm extends ArrayAdapter<Film>{
+public class AdapterFilm extends ArrayAdapter<Film> {
     private Activity ctx;
     private int resID;
     private List<Film> listaFilm;
