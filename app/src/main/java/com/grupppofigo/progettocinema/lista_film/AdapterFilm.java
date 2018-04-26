@@ -54,7 +54,10 @@ public class AdapterFilm extends ArrayAdapter<Film>{
         viewHolder.tv_titolo.setText(f.getTitolo());
         viewHolder.tv_genere.setText(f.getGenere().getNome());
         viewHolder.tv_durata.setText(ctx.getString(R.string.tvDurataFilm, f.getDurata()));
-        Picasso.get().load(f.getImmagine()).into(viewHolder.iv_film);
+        Picasso.get()
+                .load(f.getImmagine())
+                .placeholder(R.drawable.image_film_placeholder)
+                .into(viewHolder.iv_film);
         viewHolder.rb_stelle.setRating(f.getVoto());
 
         return r;

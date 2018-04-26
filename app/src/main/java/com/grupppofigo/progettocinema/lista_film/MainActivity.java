@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.grupppofigo.progettocinema.R;
@@ -28,13 +30,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // id sessione
-        long idSessione = getIntent().getLongExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
+        final long idSessione = getIntent().getLongExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
         if(idSessione == EXTRA_DEFAULT_VALUE) {
             finishSession();
         }
 
         // start della sessione
-        String startSession = getIntent().getStringExtra(ExtrasDefinition.START_SESSION);
+        final String startSession = getIntent().getStringExtra(ExtrasDefinition.START_SESSION);
         if(startSession == null) {
             finishSession();
         }
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // id dell'utente passata dall'activity prima
-        int idUtente = getIntent().getIntExtra(ExtrasDefinition.ID_UTENTE, EXTRA_DEFAULT_VALUE);
+        final int idUtente = getIntent().getIntExtra(ExtrasDefinition.ID_UTENTE, EXTRA_DEFAULT_VALUE);
         if(idUtente == EXTRA_DEFAULT_VALUE) {
             // errore idUtente non passato passo al login
             finishSession();
@@ -58,27 +60,32 @@ public class MainActivity extends AppCompatActivity {
         AdapterFilm adapterFilm = new AdapterFilm(MainActivity.this, R.layout.film_list_item, films);
         lv_film.setAdapter(adapterFilm);
 
-        //per andare nell'altra activity
-       /* lv_film.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //per andare nell'altra activity cliccando sulla card
+        lv_film.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long id) {
-                TextView tv_id = view.findViewById(R.id.tv_id);
-                String stringFilm = tv_id.getText().toString();
-                idFilm = Integer.parseInt(stringFilm);
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                int idFilm = films.get(position).getId();
 
-                if (tv_id.getText().toString() != "") {
-                    Intent intent = new Intent(MainActivity.this, Main2Activity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(IDFILM, idFilm); //id film
-                    bundle.putInt(IDUTENTE, idUtente);
-                    bundle.putString(IDTOKEN, idToken);
-                    bundle.putString(STARTSESSION, startSession);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                // se c'è un ID okey
+                if (idFilm != EXTRA_DEFAULT_VALUE) {
+                    /*Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                    intent.putExtra(ExtrasDefinition.ID_TOKEN, idSessione);
+                    intent.putExtra(ExtrasDefinition.ID_UTENTE, idUtente);
+                    intent.putExtra(ExtrasDefinition.START_SESSION, startSession);
+                    startActivity(intent);*/
 
+                    Snackbar.make(findViewById(R.id.mainContainer),
+                            films.get(position).getTitolo() + " selezionato",
+                            Snackbar.LENGTH_SHORT).show();
+                }
+                else {
+                    Snackbar.make(findViewById(R.id.mainContainer),
+                            R.string.error_film_click,
+                            Snackbar.LENGTH_SHORT).show();
                 }
             }
-        });*/
+        });
     }
 
     /**

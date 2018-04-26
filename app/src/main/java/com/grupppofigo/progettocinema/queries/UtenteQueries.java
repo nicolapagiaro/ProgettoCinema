@@ -140,7 +140,7 @@ public class UtenteQueries {
 
         Cursor c = d.query(UtentiContract.TABLE_NAME,
                 null,
-                UtentiContract.EMAIL + "=?",
+                UtentiContract.EMAIL + "= ?",
                 new String[] {email},
                 null,
                 null,

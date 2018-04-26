@@ -6,7 +6,7 @@
     <!-- SEZIONE SPLASH SCREEN -->
     <string name="splash_welcome">Developed and designed by ITS Padova</string>
 
-    <!-- SEZIONE LOGIN -->
+    <!-- SEZIONE LOGIN REGISTER -->
     <string name="accedi_prompt">Accedi</string>
     <string name="registra_prompt">Registrati</string>
     <string name="prompt_email">Email</string>
@@ -14,13 +14,38 @@
     <string name="prompt_password_repeat">Conferma password</string>
     <string name="prompt_nome">Nome</string>
     <string name="prompt_cognome">Cognome</string>
+    <string name="prompt_forgot_pssw">Password dimenticata?</string>
+    <string name="back_to_login">Torna al login</string>
     <string name="prompt_policy">Accetto i termini del contratto</string>
+    <string name="goToRegisterLink1">Non hai ancora un account?\n</string>
+    <string name="goToRegisterLink2">Creane uno!</string>
+    <string name="must_accept_contrat">Devi accettare il contratto per proseguire</string>
+    <string name="err_nome">Inserisci un nome</string>
+    <string name="err_cognome">Inserisci un cognome</string>
+    <string name="err_mail">Inserisci una mail valida</string>
+    <string name="err_passw">La password deve essere minimo di 6 caratteri</string>
+    <string name="err_passw_conf">Le due passowrd non coincidono</string>
+    <string name="err_user_not_found">L\'utente non esiste, controllare i dati immessi</string>
+
+    <!-- DIALOG per il recupero password -->
+    <string name="dialog_title">Recupera la tua password</string>
+    <string name="tvResultPssw">Password recuperata: %1$s</string>
+    <string name="tvNoResultPssw">Nessuna password trovata</string>
+
+    <!-- SEZIONE LISTA FILM -->
+    <string name="film_list_title">Film disponibili</string>
+    <string name="error_film_click">Non disponibile</string>
+
+    <!-- SEZIONE DETTAGLI FILM -->
+    <string name="film_details_title">Dettagli film</string>
 
     <!-- SEZIONE SELEZIONE POSTI -->
+    <string name="posti_title">Seleziona i posti</string>
     <string name="btn_next_label">Avanti</string>
     <string name="error_posti_max">Puoi selezionare massimo 4 posti</string>
 
     <!-- SEZIONE RIASSUNTO PRENOTAZIONE -->
+    <string name="resume_title">Riepilogo</string>
     <string name="tvTitoloLabel">Titolo</string>
     <string name="tvPostiPrenotatiLabel">Posti prenotati</string>
     <string name="tvIdSessioneLabel">ID sessione</string>

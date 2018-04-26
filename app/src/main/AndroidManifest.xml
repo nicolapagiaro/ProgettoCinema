@@ -23,14 +23,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".login.RegisterActivity" />
-        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".login.LoginActivity"
+            android:theme="@style/AppTheme"/>
         <!-- /LOGIN -->
 
-        <activity android:name=".lista_film.MainActivity" />
+        <activity android:name=".lista_film.MainActivity"
+            android:label="@string/film_list_title"/>
 
-        <activity android:name=".prenotazione_posti.PostiActivity" />
+        <activity android:name=".prenotazione_posti.PostiActivity"
+            android:label="@string/posti_title"/>
 
-        <activity android:name=".riassunto.ResumeActivity" />
+        <activity android:name=".riassunto.ResumeActivity"
+            android:label="@string/resume_title"/>
 
     </application>
 

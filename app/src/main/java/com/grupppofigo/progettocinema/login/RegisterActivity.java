@@ -1,16 +1,12 @@
 package com.grupppofigo.progettocinema.login;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,36 +14,44 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.entities.Utente;
 import com.grupppofigo.progettocinema.extras.ExtrasDefinition;
 import com.grupppofigo.progettocinema.lista_film.MainActivity;
-import com.grupppofigo.progettocinema.prenotazione_posti.PostiActivity;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
 import com.grupppofigo.progettocinema.queries.UtenteQueries;
 
 public class RegisterActivity extends AppCompatActivity {
-    String psw, conf, nom, cog, email;
-    EditText mNome, mCognome, mEmail, mPassword, mConfPassword;
-    CheckBox contratto;
-    Button registrati;
-    ConstraintLayout constraintLayout;
+    /**
+     * Lunghezze minime per i campi di imput
+     */
+    public static final int MIN_CHAR_NOME_COGNOME = 4;
+    public static final int MIN_CHAR_PASSW = 5;
+
+    private String psw, pswConf, nome, cognome, email;
+    private EditText mNome, mCognome, mEmail, mPassword, mConfPassword;
+    private CheckBox contratto;
+    private ConstraintLayout constraintLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
+        // riferimenti
         mNome = findViewById(R.id.regNome);
         mCognome = findViewById(R.id.regCognome);
         mEmail = findViewById(R.id.regEmail);
         mPassword = findViewById(R.id.regPassword);
         mConfPassword = findViewById(R.id.regConferma);
         contratto = findViewById(R.id.policy);
-        registrati = findViewById(R.id.buttonRegistrati);
+        Button registrati = findViewById(R.id.buttonRegistrati);
 
         constraintLayout = findViewById(R.id.constLayout);
         constraintLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -58,33 +62,12 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        // btn REGISTRAZIONE
         registrati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                email = mEmail.getText().toString();
-                psw = mPassword.getText().toString();
-                conf = mConfPassword.getText().toString();
-
-                if (mNome.getText().toString().isEmpty()) {
-                    mNome.setError("Inserisci il Nome");
-                } else if (mCognome.getText().toString().isEmpty()) {
-                    mCognome.setError("Inserisci il Cognome");
-                } else if (mEmail.getText().toString().isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    mEmail.setError("Inserisci una mail valida!");
-                } else if (psw.length() < 4) {
-                    mPassword.setError("Password troppo corta!");
-                } else if (!psw.equals(conf)) {
-                    mConfPassword.setError("Le Password sono diverse");
-                } else if (!contratto.isChecked()) {
-                    Snackbar.make(v, "Devi Accettare il contratto!", Snackbar.LENGTH_LONG)
-                            .show();
-                } else {
-                    nom = mNome.getText().toString();
-                    cog = mCognome.getText().toString();
-                    email = mEmail.getText().toString();
-                    psw = mPassword.getText().toString();
-
-                    int id = (int) UtenteQueries.addUtente(new Utente(0, nom, cog, email, psw));
+                if(validateInput()){
+                    int id = (int) UtenteQueries.addUtente(new Utente(0, nome, cognome, email, psw));
                     long startTime = System.currentTimeMillis();
                     long idSession = SessioneQueries.startSession(id, startTime);
 
@@ -97,6 +80,102 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // link Torna al Login
+        TextView backLogin = findViewById(R.id.tvBackLogin);
+        backLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+    }
+
+    /**
+     * Metodo che valida l'input immesso per la registrazione
+     * @return true se puoi proseguire, false se no
+     */
+    private boolean validateInput() {
+        int errCount = 0;
+
+        // controllo il nome
+        nome = mNome.getText().toString().trim();
+        TextInputLayout layoutNome = findViewById(R.id.textInputNome);
+        if (nome.length() < MIN_CHAR_NOME_COGNOME) {
+            layoutNome.setErrorEnabled(true);
+            layoutNome.setError(getString(R.string.err_nome));
+            errCount++;
+        }
+        else {
+            layoutNome.setErrorEnabled(false);
+        }
+
+        // controllo il cognome
+        cognome = mCognome.getText().toString().trim();
+        TextInputLayout layoutCognome = findViewById(R.id.textInputPsswLogin);
+        if (cognome.length() < MIN_CHAR_NOME_COGNOME) {
+            layoutCognome.setErrorEnabled(true);
+            layoutCognome.setError(getString(R.string.err_cognome));
+            errCount++;
+        }
+        else {
+            layoutCognome.setErrorEnabled(false);
+        }
+
+        // controllo la mail
+        email = mEmail.getText().toString().trim();
+        TextInputLayout layoutEmail = findViewById(R.id.textInputEmaiLogin);
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            layoutEmail.setErrorEnabled(true);
+            layoutEmail.setError(getString(R.string.err_mail));
+            errCount++;
+        }
+        else {
+            layoutEmail.setErrorEnabled(false);
+        }
+
+        // controllo la prima password
+        psw = mPassword.getText().toString().trim();
+        TextInputLayout layoutPssw = findViewById(R.id.textInputPassw);
+        if (psw.length() < MIN_CHAR_PASSW) {
+            layoutPssw.setErrorEnabled(true);
+            layoutPssw.setError(getString(R.string.err_passw));
+            errCount++;
+        }
+        else {
+            layoutPssw.setErrorEnabled(false);
+        }
+
+        // controllo la seconda password
+        pswConf = mConfPassword.getText().toString().trim();
+        TextInputLayout layoutPsswConf = findViewById(R.id.textInputPasswConf);
+        if (!pswConf.equals(psw)) {
+            layoutPsswConf.setErrorEnabled(true);
+            layoutPsswConf.setError(getString(R.string.err_passw_conf));
+            errCount++;
+        }
+        else {
+            layoutPsswConf.setErrorEnabled(false);
+        }
+
+        // check box del contratto
+        if (!contratto.isChecked()) {
+            if(errCount == 0)
+                Snackbar.make(constraintLayout, R.string.must_accept_contrat, Snackbar.LENGTH_LONG).show();
+            errCount++;
+        }
+
+        return errCount == 0;
+    }
+
+    @Override
+    public void onBackPressed() {
+        // se preme indietro torna al login
+        Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(login);
+        finish();
     }
 
     /**
