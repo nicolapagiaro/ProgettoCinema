@@ -58,7 +58,7 @@ public class PostiActivity extends AppCompatActivity {
         }
 
         // start della sessione
-        String startSession = getIntent().getStringExtra(ExtrasDefinition.START_SESSION);
+        final String startSession = getIntent().getStringExtra(ExtrasDefinition.START_SESSION);
         if(startSession == null) {
             SessionValidator.finishSession(this, idSessione);
         }
@@ -119,6 +119,7 @@ public class PostiActivity extends AppCompatActivity {
 
                 // faccio partire l'activity di riassunto
                 Intent riassunto = new Intent(getApplicationContext(), ResumeActivity.class);
+                riassunto.putExtra(ExtrasDefinition.START_SESSION, startSession);
                 riassunto.putExtra(ExtrasDefinition.ID_UTENTE, idUtente);
                 riassunto.putExtra(ExtrasDefinition.ID_TOKEN, idSessione);
                 riassunto.putExtra(ExtrasDefinition.ID_PRENOTAZIONE, idPrenotazione);

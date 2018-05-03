@@ -172,7 +172,7 @@ public class DatabaseContract {
     public class PostiPrenotatiContract {
         public static final String TABLE_NAME = "postiPrenotati";
         public static final String _ID = "_id";
-        public static final String ID_PRENOTAZIONE = "idUtente";
+        public static final String ID_PRENOTAZIONE = "idPrenotazione";
         public static final String NUMERO_POSTO = "numeroPosto";
     }
 

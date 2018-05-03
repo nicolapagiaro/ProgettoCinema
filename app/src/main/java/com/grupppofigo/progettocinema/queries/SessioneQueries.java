@@ -52,7 +52,6 @@ public class SessioneQueries {
         ContentValues cv = sessioneToCV(idSession,null, String.valueOf(System.currentTimeMillis()), 0);
         cv.remove(SessioniContract.ID_UTENTE);
         cv.remove(SessioniContract.START_SESSION);
-        Log.d("CV", cv.toString());
 
         try {
             d.update(SessioniContract.TABLE_NAME,

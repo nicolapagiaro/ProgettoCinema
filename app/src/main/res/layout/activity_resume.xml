@@ -63,11 +63,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
         android:text="Orario"
         android:textColor="@color/secondaryTextColorWhite"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="57dp" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitolo" />
 
     <TextView
         android:id="@+id/textView6"
@@ -122,14 +123,16 @@
         android:layout_height="56dp"
         android:background="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/btn"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="@string/btn_buy_label" />
+            android:text="@string/btn_buy_label"
+            android:textColor="@color/primaryTextColorWhite" />
     </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

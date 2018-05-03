@@ -2,6 +2,7 @@ package com.grupppofigo.progettocinema.riassunto;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -58,6 +59,13 @@ public class ResumeActivity extends AppCompatActivity {
             SessionValidator.finishSession(this, idSessione);
         }
 
+        // id dell'utente passata dall'activity prima
+        long idPrenotazione = getIntent().getLongExtra(ExtrasDefinition.ID_PRENOTAZIONE, EXTRA_DEFAULT_VALUE);
+        if (idPrenotazione == EXTRA_DEFAULT_VALUE) {
+            // errore idPrenotazione non passato passo al login
+            SessionValidator.finishSession(this, idSessione);
+        }
+
         // riempio lo schermo con i dati
         TextView tvTitolo = findViewById(R.id.tvTitolo);
         TextView tvGenere = findViewById(R.id.tvGenere);
@@ -65,10 +73,15 @@ public class ResumeActivity extends AppCompatActivity {
         TextView tvData = findViewById(R.id.tvData);
         TextView tvOra = findViewById(R.id.tvOrario);
 
+        // prendo le robe
         Programmazione pr = ProgrammazioneQueries.getProgrammmazione(idProgrammazione);
+        if(pr == null) {
+            SessionValidator.finishSession(this, idSessione);
+        }
+
         Film film = FilmQueries.getFilm(pr.getIdFilm());
         Sala s = SalaQueries.getSala(pr.getIdSala());
-        ArrayList<Integer> posti = PostoPrenotatoQueries.getPostiPrenotati(pr.getId());
+        ArrayList<Integer> posti = PostoPrenotatoQueries.postiPrenotatiByPrenotazione((int) idPrenotazione);
 
         if (film != null) {
             tvTitolo.setText(film.getTitolo());

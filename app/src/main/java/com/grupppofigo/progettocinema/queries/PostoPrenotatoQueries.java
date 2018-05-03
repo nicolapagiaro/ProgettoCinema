@@ -110,15 +110,15 @@ public class PostoPrenotatoQueries {
      * @param idPrenotazione id della prenotazione
      * @return lista di posti occupati
      */
-    private static ArrayList<Integer> postiPrenotatiByPrenotazione(int idPrenotazione) {
+    public static ArrayList<Integer> postiPrenotatiByPrenotazione(int idPrenotazione) {
         ArrayList<Integer> res = new ArrayList<>();
         SQLiteDatabase d = mDb.getReadableDatabase();
         String[] args = {idPrenotazione + ""};
 
         Cursor c = d.query(DatabaseContract.PostiPrenotatiContract.TABLE_NAME,
                 null,
-                null,
-                null,
+                DatabaseContract.PostiPrenotatiContract.ID_PRENOTAZIONE,
+                args,
                 null,
                 null,
                 null);
