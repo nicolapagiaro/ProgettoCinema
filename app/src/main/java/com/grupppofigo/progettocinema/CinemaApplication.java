@@ -5,8 +5,12 @@ import android.app.Application;
 import com.grupppofigo.progettocinema.database.DataStore;
 import com.grupppofigo.progettocinema.entities.Film;
 import com.grupppofigo.progettocinema.entities.Genere;
+import com.grupppofigo.progettocinema.entities.Programmazione;
+import com.grupppofigo.progettocinema.entities.Sala;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
 import com.grupppofigo.progettocinema.queries.GenereQueries;
+import com.grupppofigo.progettocinema.queries.ProgrammazioneQueries;
+import com.grupppofigo.progettocinema.queries.SalaQueries;
 
 /**
  * Classe dell'applicazione
@@ -57,5 +61,17 @@ public class CinemaApplication extends Application {
 
         FilmQueries.addFilm(f1);
         FilmQueries.addFilm(f2);
+
+        // sala a caso
+        SalaQueries.addSala(new Sala(0, "Sala rossa", 80));
+
+        // programmazioni a caso
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "4/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "4/05/2018", "19:30"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "4/05/2018", "20:30"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "5/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "5/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "5/05/2018", "19:45"));
     }
 }

@@ -70,6 +70,30 @@ public class ProgrammazioneQueries {
     }
 
     /**
+     * Restituisce tutte le programmazioni dal database
+     * @return le programmazioni dal database
+     */
+    public static ArrayList<Programmazione> getProgrammaziones(int idFilm) {
+        SQLiteDatabase d = mDb.getReadableDatabase();
+        ArrayList<Programmazione> res = new ArrayList<>();
+
+        Cursor c = d.query(DatabaseContract.ProgrammazioneContract.TABLE_NAME,
+                null,
+                DatabaseContract.ProgrammazioneContract.ID_FILM + "=?",
+                new String[]{idFilm+""},
+                null,
+                null,
+                null);
+
+        while (c.moveToNext()) {
+            res.add(programmazioneFromContentValues(c));
+        }
+
+        c.close();
+        return res;
+    }
+
+    /**
      * Metodo che restituisce una programmazione dato un id
      * @param id id della programmazione
      * @return la programmazione se esiste

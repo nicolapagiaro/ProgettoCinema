@@ -18,15 +18,19 @@ import android.widget.Toast;
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.SessionExpired;
 import com.grupppofigo.progettocinema.entities.Film;
+import com.grupppofigo.progettocinema.entities.Programmazione;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
 import com.grupppofigo.progettocinema.helpers.SessionValidator;
 import com.grupppofigo.progettocinema.helpers.SnackBar;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
+import com.grupppofigo.progettocinema.queries.ProgrammazioneQueries;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
 import com.grupppofigo.progettocinema.riassunto.ResumeActivity;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.ID_PROGRAMMAZIONE;
@@ -103,6 +107,7 @@ public class DescrizioneActivity extends AppCompatActivity {
             // errore film non trovato
             SessionValidator.finishSession(this, idSessione);
         }
+        final ArrayList<Programmazione> progs = ProgrammazioneQueries.getProgrammaziones(vFilm.getId());
 
         vDateSelected = false; // Controllo se è stata selezionata una data
 
@@ -137,8 +142,8 @@ public class DescrizioneActivity extends AppCompatActivity {
         mLayoutGiorno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*vTimeDialog = new TimeDialog(DescrizioneActivity.this, vOre);
-                vTimeDialog.show();*/
+                vDayListDialog = new DayListDialog(DescrizioneActivity.this, progs);
+                vDayListDialog.show();
             }
         });
 
@@ -146,8 +151,8 @@ public class DescrizioneActivity extends AppCompatActivity {
         mLayoutOra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*vDayListDialog = new DayListDialog(DescrizioneActivity.this, vGiorni);
-                vDayListDialog.show();*/
+                /*vTimeDialog = new TimeDialog(DescrizioneActivity.this, vOre);
+                vTimeDialog.show();*/
             }
         });
 
