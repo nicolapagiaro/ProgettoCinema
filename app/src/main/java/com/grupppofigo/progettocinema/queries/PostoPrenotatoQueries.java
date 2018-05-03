@@ -117,7 +117,7 @@ public class PostoPrenotatoQueries {
 
         Cursor c = d.query(DatabaseContract.PostiPrenotatiContract.TABLE_NAME,
                 null,
-                DatabaseContract.PostiPrenotatiContract.ID_PRENOTAZIONE,
+                DatabaseContract.PostiPrenotatiContract.ID_PRENOTAZIONE + "=?",
                 args,
                 null,
                 null,

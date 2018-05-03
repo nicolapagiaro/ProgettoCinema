@@ -1,23 +1,31 @@
 package com.grupppofigo.progettocinema.riassunto;
 
+import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.entities.Film;
 import com.grupppofigo.progettocinema.entities.Programmazione;
 import com.grupppofigo.progettocinema.entities.Sala;
+import com.grupppofigo.progettocinema.helpers.DateParser;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
 import com.grupppofigo.progettocinema.helpers.SessionValidator;
+import com.grupppofigo.progettocinema.lista_film.MainActivity;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
 import com.grupppofigo.progettocinema.queries.PostoPrenotatoQueries;
 import com.grupppofigo.progettocinema.queries.ProgrammazioneQueries;
 import com.grupppofigo.progettocinema.queries.SalaQueries;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
@@ -87,7 +95,11 @@ public class ResumeActivity extends AppCompatActivity {
             tvTitolo.setText(film.getTitolo());
             tvGenere.setText(film.getGenere().getNome());
             tvDurata.setText(getString(R.string.tvDurataFilm, film.getDurata()));
-            tvData.setText(pr.getData());
+            try {
+                tvData.setText(DateParser.getFormattedDate(pr.getData()));
+            } catch (ParseException e) {
+                tvData.setText(pr.getData());
+            }
             tvOra.setText(pr.getOra());
         }
 
@@ -95,5 +107,22 @@ public class ResumeActivity extends AppCompatActivity {
         ListView lista = findViewById(R.id.list);
         CustomListView customListView = new CustomListView(this, R.layout.resume_posto_item, posti, s);
         lista.setAdapter(customListView);
+
+        // acquista btn
+        Button btn = findViewById(R.id.btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // finto acquisto con paypal
+                Toast.makeText(getApplicationContext(), "Acquistato", Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 1000);
+            }
+        });
     }
 }
