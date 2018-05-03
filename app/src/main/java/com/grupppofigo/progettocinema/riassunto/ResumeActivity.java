@@ -1,8 +1,5 @@
 package com.grupppofigo.progettocinema.riassunto;
 
-import android.content.Intent;
-import android.os.Handler;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -14,7 +11,6 @@ import com.grupppofigo.progettocinema.entities.Programmazione;
 import com.grupppofigo.progettocinema.entities.Sala;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
 import com.grupppofigo.progettocinema.helpers.SessionValidator;
-import com.grupppofigo.progettocinema.login.LoginActivity;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
 import com.grupppofigo.progettocinema.queries.PostoPrenotatoQueries;
 import com.grupppofigo.progettocinema.queries.ProgrammazioneQueries;
@@ -33,7 +29,7 @@ public class ResumeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_resume);
 
         // id sessione
-        int idSessione = getIntent().getIntExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
+        long idSessione = getIntent().getLongExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
         if (idSessione == EXTRA_DEFAULT_VALUE) {
             SessionValidator.finishSession(this, idSessione);
         }

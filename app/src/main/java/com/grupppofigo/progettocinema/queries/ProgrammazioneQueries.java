@@ -4,11 +4,15 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
+import android.util.Log;
 
 import com.grupppofigo.progettocinema.database.DBHelper;
 import com.grupppofigo.progettocinema.database.DataStore;
 import com.grupppofigo.progettocinema.database.DatabaseContract;
+import com.grupppofigo.progettocinema.entities.Giorno;
 import com.grupppofigo.progettocinema.entities.Programmazione;
+import com.grupppofigo.progettocinema.entities.Programmazioni;
 
 import java.util.ArrayList;
 
@@ -73,20 +77,73 @@ public class ProgrammazioneQueries {
      * Restituisce tutte le programmazioni dal database
      * @return le programmazioni dal database
      */
-    public static ArrayList<Programmazione> getProgrammaziones(int idFilm) {
+    public static Programmazioni getProgrammaziones(int idFilm) {
         SQLiteDatabase d = mDb.getReadableDatabase();
-        ArrayList<Programmazione> res = new ArrayList<>();
+        Programmazioni res= new Programmazioni();
 
-        Cursor c = d.query(DatabaseContract.ProgrammazioneContract.TABLE_NAME,
-                null,
+        // prendo tutte le date
+        Cursor c = d.query(true, DatabaseContract.ProgrammazioneContract.TABLE_NAME,
+                new String[]{DatabaseContract.ProgrammazioneContract.DATA},
                 DatabaseContract.ProgrammazioneContract.ID_FILM + "=?",
                 new String[]{idFilm+""},
                 null,
                 null,
+                null,
+                null);
+        while (c.moveToNext()) {
+            Giorno g = new Giorno();
+            g.setData(c.getString(0));
+            res.getGiorni().add(g);
+        }
+        c.close();
+
+        // prendo le date di tutti gli orari
+        for (int i=0; i<res.getGiorni().size(); i++) {
+            Cursor cTemp = d.query(DatabaseContract.ProgrammazioneContract.TABLE_NAME,
+                    new String[]{DatabaseContract.ProgrammazioneContract.ORA},
+                    DatabaseContract.ProgrammazioneContract.ID_FILM + "=? AND " + DatabaseContract.ProgrammazioneContract.DATA + "=?",
+                    new String[]{idFilm+"", res.getGiorni().get(i).getData()},
+                    null,
+                    null,
+                    DatabaseContract.ProgrammazioneContract.ORA + " ASC",
+                    null);
+
+            while (cTemp.moveToNext()) {
+                res.getGiorni().get(i).getOrari().add(cTemp.getString(0));
+            }
+
+            cTemp.close();
+        }
+
+        return res;
+    }
+
+    /**
+     * Restituisce l'id della programmazione selezionata
+     * @param data data selezionata
+     * @param ora ora selezionata
+     * @param idFilm idFilm selezionato
+     * @return id
+     */
+    public static int getProgrammazioneId(String data, String ora, int idFilm) {
+        int res = DatabaseContract.ID_NOT_FOUND;
+        SQLiteDatabase d = mDb.getReadableDatabase();
+
+        Cursor c = d.query(DatabaseContract.ProgrammazioneContract.TABLE_NAME,
+                null,
+                DatabaseContract.ProgrammazioneContract.ID_FILM + "=? AND "
+                        + DatabaseContract.ProgrammazioneContract.DATA + "=? AND "
+                        + DatabaseContract.ProgrammazioneContract.ORA + "=?",
+                new String[]{idFilm+"", data, ora},
+                null,
+                null,
+                null,
                 null);
 
+        Log.d("ResQuery", c.getCount() + "");
+
         while (c.moveToNext()) {
-            res.add(programmazioneFromContentValues(c));
+            res = (int) c.getLong(0);
         }
 
         c.close();

@@ -3,18 +3,17 @@ package com.grupppofigo.progettocinema.film_details;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.grupppofigo.progettocinema.R;
+import com.grupppofigo.progettocinema.entities.Giorno;
 import com.grupppofigo.progettocinema.entities.Programmazione;
+import com.grupppofigo.progettocinema.helpers.DateParser;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * Dialog per mostrare i giorni disponibili da prenotare
@@ -26,23 +25,24 @@ class DayListDialog extends Dialog {
     /**
      * Coostrutto del dialog
      * @param aContext context
-     * @param progs lista di giorni
+     * @param adate lista di giorni
      */
-    DayListDialog(Context aContext, final ArrayList<Programmazione> progs) {
+    DayListDialog(Context aContext, final ArrayList<Giorno> adate) {
         super(aContext);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.time_layout);
+        setTitle(R.string.dialog_day_title);
 
         ListView mData = findViewById(R.id.lv_time);
         vContext = (DescrizioneActivity) aContext;
-        ArrayList<Programmazione> vDates = progs;
 
-        final String[] progsText = new String[vDates.size()];
-        SimpleDateFormat format = new SimpleDateFormat("dd MMM", Locale.ITALY);
-        SimpleDateFormat parse = new SimpleDateFormat("dd/mm/yyyy", Locale.ITALY);
-        for(int i = 0; i<progs.size(); i++) {
+        if (adate == null) {
+            dismiss();
+        }
+
+        final String[] progsText = new String[adate.size()];
+        for(int i = 0; i<adate.size(); i++) {
             try {
-                progsText[i] = format.format(parse.parse(vDates.get(i).getData()));
+                progsText[i] = DateParser.getFormattedDate(adate.get(i).getData());
             } catch (ParseException e) {
                 progsText[i] = "";
             }
@@ -54,9 +54,9 @@ class DayListDialog extends Dialog {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(vContext != null && vContext instanceof DescrizioneActivity) {
-                    vContext.setvDateSelected(true);
                     vContext.changeDate(progsText[position]);
                     vContext.getvDayListDialog().dismiss();
+                    vContext.setSelectedDate(adate.get(position).getData(), position);
                 }
             }
         });

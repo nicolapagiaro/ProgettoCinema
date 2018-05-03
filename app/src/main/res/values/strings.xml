@@ -40,6 +40,10 @@
     <!-- SEZIONE DETTAGLI FILM -->
     <string name="film_details_title">Dettaglio film</string>
     <string name="btnPrenota">Prenota</string>
+    <string name="prompt_error_prenotazione">Seleziona il giorno e l\'ora</string>
+    <string name="prompt_error_general">Ops, qualcosa non funziona</string>
+    <string name="dialog_day_title">Seleziona la data</string>
+    <string name="dialog_time_title">Seleziona l\'ora</string>
 
     <!-- SEZIONE SELEZIONE POSTI -->
     <string name="posti_title">Seleziona i posti</string>

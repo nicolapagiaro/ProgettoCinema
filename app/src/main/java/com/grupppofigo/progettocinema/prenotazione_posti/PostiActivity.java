@@ -52,7 +52,7 @@ public class PostiActivity extends AppCompatActivity {
         setContentView(R.layout.activity_posti);
 
         // id sessione
-        idSessione =  getIntent().getIntExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
+        idSessione =  getIntent().getLongExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
         if(idSessione == EXTRA_DEFAULT_VALUE) {
             SessionValidator.finishSession(this, idSessione);
         }
@@ -87,8 +87,6 @@ public class PostiActivity extends AppCompatActivity {
         RecyclerView r = findViewById(R.id.mainR);
 
         postiDaPrenotare = new ArrayList<>();
-        idProgrammazione = 1;
-        idUtente = 1;
 
         // sala associata
         final Sala currentSala = SalaQueries.getSalaFromId(idProgrammazione);

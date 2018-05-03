@@ -10,29 +10,30 @@ import android.widget.ListView;
 
 import com.grupppofigo.progettocinema.R;
 
+import java.util.ArrayList;
+
 /**
  * Dialog che mostra l'orario da selezionare
  * Created by jack on 26/04/18.
  */
 class TimeDialog extends Dialog {
     private DescrizioneActivity vContext;
-    private String[] vData;
 
-    TimeDialog(Context aContext, String[] aItem) {
+    TimeDialog(Context aContext, final ArrayList<String> aTime) {
         super(aContext);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.time_layout);
 
         vContext = (DescrizioneActivity) aContext;
-        ArrayAdapter<String> vAdapter = new ArrayAdapter<>(aContext, android.R.layout.simple_list_item_1, aItem);
-        vData = aItem;
+        ArrayAdapter<String> vAdapter = new ArrayAdapter<>(aContext, android.R.layout.simple_list_item_1, aTime);
         ListView mOre = findViewById(R.id.lv_time);
         mOre.setAdapter(vAdapter);
         mOre.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                vContext.changeOra(vData[position]);
+                vContext.changeOra(aTime.get(position));
                 vContext.getvTimeDialog().dismiss();
+                vContext.setSelectedTime(aTime.get(position));
             }
         });
     }

@@ -3,13 +3,17 @@ package com.grupppofigo.progettocinema.film_details;
 import android.animation.Animator;
 import android.content.Intent;
 import android.os.Build;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,11 +21,16 @@ import android.widget.Toast;
 
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.SessionExpired;
+import com.grupppofigo.progettocinema.database.DatabaseContract;
 import com.grupppofigo.progettocinema.entities.Film;
+import com.grupppofigo.progettocinema.entities.Prenotazione;
 import com.grupppofigo.progettocinema.entities.Programmazione;
+import com.grupppofigo.progettocinema.entities.Programmazioni;
+import com.grupppofigo.progettocinema.helpers.DateParser;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
 import com.grupppofigo.progettocinema.helpers.SessionValidator;
 import com.grupppofigo.progettocinema.helpers.SnackBar;
+import com.grupppofigo.progettocinema.prenotazione_posti.PostiActivity;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
 import com.grupppofigo.progettocinema.queries.ProgrammazioneQueries;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
@@ -30,6 +39,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
@@ -46,8 +56,8 @@ public class DescrizioneActivity extends AppCompatActivity {
     private DayListDialog vDayListDialog;
     private TextView mSelectDate, mSelectTime;
     private ImageView mCopertina;
-    private LinearLayout mLayoutOra;
-    private boolean vDateSelected;
+    private int selectedDatePosition;
+    private String selectedDate = "", selectedTime = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,23 +112,23 @@ public class DescrizioneActivity extends AppCompatActivity {
         }
 
         // prendo il film
-        Film vFilm = FilmQueries.getFilm(idFilm);
+        final Film vFilm = FilmQueries.getFilm(idFilm);
         if(vFilm == null) {
             // errore film non trovato
             SessionValidator.finishSession(this, idSessione);
         }
-        final ArrayList<Programmazione> progs = ProgrammazioneQueries.getProgrammaziones(vFilm.getId());
 
-        vDateSelected = false; // Controllo se è stata selezionata una data
+        // prendo le programmazoni
+        final Programmazioni progs = ProgrammazioneQueries.getProgrammaziones(vFilm.getId());
+
 
         //Collego gli elementi del layout
         mCopertina = findViewById(R.id.img_header);
         mSelectDate = findViewById(R.id.txt_data);
         mSelectTime = findViewById(R.id.txt_ora);
         Button mSumbit = findViewById(R.id.btn_submit);
-        mLayoutOra = findViewById(R.id.oraContainer);
+        LinearLayout mLayoutOra = findViewById(R.id.oraContainer);
         LinearLayout mLayoutGiorno = findViewById(R.id.dataContainer);
-        mLayoutOra.setClickable(vDateSelected);
 
         //setto l'immagine di copertina
         Picasso.get()
@@ -142,7 +152,7 @@ public class DescrizioneActivity extends AppCompatActivity {
         mLayoutGiorno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vDayListDialog = new DayListDialog(DescrizioneActivity.this, progs);
+                vDayListDialog = new DayListDialog(DescrizioneActivity.this, progs.getGiorni());
                 vDayListDialog.show();
             }
         });
@@ -151,33 +161,69 @@ public class DescrizioneActivity extends AppCompatActivity {
         mLayoutOra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*vTimeDialog = new TimeDialog(DescrizioneActivity.this, vOre);
-                vTimeDialog.show();*/
+                vTimeDialog = new TimeDialog(DescrizioneActivity.this, progs.getGiorni().get(selectedDatePosition).getOrari());
+                vTimeDialog.show();
             }
         });
+
+        // metto il primo giorno selezionato ae la prima data
+        try {
+            if(progs != null && progs.getGiorni().size() > 0) {
+                mSelectDate.setText(DateParser.getFormattedDate(progs.getGiorni().get(0).getData()));
+                selectedDate = progs.getGiorni().get(0).getData();
+            }
+        } catch (ParseException e) {
+            mSelectDate.setText("");
+        }
 
         // pulsante per andare avanti
         mSumbit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent resume = new Intent(getApplicationContext(), ResumeActivity.class);
-                resume.putExtra(START_SESSION, startSession);
-                resume.putExtra(ID_TOKEN, idSessione);
-                resume.putExtra(ID_UTENTE, idUtente);
-                resume.putExtra(ID_PROGRAMMAZIONE, 0);
-                startActivity(resume);*/
-                Toast.makeText(getApplicationContext(), "Prenota", Toast.LENGTH_SHORT).show();
+                // controllo la selezione della data e dell'orea
+                if(!selectedDate.isEmpty() && !selectedTime.isEmpty()) {
+                    int idProgrammazione = ProgrammazioneQueries.getProgrammazioneId(selectedDate, selectedTime, vFilm.getId());
+
+                    // se l'id è valido
+                    if(idProgrammazione != DatabaseContract.ID_NOT_FOUND) {
+                        Intent resume = new Intent(getApplicationContext(), PostiActivity.class);
+                        resume.putExtra(START_SESSION, startSession);
+                        resume.putExtra(ID_TOKEN, idSessione);
+                        resume.putExtra(ID_UTENTE, idUtente);
+                        resume.putExtra(ID_PROGRAMMAZIONE, idProgrammazione);
+                        startActivity(resume);
+                    }
+                    else {
+                        ConstraintLayout layout = findViewById(R.id.bottomContainer);
+                        SnackBar.with(getApplicationContext())
+                                .show(layout, R.string.prompt_error_general, Snackbar.LENGTH_SHORT);
+                    }
+                }
+                else {
+                    ConstraintLayout layout = findViewById(R.id.bottomContainer);
+                    SnackBar.with(getApplicationContext())
+                            .show(layout, R.string.prompt_error_prenotazione, Snackbar.LENGTH_SHORT);
+                }
+
             }
         });
     }
 
-    public void setvDateSelected(boolean aDateSelected) {
-        this.vDateSelected = aDateSelected;
-        mLayoutOra.setClickable(aDateSelected);
+    public String getSelectedDate() {
+        return selectedDate;
     }
 
-    public boolean isvDateSelected() {
-        return vDateSelected;
+    public void setSelectedDate(String selectedDate, int position) {
+        this.selectedDate = selectedDate;
+        this.selectedDatePosition = position;
+    }
+
+    public String getSelectedTime() {
+        return selectedTime;
+    }
+
+    public void setSelectedTime(String selectedTime) {
+        this.selectedTime = selectedTime;
     }
 
     public TimeDialog getvTimeDialog() {
@@ -190,6 +236,8 @@ public class DescrizioneActivity extends AppCompatActivity {
 
     public void changeDate(String aData) {
         mSelectDate.setText(aData);
+        mSelectTime.setText("");
+        selectedTime = "";
     }
 
     public void changeOra(String aData) {

@@ -36,14 +36,8 @@ public class SessionValidator {
             SessioneQueries.endSession(idSession);
         }
 
-        int delayTime = 1000;
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent s = new Intent(activity, SessionExpired.class);
-                activity.startActivity(s);
-                activity.finish();
-            }
-        }, delayTime);
+        Intent s = new Intent(activity, SessionExpired.class);
+        activity.startActivity(s);
+        activity.finish();
     }
 }
