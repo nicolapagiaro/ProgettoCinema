@@ -43,6 +43,7 @@
             android:label="@string/resume_title" />
 
         <activity android:name=".SessionExpired"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/session_expired_label"/>
     </application>
 
