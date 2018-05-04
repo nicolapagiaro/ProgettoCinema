@@ -129,6 +129,7 @@ public class ResumeActivity extends AppCompatActivity {
                     PostoPrenotatoQueries.addPostoPrenotato(p);
 
 
+
                 }
                 Toast.makeText(getApplicationContext(), "Acquistato", Toast.LENGTH_SHORT).show();
                 new Handler().postDelayed(new Runnable() {

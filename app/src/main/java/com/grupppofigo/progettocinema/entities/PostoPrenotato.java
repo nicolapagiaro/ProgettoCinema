@@ -5,6 +5,7 @@ public class PostoPrenotato {
     private int idPrenotazione;
     private int numeroPosto;
 
+
     /**
      * Costruttore parametrico
      * @param id
