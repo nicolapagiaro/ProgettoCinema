@@ -97,12 +97,13 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        // DISPLAY TERMINI DEL CONTRATTO
         contratto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                 builder
-                        .setTitle("Termini del Contratto:")
+                        .setTitle("Termini e Condizioni:")
                         .setMessage(R.string.terms)
                         .setPositiveButton("Accetto", new DialogInterface.OnClickListener() {
                             @Override
@@ -116,7 +117,6 @@ public class RegisterActivity extends AppCompatActivity {
                                 contratto.setChecked(false);
                                 SnackBar.with(getApplicationContext())
                                         .show(constraintLayout, R.string.must_accept_contrat, Snackbar.LENGTH_SHORT);
-
                             }
                         })
                         .create()
