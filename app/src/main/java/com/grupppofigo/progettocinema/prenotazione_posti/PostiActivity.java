@@ -32,12 +32,12 @@ import static com.grupppofigo.progettocinema.prenotazione_posti.PostiAdapter.POS
 public class PostiActivity extends AppCompatActivity {
     /**
      * Span del grid della lista dei posti
-     */ 
+     */
     private static final int GRID_SPAN_COUNT = 8;
 
-     /**
-      * Gestione della prenotazione
-      */
+    /**
+     * Gestione della prenotazione
+     */
     private ArrayList<Integer> postiDaPrenotare;
 
     /**
@@ -52,17 +52,16 @@ public class PostiActivity extends AppCompatActivity {
         setContentView(R.layout.activity_posti);
 
         // id sessione
-        idSessione =  getIntent().getLongExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
-        if(idSessione == EXTRA_DEFAULT_VALUE) {
+        idSessione = getIntent().getLongExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
+        if (idSessione == EXTRA_DEFAULT_VALUE) {
             SessionValidator.finishSession(this, idSessione);
         }
 
         // start della sessione
         final String startSession = getIntent().getStringExtra(ExtrasDefinition.START_SESSION);
-        if(startSession == null) {
+        if (startSession == null) {
             SessionValidator.finishSession(this, idSessione);
-        }
-        else if(SessionValidator.isExpired(startSession)){
+        } else if (SessionValidator.isExpired(startSession)) {
             // se è scaduta la registro e chiudo tutto
             SessioneQueries.endSession(idSessione);
             SessionValidator.finishSession(this, idSessione);
@@ -70,14 +69,14 @@ public class PostiActivity extends AppCompatActivity {
 
         // id della programmazione passata dall'activity prima
         idProgrammazione = getIntent().getIntExtra(ExtrasDefinition.ID_PROGRAMMAZIONE, EXTRA_DEFAULT_VALUE);
-        if(idProgrammazione == EXTRA_DEFAULT_VALUE) {
+        if (idProgrammazione == EXTRA_DEFAULT_VALUE) {
             // errore idProgrammazione non passata
             SessionValidator.finishSession(this, idSessione);
         }
 
         // id dell'utente passata dall'activity prima
         idUtente = getIntent().getIntExtra(ExtrasDefinition.ID_UTENTE, EXTRA_DEFAULT_VALUE);
-        if(idUtente == EXTRA_DEFAULT_VALUE) {
+        if (idUtente == EXTRA_DEFAULT_VALUE) {
             // errore idUtente non passato passo al login
             SessionValidator.finishSession(this, idSessione);
         }
@@ -92,7 +91,7 @@ public class PostiActivity extends AppCompatActivity {
         final Sala currentSala = SalaQueries.getSalaFromId(idProgrammazione);
 
         // posti già prenotati per quella programmazione
-        ArrayList<Integer> postiPrenotati = PostoPrenotatoQueries.getPostiPrenotati(idProgrammazione);
+        final ArrayList<Integer> postiPrenotati = PostoPrenotatoQueries.getPostiPrenotati(idProgrammazione);
 
         // recyclerview set up
         GridLayoutManager recyclerGrid = new GridLayoutManager(getApplicationContext(), GRID_SPAN_COUNT);
@@ -108,7 +107,7 @@ public class PostiActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if(postiDaPrenotare.size() == 0) {
+                if (postiDaPrenotare.size() == 0) {
                     Snackbar snack = Snackbar.make(findViewById(R.id.main_container),
                             R.string.error_posti_min, Snackbar.LENGTH_LONG);
                     snack.show();
@@ -116,13 +115,8 @@ public class PostiActivity extends AppCompatActivity {
                 }
 
                 // registro la PRENOTAZIONE
-                long idPrenotazione = PrenotazioneQueries.addPrenotazione(new Prenotazione(0,idProgrammazione, idUtente));
+                long idPrenotazione = PrenotazioneQueries.addPrenotazione(new Prenotazione(0, idProgrammazione, idUtente));
 
-                // faccio una lista di posti prenotati
-                for(Integer i : postiDaPrenotare) {
-                    PostoPrenotato p = new PostoPrenotato(0, (int) idPrenotazione, i);
-                    PostoPrenotatoQueries.addPostoPrenotato(p);
-                }
 
                 // faccio partire l'activity di riassunto
                 Intent riassunto = new Intent(getApplicationContext(), ResumeActivity.class);
@@ -131,6 +125,7 @@ public class PostiActivity extends AppCompatActivity {
                 riassunto.putExtra(ExtrasDefinition.ID_TOKEN, idSessione);
                 riassunto.putExtra(ExtrasDefinition.ID_PRENOTAZIONE, idPrenotazione);
                 riassunto.putExtra(ExtrasDefinition.ID_PROGRAMMAZIONE, idProgrammazione);
+                riassunto.putIntegerArrayListExtra("postiDaPrenotare", postiDaPrenotare);
                 startActivity(riassunto);
                 finish();
             }
