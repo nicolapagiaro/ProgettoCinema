@@ -80,6 +80,8 @@ public class ResumeActivity extends AppCompatActivity {
         TextView tvDurata = findViewById(R.id.tvDurata);
         TextView tvData = findViewById(R.id.tvData);
         TextView tvOra = findViewById(R.id.tvOrario);
+        TextView tvIdSessione = findViewById(R.id.tvId);
+        tvIdSessione.setText("" + idSessione);
 
         // prendo le robe
         Programmazione pr = ProgrammazioneQueries.getProgrammmazione(idProgrammazione);

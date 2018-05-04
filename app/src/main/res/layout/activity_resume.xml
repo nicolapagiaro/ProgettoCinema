@@ -111,7 +111,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="4dp"
-        android:text="34532"
         android:textColor="@color/secondaryTextColorWhite"
         android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/btnContainer"

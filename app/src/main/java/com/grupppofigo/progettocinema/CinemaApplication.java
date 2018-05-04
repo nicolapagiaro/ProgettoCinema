@@ -1,6 +1,12 @@
 package com.grupppofigo.progettocinema;
 
+import android.app.AlertDialog;
 import android.app.Application;
+import android.app.SharedElementCallback;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.v4.content.SharedPreferencesCompat;
 
 import com.grupppofigo.progettocinema.database.DataStore;
 import com.grupppofigo.progettocinema.entities.Film;
@@ -26,7 +32,13 @@ public class CinemaApplication extends Application {
         DataStore.init(getApplicationContext());
 
         // robe random
-        //fakeData();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if(sharedPreferences.getBoolean("first", false)) {
+            fakeData();
+            SharedPreferences.Editor ed = sharedPreferences.edit();
+            ed.putBoolean("first", true);
+            ed.apply();
+        }
     }
 
     /**
