@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -37,6 +38,7 @@ import com.grupppofigo.progettocinema.queries.SessioneQueries;
 import com.grupppofigo.progettocinema.riassunto.ResumeActivity;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -134,6 +136,7 @@ public class DescrizioneActivity extends AppCompatActivity {
         Picasso.get()
                 .load(vFilm.getImmagine())
                 .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
                 .into(mCopertina, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -258,12 +261,12 @@ public class DescrizioneActivity extends AppCompatActivity {
         float startRadius = 0F;
         float endRadius  = (float) Math.hypot(app_bar.getWidth(), app_bar.getHeight());
 
-        Animator anim = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            anim = ViewAnimationUtils.createCircularReveal(mCopertina, x, y, startRadius, endRadius);
-            mCopertina.setVisibility(View.VISIBLE);
+            Animator anim = ViewAnimationUtils.createCircularReveal(mCopertina, x, y, startRadius, endRadius);
             anim.start();
         }
+
+        mCopertina.setVisibility(View.VISIBLE);
     }
 }
 

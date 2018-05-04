@@ -114,6 +114,7 @@ public class PostiActivity extends AppCompatActivity {
                     snack.show();
                     return;
                 }
+
                 // registro la PRENOTAZIONE
                 long idPrenotazione = PrenotazioneQueries.addPrenotazione(new Prenotazione(0,idProgrammazione, idUtente));
 
@@ -131,7 +132,6 @@ public class PostiActivity extends AppCompatActivity {
                 riassunto.putExtra(ExtrasDefinition.ID_PRENOTAZIONE, idPrenotazione);
                 riassunto.putExtra(ExtrasDefinition.ID_PROGRAMMAZIONE, idProgrammazione);
                 startActivity(riassunto);
-
                 finish();
             }
         });
