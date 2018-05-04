@@ -39,8 +39,6 @@ public class CinemaApplication extends Application {
             ed.putBoolean("first", true);
             ed.apply();
         }
-
-        // prova
     }
 
     /**

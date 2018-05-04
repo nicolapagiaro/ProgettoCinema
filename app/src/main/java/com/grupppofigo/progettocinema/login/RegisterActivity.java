@@ -1,6 +1,8 @@
 package com.grupppofigo.progettocinema.login;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -92,6 +94,33 @@ public class RegisterActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i);
                 finish();
+            }
+        });
+
+        contratto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder
+                        .setTitle("Termini del Contratto:")
+                        .setMessage(R.string.terms)
+                        .setPositiveButton("Accetto", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                contratto.setChecked(true);
+                            }
+                        })
+                        .setNegativeButton("Rifiuto", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                contratto.setChecked(false);
+                                SnackBar.with(getApplicationContext())
+                                        .show(constraintLayout, R.string.must_accept_contrat, Snackbar.LENGTH_SHORT);
+
+                            }
+                        })
+                        .create()
+                        .show();
             }
         });
     }
