@@ -54,11 +54,15 @@
     <!-- SEZIONE RIASSUNTO PRENOTAZIONE -->
     <string name="resume_title">Riepilogo</string>
     <string name="tvTitoloLabel">Titolo</string>
+    <string name="tvDataLabel">Data</string>
+    <string name="tvSalaLabel">Sala</string>
+    <string name="tvOraLabel">Ora</string>
     <string name="tvPostiPrenotatiLabel">Posti prenotati</string>
     <string name="tvIdSessioneLabel">ID sessione</string>
     <string name="btn_buy_label">Acquista</string>
     <string name="tvDurataFilm">%1$d minuti</string>
     <string name="tvNumeroPosto">Posto %1$d</string>
+    <string name="hintPrenotazione">Clicca sul biglietto per prenotare</string>
 
     <!-- TERMINI DEL CONTRATTO -->
     <string name="terms">Raccogliamo i contenuti, le comunicazioni e le altre informazioni che fornisci quando usi i nostri Prodotti, anche quando crei un account, prenoti un film. \n

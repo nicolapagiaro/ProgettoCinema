@@ -43,7 +43,7 @@
             app:layout_constraintTop_toBottomOf="@+id/policy" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/tvPostiPrenotatiLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -66,7 +66,7 @@
             android:textColorHint="@color/primaryTextColorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6">
+            app:layout_constraintTop_toBottomOf="@+id/tvPostiPrenotatiLabel">
 
             <EditText
                 android:id="@+id/regNome"

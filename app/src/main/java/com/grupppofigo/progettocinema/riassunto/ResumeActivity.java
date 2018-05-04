@@ -1,15 +1,17 @@
 package com.grupppofigo.progettocinema.riassunto;
 
-import android.content.Intent;
-import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.entities.Film;
@@ -18,7 +20,7 @@ import com.grupppofigo.progettocinema.entities.Sala;
 import com.grupppofigo.progettocinema.helpers.DateParser;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
 import com.grupppofigo.progettocinema.helpers.SessionValidator;
-import com.grupppofigo.progettocinema.lista_film.MainActivity;
+import com.grupppofigo.progettocinema.helpers.SnackBar;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
 import com.grupppofigo.progettocinema.queries.PostoPrenotatoQueries;
 import com.grupppofigo.progettocinema.queries.ProgrammazioneQueries;
@@ -35,7 +37,7 @@ public class ResumeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resume);
+        setContentView(R.layout.activity_resume_1);
 
         // id sessione
         long idSessione = getIntent().getLongExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
@@ -76,10 +78,11 @@ public class ResumeActivity extends AppCompatActivity {
 
         // riempio lo schermo con i dati
         TextView tvTitolo = findViewById(R.id.tvTitolo);
-        TextView tvGenere = findViewById(R.id.tvGenere);
-        TextView tvDurata = findViewById(R.id.tvDurata);
+        //TextView tvGenere = findViewById(R.id.tvGenere);
+        //TextView tvDurata = findViewById(R.id.tvDurata);
         TextView tvData = findViewById(R.id.tvData);
-        TextView tvOra = findViewById(R.id.tvOrario);
+        TextView tvOra = findViewById(R.id.tvOrarioLabel);
+        TextView tvSala = findViewById(R.id.tvSala);
         TextView tvIdSessione = findViewById(R.id.tvId);
         tvIdSessione.setText("" + idSessione);
 
@@ -93,10 +96,12 @@ public class ResumeActivity extends AppCompatActivity {
         Sala s = SalaQueries.getSala(pr.getIdSala());
         ArrayList<Integer> posti = PostoPrenotatoQueries.postiPrenotatiByPrenotazione((int) idPrenotazione);
 
+        tvSala.setText(s.getNome());
+
         if (film != null) {
             tvTitolo.setText(film.getTitolo());
-            tvGenere.setText(film.getGenere().getNome());
-            tvDurata.setText(getString(R.string.tvDurataFilm, film.getDurata()));
+            //tvGenere.setText(film.getGenere().getNome());
+            //tvDurata.setText(getString(R.string.tvDurataFilm, film.getDurata()));
             try {
                 tvData.setText(DateParser.getFormattedDate(pr.getData()));
             } catch (ParseException e) {
@@ -110,7 +115,7 @@ public class ResumeActivity extends AppCompatActivity {
         CustomListView customListView = new CustomListView(this, R.layout.resume_posto_item, posti, s);
         lista.setAdapter(customListView);
 
-        // acquista btn
+        /* acquista btn
         Button btn = findViewById(R.id.btn);
         btn.setOnClickListener(new View.OnClickListener() {
 
@@ -124,6 +129,37 @@ public class ResumeActivity extends AppCompatActivity {
                         finish();
                     }
                 }, 1000);
+            }
+        });*/
+
+
+        // mostro il suggerimento
+        SnackBar.with(getApplicationContext())
+                .show(findViewById(R.id.resume_container_1), R.string.hintPrenotazione, Snackbar.LENGTH_LONG);
+
+        // QR code
+        ImageView qrCode = findViewById(R.id.qrCode);
+        qrCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View dialog = getLayoutInflater().inflate(R.layout.dialog_show_qr_barcode, null);
+                ((ImageView) dialog).setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.qr_code));
+                new AlertDialog.Builder(ResumeActivity.this)
+                        .setView(dialog)
+                        .show();
+            }
+        });
+
+        // Barcode
+        ImageView barcode = findViewById(R.id.barcode);
+        barcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View dialog = getLayoutInflater().inflate(R.layout.dialog_show_qr_barcode, null);
+                ((ImageView) dialog).setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.barcode));
+                new AlertDialog.Builder(ResumeActivity.this)
+                        .setView(dialog)
+                        .show();
             }
         });
     }

@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTitolo" />
 
     <TextView
-        android:id="@+id/tvData"
+        android:id="@+id/tvDataLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -71,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTitolo" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/tvPostiPrenotatiLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -91,7 +91,7 @@
         app:layout_constraintBottom_toTopOf="@+id/tvIdSessione"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPostiPrenotatiLabel" />
 
     <TextView
         android:id="@+id/tvIdSessione"
@@ -102,7 +102,7 @@
         android:text="@string/tvIdSessioneLabel"
         android:textColor="@color/secondaryTextColorWhite"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/btnContainer"
+        app:layout_constraintBottom_toTopOf="@+id/qrBarcodeContainer"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -113,11 +113,11 @@
         android:layout_marginStart="4dp"
         android:textColor="@color/secondaryTextColorWhite"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/btnContainer"
+        app:layout_constraintBottom_toTopOf="@+id/qrBarcodeContainer"
         app:layout_constraintStart_toEndOf="@+id/tvIdSessione" />
 
     <FrameLayout
-        android:id="@+id/btnContainer"
+        android:id="@+id/qrBarcodeContainer"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="@color/colorAccent"
