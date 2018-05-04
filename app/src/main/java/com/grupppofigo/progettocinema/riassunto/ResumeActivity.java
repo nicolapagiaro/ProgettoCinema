@@ -1,5 +1,9 @@
 package com.grupppofigo.progettocinema.riassunto;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.os.Build;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -8,9 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.grupppofigo.progettocinema.R;
@@ -33,6 +39,9 @@ import java.util.ArrayList;
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
 
 public class ResumeActivity extends AppCompatActivity {
+    private ConstraintLayout resumeContainer;
+    private ConstraintLayout prenotatoContainer;
+    private boolean isBigliettoComprato = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +94,8 @@ public class ResumeActivity extends AppCompatActivity {
         TextView tvSala = findViewById(R.id.tvSala);
         TextView tvIdSessione = findViewById(R.id.tvId);
         tvIdSessione.setText("" + idSessione);
+        resumeContainer = findViewById(R.id.resumeContainer);
+        prenotatoContainer = findViewById(R.id.doneReveal);
 
         // prendo le robe
         Programmazione pr = ProgrammazioneQueries.getProgrammmazione(idProgrammazione);
@@ -162,5 +173,69 @@ public class ResumeActivity extends AppCompatActivity {
                         .show();
             }
         });
+
+        // quando clicca sul biglietto lo acquista
+        resumeContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isBigliettoComprato) {
+                    // scrivo nel db le modifiche
+
+                    // faccio l'animazione
+                    doRevealAnimation();
+                    isBigliettoComprato = !isBigliettoComprato;
+                }
+            }
+        });
+    }
+
+    /**
+     * Fa l'animazione quando viene acquistato il biglietto
+     */
+    private void doRevealAnimation() {
+        final int ANIMATION_DURATION = 550;
+        final LinearLayout container = findViewById(R.id.resumeMainContainer);
+
+        // get the center for the clipping circle
+        final int x = container.getRight() / 2;
+        final int y = container.getBottom() / 2;
+
+        final float startRadius = 0F;
+        final float endRadius  = (float) Math.hypot(container.getWidth(), container.getHeight());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Animator anim = ViewAnimationUtils.createCircularReveal(prenotatoContainer, x, y, startRadius, endRadius);
+            anim.setDuration(ANIMATION_DURATION);
+            anim.start();
+        }
+
+        final ScrollView viewToHide = findViewById(R.id.resume_container_1);
+        viewToHide.setVisibility(View.GONE);
+        prenotatoContainer.setVisibility(View.VISIBLE);
+
+        // dopo due secondi nascondo tutto
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    float startRadius = (float) Math.hypot(container.getWidth(), container.getHeight());
+                    float endRadius  = 0F;
+                    Animator anim = ViewAnimationUtils.createCircularReveal(prenotatoContainer, x, y, startRadius, endRadius);
+                    anim.setDuration(ANIMATION_DURATION);
+                    anim.start();
+
+                    anim.addListener(new AnimatorListenerAdapter() {
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            prenotatoContainer.setVisibility(View.GONE);
+                            viewToHide.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+
+            }
+        }, ANIMATION_DURATION + 2000);
     }
 }

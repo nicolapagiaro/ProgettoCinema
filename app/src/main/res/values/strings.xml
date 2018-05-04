@@ -63,6 +63,7 @@
     <string name="tvDurataFilm">%1$d minuti</string>
     <string name="tvNumeroPosto">Posto %1$d</string>
     <string name="hintPrenotazione">Clicca sul biglietto per prenotare</string>
+    <string name="promptPrenotatoText">Biglietto acquistato</string>
 
     <!-- TERMINI DEL CONTRATTO -->
     <string name="terms">Raccogliamo i contenuti, le comunicazioni e le altre informazioni che fornisci quando usi i nostri Prodotti, anche quando crei un account, prenoti un film. \n
