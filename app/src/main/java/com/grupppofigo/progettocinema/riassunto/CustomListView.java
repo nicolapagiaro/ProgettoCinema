@@ -54,7 +54,7 @@ public class CustomListView extends ArrayAdapter<Integer> {
 
         // mostro le info nelle textview
         viewHolder.tvPosto.setText(context.getString(R.string.tvNumeroPosto, posti.get(position)));
-        viewHolder.tvSala.setText(sala.getNome());
+        //viewHolder.tvSala.setText(sala.getNome());
 
         return r;
     }

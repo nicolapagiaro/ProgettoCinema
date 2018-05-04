@@ -104,7 +104,7 @@
             android:id="@+id/oraContainer"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnContainer"
+            app:layout_constraintEnd_toStartOf="@+id/qrBarcodeContainer"
             app:layout_constraintStart_toEndOf="@+id/dataContainer">
 
             <ImageView
@@ -129,7 +129,7 @@
 
 
         <FrameLayout
-            android:id="@+id/btnContainer"
+            android:id="@+id/qrBarcodeContainer"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:background="@color/colorAccent"
