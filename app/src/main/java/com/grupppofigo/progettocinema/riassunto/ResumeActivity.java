@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.entities.Film;
+import com.grupppofigo.progettocinema.entities.PostoPrenotato;
+import com.grupppofigo.progettocinema.entities.Prenotazione;
 import com.grupppofigo.progettocinema.entities.Programmazione;
 import com.grupppofigo.progettocinema.entities.Sala;
 import com.grupppofigo.progettocinema.helpers.DateParser;
@@ -29,6 +31,7 @@ import com.grupppofigo.progettocinema.helpers.SessionValidator;
 import com.grupppofigo.progettocinema.helpers.SnackBar;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
 import com.grupppofigo.progettocinema.queries.PostoPrenotatoQueries;
+import com.grupppofigo.progettocinema.queries.PrenotazioneQueries;
 import com.grupppofigo.progettocinema.queries.ProgrammazioneQueries;
 import com.grupppofigo.progettocinema.queries.SalaQueries;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
@@ -42,6 +45,8 @@ public class ResumeActivity extends AppCompatActivity {
     private ConstraintLayout resumeContainer;
     private ConstraintLayout prenotatoContainer;
     private boolean isBigliettoComprato = false;
+
+    ArrayList<Integer> posti;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,21 +70,21 @@ public class ResumeActivity extends AppCompatActivity {
         }
 
         // id della programmazione
-        int idProgrammazione = getIntent().getIntExtra(ExtrasDefinition.ID_PROGRAMMAZIONE, EXTRA_DEFAULT_VALUE);
+        final int idProgrammazione = getIntent().getIntExtra(ExtrasDefinition.ID_PROGRAMMAZIONE, EXTRA_DEFAULT_VALUE);
         if (idProgrammazione == EXTRA_DEFAULT_VALUE) {
             // errore idProgrammazione non passata
             SessionValidator.finishSession(this, idSessione);
         }
 
         // id dell'utente passata dall'activity prima
-        int idUtente = getIntent().getIntExtra(ExtrasDefinition.ID_UTENTE, EXTRA_DEFAULT_VALUE);
+        final int idUtente = getIntent().getIntExtra(ExtrasDefinition.ID_UTENTE, EXTRA_DEFAULT_VALUE);
         if (idUtente == EXTRA_DEFAULT_VALUE) {
             // errore idUtente non passato passo al login
             SessionValidator.finishSession(this, idSessione);
         }
 
         // id dell'utente passata dall'activity prima
-        long idPrenotazione = getIntent().getLongExtra(ExtrasDefinition.ID_PRENOTAZIONE, EXTRA_DEFAULT_VALUE);
+        final long idPrenotazione = getIntent().getLongExtra(ExtrasDefinition.ID_PRENOTAZIONE, EXTRA_DEFAULT_VALUE);
         if (idPrenotazione == EXTRA_DEFAULT_VALUE) {
             // errore idPrenotazione non passato passo al login
             SessionValidator.finishSession(this, idSessione);
@@ -99,13 +104,15 @@ public class ResumeActivity extends AppCompatActivity {
 
         // prendo le robe
         Programmazione pr = ProgrammazioneQueries.getProgrammmazione(idProgrammazione);
-        if(pr == null) {
+        if (pr == null) {
             SessionValidator.finishSession(this, idSessione);
         }
 
         Film film = FilmQueries.getFilm(pr.getIdFilm());
         Sala s = SalaQueries.getSala(pr.getIdSala());
-        ArrayList<Integer> posti = PostoPrenotatoQueries.postiPrenotatiByPrenotazione((int) idPrenotazione);
+        posti = getIntent().getIntegerArrayListExtra("postiDaPrenotare");
+        Log.e("NP",posti.size()+"");
+        //posti = PostoPrenotatoQueries.postiPrenotatiByPrenotazione((int) idPrenotazione);
 
         tvSala.setText(s.getNome());
 
@@ -131,8 +138,15 @@ public class ResumeActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v) {
-                // finto acquisto con paypal
+            public void onClick(View v) {  // finto acquisto con paypal
+                // inserisco nel db i posti prenotati
+                for (Integer index : posti) {
+                    PostoPrenotato p = new PostoPrenotato(0, (int) idPrenotazione, index);
+                    PostoPrenotatoQueries.addPostoPrenotato(p);
+
+
+
+                }
                 Toast.makeText(getApplicationContext(), "Acquistato", Toast.LENGTH_SHORT).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
