@@ -103,8 +103,9 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                 builder
-                        .setTitle("Termini e Condizioni:")
+                        .setTitle("Termini e Condizioni")
                         .setMessage(R.string.terms)
+                        .setCancelable(false)
                         .setPositiveButton("Accetto", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
