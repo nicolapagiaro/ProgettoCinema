@@ -49,6 +49,7 @@
     <string name="posti_title">Seleziona i posti</string>
     <string name="btn_next_label">Avanti</string>
     <string name="error_posti_max">Puoi selezionare massimo 4 posti</string>
+    <string name="error_posti_min">Seleziona almeno un posto!</string>
 
     <!-- SEZIONE RIASSUNTO PRENOTAZIONE -->
     <string name="resume_title">Riepilogo</string>

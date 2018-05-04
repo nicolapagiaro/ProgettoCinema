@@ -108,6 +108,12 @@ public class PostiActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                if(postiDaPrenotare.size() == 0) {
+                    Snackbar snack = Snackbar.make(findViewById(R.id.main_container),
+                            R.string.error_posti_min, Snackbar.LENGTH_LONG);
+                    snack.show();
+                    return;
+                }
                 // registro la PRENOTAZIONE
                 long idPrenotazione = PrenotazioneQueries.addPrenotazione(new Prenotazione(0,idProgrammazione, idUtente));
 
