@@ -34,18 +34,19 @@
         <activity
             android:name=".prenotazione_posti.PostiActivity"
             android:label="@string/posti_title" />
-
-        <activity android:name=".film_details.DescrizioneActivity"
+        <activity
+            android:name=".film_details.DescrizioneActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".riassunto.ResumeActivity"
-            android:theme="@style/AppTheme.Resume"
-            android:label="@string/resume_title" />
-
-        <activity android:name=".SessionExpired"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/session_expired_label"/>
+            android:label="@string/resume_title"
+            android:theme="@style/AppTheme.Resume" />
+        <activity
+            android:name=".SessionExpired"
+            android:label="@string/session_expired_label"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".menu_activities.AccountIntent" />
+        <activity android:name=".menu_activities.InfoIntent"></activity>
     </application>
 
 </manifest>

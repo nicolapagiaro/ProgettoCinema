@@ -6,6 +6,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -17,6 +20,8 @@ import com.grupppofigo.progettocinema.film_details.DescrizioneActivity;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
 import com.grupppofigo.progettocinema.helpers.SessionValidator;
 import com.grupppofigo.progettocinema.helpers.SnackBar;
+import com.grupppofigo.progettocinema.menu_activities.AccountIntent;
+import com.grupppofigo.progettocinema.menu_activities.InfoIntent;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
 
@@ -92,4 +97,29 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.options_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            /*
+            case R.id.account_user:
+                Intent accountIntent = new Intent(this, AccountIntent.class);
+                startActivity(accountIntent);
+                return true;
+            */
+
+            case R.id.info_app:
+                Intent infoIntent = new Intent(this, InfoIntent.class);
+                startActivity(infoIntent);
+                return true;
+
+            default: return super.onOptionsItemSelected(item);
+        }
+    }
 }
