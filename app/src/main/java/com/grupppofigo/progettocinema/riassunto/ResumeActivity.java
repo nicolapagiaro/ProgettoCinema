@@ -2,7 +2,6 @@ package com.grupppofigo.progettocinema.riassunto;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
@@ -11,13 +10,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -30,7 +26,6 @@ import com.grupppofigo.progettocinema.entities.Sala;
 import com.grupppofigo.progettocinema.helpers.DateParser;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
 import com.grupppofigo.progettocinema.helpers.SessionValidator;
-import com.grupppofigo.progettocinema.helpers.SnackBar;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
 import com.grupppofigo.progettocinema.queries.PostoPrenotatoQueries;
 import com.grupppofigo.progettocinema.queries.PrenotazioneQueries;
@@ -38,7 +33,6 @@ import com.grupppofigo.progettocinema.queries.ProgrammazioneQueries;
 import com.grupppofigo.progettocinema.queries.SalaQueries;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -135,8 +129,7 @@ public class ResumeActivity extends AppCompatActivity {
         tvPostiPrenotati.setText(postiString.toString());
 
         // mostro il suggerimento
-        SnackBar.with(getApplicationContext())
-                .show(findViewById(R.id.resume_container_1), R.string.hintPrenotazione, Snackbar.LENGTH_LONG);
+        Snackbar.make(findViewById(R.id.resume_container_1), R.string.hintPrenotazione, Snackbar.LENGTH_LONG).show();
 
         // QR code
         ImageView qrCode = findViewById(R.id.qrCode);

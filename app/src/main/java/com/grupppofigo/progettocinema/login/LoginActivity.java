@@ -28,7 +28,6 @@ import android.widget.TextView;
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.database.DatabaseContract;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
-import com.grupppofigo.progettocinema.helpers.SnackBar;
 import com.grupppofigo.progettocinema.lista_film.MainActivity;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
 import com.grupppofigo.progettocinema.queries.UtenteQueries;
@@ -106,8 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     else {
                         // l'utente non c'è
-                        SnackBar.with(getApplicationContext())
-                                .show(constraintLayout, R.string.err_user_not_found, Snackbar.LENGTH_SHORT);
+                        Snackbar.make(constraintLayout, R.string.err_user_not_found, Snackbar.LENGTH_SHORT).show();
 
                         // ANIMAZIONE BOTTONE
                         final Animation myAnim = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.milkshake);
