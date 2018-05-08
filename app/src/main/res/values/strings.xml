@@ -65,6 +65,8 @@
     <string name="tvNumeroPosto">Posto %1$d</string>
     <string name="hintPrenotazione">Clicca sul biglietto per prenotare</string>
     <string name="promptPrenotatoText">Biglietto acquistato</string>
+    <string name="exitPrenotazioneDialogTitle">Attenzione</string>
+    <string name="exitPrenotazioneDialogDescr">Non hai ancora confermato la prenotazione, sicuro di tornare indietro?</string>
 
     <!-- SEZIONE TERMINI DEL CONTRATTO -->
     <string name="terms">Raccogliamo i contenuti, le comunicazioni e le altre informazioni che fornisci quando usi i nostri Prodotti, anche quando crei un account, prenoti un film. \n

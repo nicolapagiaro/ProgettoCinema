@@ -114,8 +114,6 @@ public class PostiActivity extends AppCompatActivity {
                     return;
                 }
 
-
-
                 // faccio partire l'activity di riassunto
                 Intent riassunto = new Intent(getApplicationContext(), ResumeActivity.class);
                 riassunto.putExtra(ExtrasDefinition.START_SESSION, startSession);
@@ -124,7 +122,6 @@ public class PostiActivity extends AppCompatActivity {
                 riassunto.putExtra(ExtrasDefinition.ID_PROGRAMMAZIONE, idProgrammazione);
                 riassunto.putIntegerArrayListExtra(ExtrasDefinition.POSTI_PRENOTARE, postiDaPrenotare);
                 startActivity(riassunto);
-                finish();
             }
         });
     }

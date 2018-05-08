@@ -2,6 +2,9 @@ package com.grupppofigo.progettocinema.riassunto;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.ActivityOptions;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
@@ -26,6 +29,7 @@ import com.grupppofigo.progettocinema.entities.Sala;
 import com.grupppofigo.progettocinema.helpers.DateParser;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
 import com.grupppofigo.progettocinema.helpers.SessionValidator;
+import com.grupppofigo.progettocinema.lista_film.MainActivity;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
 import com.grupppofigo.progettocinema.queries.PostoPrenotatoQueries;
 import com.grupppofigo.progettocinema.queries.PrenotazioneQueries;
@@ -41,8 +45,10 @@ import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFA
 public class ResumeActivity extends AppCompatActivity {
     private ConstraintLayout prenotatoContainer;
     private boolean isBigliettoComprato = false;
-
-    ArrayList<Integer> posti;
+    private long idSessione;
+    private String startSession;
+    private int idUtente;
+    private ArrayList<Integer> posti;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +56,13 @@ public class ResumeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_resume_1);
 
         // id sessione
-        long idSessione = getIntent().getLongExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
+        idSessione = getIntent().getLongExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
         if (idSessione == EXTRA_DEFAULT_VALUE) {
             SessionValidator.finishSession(this, idSessione);
         }
 
         // start della sessione
-        String startSession = getIntent().getStringExtra(ExtrasDefinition.START_SESSION);
+        startSession = getIntent().getStringExtra(ExtrasDefinition.START_SESSION);
         if (startSession == null) {
             SessionValidator.finishSession(this, idSessione);
         } else if (SessionValidator.isExpired(startSession)) {
@@ -73,7 +79,7 @@ public class ResumeActivity extends AppCompatActivity {
         }
 
         // id dell'utente passata dall'activity prima
-        final int idUtente = getIntent().getIntExtra(ExtrasDefinition.ID_UTENTE, EXTRA_DEFAULT_VALUE);
+        idUtente = getIntent().getIntExtra(ExtrasDefinition.ID_UTENTE, EXTRA_DEFAULT_VALUE);
         if (idUtente == EXTRA_DEFAULT_VALUE) {
             // errore idUtente non passato passo al login
             SessionValidator.finishSession(this, idSessione);
@@ -177,6 +183,39 @@ public class ResumeActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(!isBigliettoComprato) {
+            // mostro un messaggio di avviso
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.exitPrenotazioneDialogTitle)
+                    .setMessage(R.string.exitPrenotazioneDialogDescr)
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ResumeActivity.super.onBackPressed();
+                        }
+                    })
+                    .create()
+                    .show();
+        }
+        else {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra(ExtrasDefinition.START_SESSION, startSession);
+            intent.putExtra(ExtrasDefinition.ID_UTENTE, idUtente);
+            intent.putExtra(ExtrasDefinition.ID_TOKEN, idSessione);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        }
     }
 
     /**

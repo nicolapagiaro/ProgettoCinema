@@ -65,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
         AdapterFilm adapterFilm = new AdapterFilm(MainActivity.this, R.layout.film_list_item, films);
         lv_film.setAdapter(adapterFilm);
 
-        Log.d("Films", films.toString());
-
         //per andare nell'altra activity cliccando sulla card
         lv_film.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

@@ -187,7 +187,6 @@ public class DescrizioneActivity extends AppCompatActivity {
                         resume.putExtra(ID_UTENTE, idUtente);
                         resume.putExtra(ID_PROGRAMMAZIONE, idProgrammazione);
                         startActivity(resume);
-                        finish();
                     }
                     else {
                         ConstraintLayout layout = findViewById(R.id.bottomContainer);
