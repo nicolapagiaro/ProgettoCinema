@@ -131,6 +131,7 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Metodo che verifica se i dati inseriti son validi
+     * fdfd
      * @return true/false
      */
     private boolean validateInput() {
