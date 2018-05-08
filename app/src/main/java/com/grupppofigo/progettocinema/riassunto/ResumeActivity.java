@@ -43,7 +43,6 @@ import java.util.ArrayList;
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
 
 public class ResumeActivity extends AppCompatActivity {
-    private ConstraintLayout resumeContainer;
     private ConstraintLayout prenotatoContainer;
     private boolean isBigliettoComprato = false;
 
@@ -84,23 +83,21 @@ public class ResumeActivity extends AppCompatActivity {
             SessionValidator.finishSession(this, idSessione);
         }
 
-        // id dell'utente passata dall'activity prima
-        final long idPrenotazione = getIntent().getLongExtra(ExtrasDefinition.ID_PRENOTAZIONE, EXTRA_DEFAULT_VALUE);
-        if (idPrenotazione == EXTRA_DEFAULT_VALUE) {
-            // errore idPrenotazione non passato passo al login
+        // array di posti prenotati
+        posti = getIntent().getIntegerArrayListExtra(ExtrasDefinition.POSTI_PRENOTARE);
+        if(posti == null || posti.isEmpty()) {
+            // errore di qualosa
             SessionValidator.finishSession(this, idSessione);
         }
 
         // riempio lo schermo con i dati
         TextView tvTitolo = findViewById(R.id.tvTitolo);
-        //TextView tvGenere = findViewById(R.id.tvGenere);
-        //TextView tvDurata = findViewById(R.id.tvDurata);
         TextView tvData = findViewById(R.id.tvData);
         TextView tvOra = findViewById(R.id.tvOrarioLabel);
         TextView tvSala = findViewById(R.id.tvSala);
         TextView tvIdSessione = findViewById(R.id.tvId);
         tvIdSessione.setText("" + idSessione);
-        resumeContainer = findViewById(R.id.resumeContainer);
+        ConstraintLayout resumeContainer = findViewById(R.id.resumeContainer);
         prenotatoContainer = findViewById(R.id.doneReveal);
 
         // prendo le robe
@@ -111,9 +108,6 @@ public class ResumeActivity extends AppCompatActivity {
 
         Film film = FilmQueries.getFilm(pr.getIdFilm());
         Sala s = SalaQueries.getSala(pr.getIdSala());
-        posti = getIntent().getIntegerArrayListExtra("postiDaPrenotare");
-        Log.e("NP",posti.size()+"");
-
         tvSala.setText(s.getNome());
 
         if (film != null) {
@@ -130,31 +124,6 @@ public class ResumeActivity extends AppCompatActivity {
         ListView lista = findViewById(R.id.list);
         CustomListView customListView = new CustomListView(this, R.layout.resume_posto_item, posti, s);
         lista.setAdapter(customListView);
-
-        /* acquista btn
-        Button btn = findViewById(R.id.btn);
-        btn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {  // finto acquisto con paypal
-                // inserisco nel db i posti prenotati
-                for (Integer index : posti) {
-                    PostoPrenotato p = new PostoPrenotato(0, (int) idPrenotazione, index);
-                    PostoPrenotatoQueries.addPostoPrenotato(p);
-
-
-
-                }
-                Toast.makeText(getApplicationContext(), "Acquistato", Toast.LENGTH_SHORT).show();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        finish();
-                    }
-                }, 1000);
-            }
-        });*/
-
 
         // mostro il suggerimento
         SnackBar.with(getApplicationContext())
@@ -191,6 +160,9 @@ public class ResumeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!isBigliettoComprato) {
+                    // registro la PRENOTAZIONE
+                    long idPrenotazione = PrenotazioneQueries.addPrenotazione(new Prenotazione(0, idProgrammazione, idUtente));
+
                     // scrivo nel db le modifiche
                     for (Integer index : posti) {
                         PostoPrenotato p = new PostoPrenotato(0, (int) idPrenotazione, index);

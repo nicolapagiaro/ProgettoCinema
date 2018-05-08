@@ -114,17 +114,15 @@ public class PostiActivity extends AppCompatActivity {
                     return;
                 }
 
-                // registro la PRENOTAZIONE
-                long idPrenotazione = PrenotazioneQueries.addPrenotazione(new Prenotazione(0, idProgrammazione, idUtente));
+
 
                 // faccio partire l'activity di riassunto
                 Intent riassunto = new Intent(getApplicationContext(), ResumeActivity.class);
                 riassunto.putExtra(ExtrasDefinition.START_SESSION, startSession);
                 riassunto.putExtra(ExtrasDefinition.ID_UTENTE, idUtente);
                 riassunto.putExtra(ExtrasDefinition.ID_TOKEN, idSessione);
-                riassunto.putExtra(ExtrasDefinition.ID_PRENOTAZIONE, idPrenotazione);
                 riassunto.putExtra(ExtrasDefinition.ID_PROGRAMMAZIONE, idProgrammazione);
-                riassunto.putIntegerArrayListExtra("postiDaPrenotare", postiDaPrenotare);
+                riassunto.putIntegerArrayListExtra(ExtrasDefinition.POSTI_PRENOTARE, postiDaPrenotare);
                 startActivity(riassunto);
                 finish();
             }

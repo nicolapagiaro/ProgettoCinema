@@ -10,6 +10,7 @@ public class ExtrasDefinition {
     public static final String ID_FILM = "idFilm";
     public static final String ID_PROGRAMMAZIONE = "idProgrammazione";
     public static final String ID_PRENOTAZIONE = "idPrenotazione";
+    public static final String POSTI_PRENOTARE = "postiPrenotati";
 
     public static final int EXTRA_DEFAULT_VALUE = -1;
 }
