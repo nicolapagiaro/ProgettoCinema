@@ -201,14 +201,6 @@ public class RegisterActivity extends AppCompatActivity {
         return errCount == 0;
     }
 
-    @Override
-    public void onBackPressed() {
-        // se preme indietro torna al login
-        Intent login = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(login);
-        finish();
-    }
-
     /**
      * Per fare andare via la tastiera
      * @param activity activity
