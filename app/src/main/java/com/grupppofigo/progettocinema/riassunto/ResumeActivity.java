@@ -49,10 +49,14 @@ public class ResumeActivity extends AppCompatActivity {
     private int idUtente;
     private ArrayList<Integer> posti;
 
+    ConstraintLayout container;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resume_1);
+
+        container = findViewById(R.id.resumeContainer);
 
         // id sessione
         idSessione = getIntent().getLongExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
@@ -86,7 +90,7 @@ public class ResumeActivity extends AppCompatActivity {
 
         // array di posti prenotati
         posti = getIntent().getIntegerArrayListExtra(ExtrasDefinition.POSTI_PRENOTARE);
-        if(posti == null || posti.isEmpty()) {
+        if (posti == null || posti.isEmpty()) {
             // errore di qualosa
             SessionValidator.finishSession(this, idSessione);
         }
@@ -125,9 +129,9 @@ public class ResumeActivity extends AppCompatActivity {
         // cose con i posti con i posti
         String charDelimit = "- ";
         StringBuilder postiString = new StringBuilder();
-        for (int i=0; i<posti.size(); i++) {
+        for (int i = 0; i < posti.size(); i++) {
             postiString.append(posti.get(i));
-            if(i != posti.size()-1) {
+            if (i != posti.size() - 1) {
                 postiString.append(charDelimit);
             }
         }
@@ -166,7 +170,7 @@ public class ResumeActivity extends AppCompatActivity {
         resumeContainer.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if(!isBigliettoComprato) {
+                if (!isBigliettoComprato) {
                     // registro la PRENOTAZIONE
                     long idPrenotazione = PrenotazioneQueries.addPrenotazione(new Prenotazione(0, idProgrammazione, idUtente));
 
@@ -184,11 +188,18 @@ public class ResumeActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(findViewById(R.id.resume_container_1), R.string.hintPrenotazione, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
-        if(!isBigliettoComprato) {
+        if (!isBigliettoComprato) {
             // mostro un messaggio di avviso
             new AlertDialog.Builder(this)
                     .setTitle(R.string.exitPrenotazioneDialogTitle)
@@ -207,8 +218,7 @@ public class ResumeActivity extends AppCompatActivity {
                     })
                     .create()
                     .show();
-        }
-        else {
+        } else {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra(ExtrasDefinition.START_SESSION, startSession);
@@ -231,7 +241,7 @@ public class ResumeActivity extends AppCompatActivity {
         final int y = container.getBottom() / 2;
 
         final float startRadius = 0F;
-        final float endRadius  = (float) Math.hypot(container.getWidth(), container.getHeight());
+        final float endRadius = (float) Math.hypot(container.getWidth(), container.getHeight());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Animator anim = ViewAnimationUtils.createCircularReveal(prenotatoContainer, x, y, startRadius, endRadius);
@@ -249,7 +259,7 @@ public class ResumeActivity extends AppCompatActivity {
             public void run() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     float startRadius = (float) Math.hypot(container.getWidth(), container.getHeight());
-                    float endRadius  = 0F;
+                    float endRadius = 0F;
                     Animator anim = ViewAnimationUtils.createCircularReveal(prenotatoContainer, x, y, startRadius, endRadius);
                     anim.setDuration(ANIMATION_DURATION);
                     anim.start();
