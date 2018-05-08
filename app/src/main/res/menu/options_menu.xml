@@ -3,10 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/account_user"
+        app:showAsAction="never"
         android:title="@string/account" />
 
     <item
         android:id="@+id/info_app"
+        app:showAsAction="never"
         android:title="@string/info" />
+
+    <item
+        android:id="@+id/exit_app"
+        app:showAsAction="never"
+        android:title="@string/esci" />
 
 </menu>

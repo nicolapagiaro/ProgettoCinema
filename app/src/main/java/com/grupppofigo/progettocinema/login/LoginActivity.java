@@ -22,12 +22,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.database.DatabaseContract;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
+import com.grupppofigo.progettocinema.helpers.SharedPrefHelper;
 import com.grupppofigo.progettocinema.lista_film.MainActivity;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
 import com.grupppofigo.progettocinema.queries.UtenteQueries;
@@ -53,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button mAccedi = findViewById(R.id.buttonAccedi);
         TextView mRegistrati = findViewById(R.id.linkRegistrati);
         final TextView getPsw = findViewById(R.id.textGetPsw);
+        final CheckBox chkRemind = findViewById(R.id.chRemember);
 
         mPassword.setTransformationMethod(new PasswordTransformationMethod());
 
@@ -94,6 +97,11 @@ public class LoginActivity extends AppCompatActivity {
                         // l'utente c'è registro la sessione
                         long startTime = System.currentTimeMillis();
                         token = SessioneQueries.startSession((int) id, startTime);
+
+                        if(chkRemind.isChecked()) {
+                            SharedPrefHelper.with(getApplicationContext())
+                                    .rememberUser((int) id);
+                        }
 
                         // faccio partire l'altra activity
                         Intent postLoginAct = new Intent(LoginActivity.this, MainActivity.class);

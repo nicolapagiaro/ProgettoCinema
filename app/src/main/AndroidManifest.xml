@@ -30,7 +30,8 @@
 
         <activity
             android:name=".lista_film.MainActivity"
-            android:label="@string/film_list_title" />
+            android:label="@string/film_list_title" >
+        </activity>
         <activity
             android:name=".prenotazione_posti.PostiActivity"
             android:label="@string/posti_title" />

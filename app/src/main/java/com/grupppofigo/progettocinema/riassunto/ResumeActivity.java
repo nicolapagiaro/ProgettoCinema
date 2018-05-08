@@ -2,7 +2,6 @@ package com.grupppofigo.progettocinema.riassunto;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -124,7 +123,7 @@ public class ResumeActivity extends AppCompatActivity {
         }
 
         // cose con i posti con i posti
-        String charDelimit = ", ";
+        String charDelimit = "- ";
         StringBuilder postiString = new StringBuilder();
         for (int i=0; i<posti.size(); i++) {
             postiString.append(posti.get(i));
@@ -164,9 +163,9 @@ public class ResumeActivity extends AppCompatActivity {
         });
 
         // quando clicca sul biglietto lo acquista
-        resumeContainer.setOnClickListener(new View.OnClickListener() {
+        resumeContainer.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 if(!isBigliettoComprato) {
                     // registro la PRENOTAZIONE
                     long idPrenotazione = PrenotazioneQueries.addPrenotazione(new Prenotazione(0, idProgrammazione, idUtente));
@@ -181,6 +180,8 @@ public class ResumeActivity extends AppCompatActivity {
                     doRevealAnimation();
                     isBigliettoComprato = !isBigliettoComprato;
                 }
+
+                return false;
             }
         });
     }

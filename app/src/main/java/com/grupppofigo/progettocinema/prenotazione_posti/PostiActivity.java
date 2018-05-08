@@ -104,14 +104,12 @@ public class PostiActivity extends AppCompatActivity {
 
         //btn avanti --> registro la prenotazione nel database
         mBtnAvanti.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 if (postiDaPrenotare.size() == 0) {
                     Snackbar snack = Snackbar.make(findViewById(R.id.main_container),
                             R.string.error_posti_min, Snackbar.LENGTH_LONG);
                     snack.show();
-                    return;
                 }
 
                 // faccio partire l'activity di riassunto

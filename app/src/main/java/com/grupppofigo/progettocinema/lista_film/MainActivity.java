@@ -17,6 +17,8 @@ import com.grupppofigo.progettocinema.entities.Film;
 import com.grupppofigo.progettocinema.film_details.DescrizioneActivity;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
 import com.grupppofigo.progettocinema.helpers.SessionValidator;
+import com.grupppofigo.progettocinema.helpers.SharedPrefHelper;
+import com.grupppofigo.progettocinema.login.SplashScreen;
 import com.grupppofigo.progettocinema.menu_activities.AccountIntent;
 import com.grupppofigo.progettocinema.menu_activities.InfoIntent;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
@@ -109,6 +111,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.info_app:
                 Intent infoIntent = new Intent(this, InfoIntent.class);
                 startActivity(infoIntent);
+                return true;
+
+            case R.id.exit_app:
+                SharedPrefHelper.with(getApplicationContext())
+                        .removeUser();
+                Intent splash = new Intent(this, SplashScreen.class);
+                startActivity(splash);
+                finish();
                 return true;
 
             default: return super.onOptionsItemSelected(item);
