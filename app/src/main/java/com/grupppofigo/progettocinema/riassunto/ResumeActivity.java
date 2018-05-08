@@ -2,6 +2,7 @@ package com.grupppofigo.progettocinema.riassunto;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
@@ -37,6 +38,7 @@ import com.grupppofigo.progettocinema.queries.ProgrammazioneQueries;
 import com.grupppofigo.progettocinema.queries.SalaQueries;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
 
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -96,6 +98,7 @@ public class ResumeActivity extends AppCompatActivity {
         TextView tvOra = findViewById(R.id.tvOrarioLabel);
         TextView tvSala = findViewById(R.id.tvSala);
         TextView tvIdSessione = findViewById(R.id.tvId);
+        TextView tvPostiPrenotati = findViewById(R.id.tvPosti);
         tvIdSessione.setText("" + idSessione);
         ConstraintLayout resumeContainer = findViewById(R.id.resumeContainer);
         prenotatoContainer = findViewById(R.id.doneReveal);
@@ -120,10 +123,16 @@ public class ResumeActivity extends AppCompatActivity {
             tvOra.setText(pr.getOra());
         }
 
-        // listview con i posti
-        ListView lista = findViewById(R.id.list);
-        CustomListView customListView = new CustomListView(this, R.layout.resume_posto_item, posti, s);
-        lista.setAdapter(customListView);
+        // cose con i posti con i posti
+        String charDelimit = ", ";
+        StringBuilder postiString = new StringBuilder();
+        for (int i=0; i<posti.size(); i++) {
+            postiString.append(posti.get(i));
+            if(i != posti.size()-1) {
+                postiString.append(charDelimit);
+            }
+        }
+        tvPostiPrenotati.setText(postiString.toString());
 
         // mostro il suggerimento
         SnackBar.with(getApplicationContext())

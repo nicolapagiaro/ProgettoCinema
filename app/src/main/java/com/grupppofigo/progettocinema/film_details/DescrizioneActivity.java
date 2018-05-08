@@ -10,6 +10,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.ViewUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -140,7 +141,8 @@ public class DescrizioneActivity extends AppCompatActivity {
                 .into(mCopertina, new Callback() {
                     @Override
                     public void onSuccess() {
-                        showImage();
+                        if(ViewCompat.isAttachedToWindow(mCopertina))
+                            showImage();
                     }
 
                     @Override
