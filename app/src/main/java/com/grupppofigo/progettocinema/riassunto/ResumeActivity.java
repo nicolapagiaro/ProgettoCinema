@@ -113,14 +113,11 @@ public class ResumeActivity extends AppCompatActivity {
         Sala s = SalaQueries.getSala(pr.getIdSala());
         posti = getIntent().getIntegerArrayListExtra("postiDaPrenotare");
         Log.e("NP",posti.size()+"");
-        //posti = PostoPrenotatoQueries.postiPrenotatiByPrenotazione((int) idPrenotazione);
 
         tvSala.setText(s.getNome());
 
         if (film != null) {
             tvTitolo.setText(film.getTitolo());
-            //tvGenere.setText(film.getGenere().getNome());
-            //tvDurata.setText(getString(R.string.tvDurataFilm, film.getDurata()));
             try {
                 tvData.setText(DateParser.getFormattedDate(pr.getData()));
             } catch (ParseException e) {
@@ -195,6 +192,10 @@ public class ResumeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!isBigliettoComprato) {
                     // scrivo nel db le modifiche
+                    for (Integer index : posti) {
+                        PostoPrenotato p = new PostoPrenotato(0, (int) idPrenotazione, index);
+                        PostoPrenotatoQueries.addPostoPrenotato(p);
+                    }
 
                     // faccio l'animazione
                     doRevealAnimation();

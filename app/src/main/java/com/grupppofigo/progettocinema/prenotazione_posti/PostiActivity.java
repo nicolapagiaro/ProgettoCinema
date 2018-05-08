@@ -117,7 +117,6 @@ public class PostiActivity extends AppCompatActivity {
                 // registro la PRENOTAZIONE
                 long idPrenotazione = PrenotazioneQueries.addPrenotazione(new Prenotazione(0, idProgrammazione, idUtente));
 
-
                 // faccio partire l'activity di riassunto
                 Intent riassunto = new Intent(getApplicationContext(), ResumeActivity.class);
                 riassunto.putExtra(ExtrasDefinition.START_SESSION, startSession);
