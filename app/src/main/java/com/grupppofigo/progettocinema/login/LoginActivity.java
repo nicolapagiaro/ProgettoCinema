@@ -18,6 +18,8 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mMail = findViewById(R.id.editTextEmail);
         mPassword = findViewById(R.id.editTextPassword);
-        Button mAccedi = findViewById(R.id.buttonAccedi);
+        final Button mAccedi = findViewById(R.id.buttonAccedi);
         TextView mRegistrati = findViewById(R.id.linkRegistrati);
         final TextView getPsw = findViewById(R.id.textGetPsw);
 
@@ -106,6 +108,11 @@ public class LoginActivity extends AppCompatActivity {
                         // l'utente non c'è
                         SnackBar.with(getApplicationContext())
                                 .show(constraintLayout, R.string.err_user_not_found, Snackbar.LENGTH_SHORT);
+
+                        // ANIMAZIONE BOTTONE
+                        final Animation myAnim = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.milkshake);
+                        mAccedi.setAnimation(myAnim);
+                        mAccedi.startAnimation(myAnim);
                     }
                 }
             }
