@@ -82,6 +82,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonAccedi" />
 
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CheckBox" />
+
     <Button
         android:id="@+id/buttonAccedi"
         style="@style/Base.Widget.AppCompat.Button.Colored"
