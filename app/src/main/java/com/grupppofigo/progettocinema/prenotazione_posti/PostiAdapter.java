@@ -6,10 +6,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.entities.Sala;
@@ -96,10 +98,12 @@ class PostiAdapter extends RecyclerView.Adapter<PostiAdapter.AdapterViewHolder> 
         int id;
         ImageView icon;
         boolean isOccupato;
+        TextView tv_numeroPosti;
 
         AdapterViewHolder(View itemView) {
             super(itemView);
             icon = itemView.findViewById(R.id.iv);
+            tv_numeroPosti = itemView.findViewById(R.id.tv_numeroPosto);
         }
 
         /**
@@ -121,6 +125,8 @@ class PostiAdapter extends RecyclerView.Adapter<PostiAdapter.AdapterViewHolder> 
                         // lo metto occupato
                         icon.setImageResource(R.drawable.ic_cadrega);
                         DrawableCompat.setTint(icon.getDrawable(), ContextCompat.getColor(cx, R.color.colorAccent));
+                        // si vede id posto
+                        tv_numeroPosti.setText(id+"");
 
                         // lo aggiungo alla lista
                         postiDaPrenotare.add(id);
@@ -128,6 +134,8 @@ class PostiAdapter extends RecyclerView.Adapter<PostiAdapter.AdapterViewHolder> 
                     else {
                         // lo mettono libero
                         icon.setImageResource(R.drawable.ic_cadrega_libera);
+                        // nascondo id posto
+                        tv_numeroPosti.setText("");
 
                         // lo rimuovo alla lista
                         postiDaPrenotare.remove(Integer.valueOf(id));
