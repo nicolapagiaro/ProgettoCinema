@@ -107,12 +107,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            /*
             case R.id.account_user:
                 Intent accountIntent = new Intent(this, AccountIntent.class);
                 startActivity(accountIntent);
                 return true;
-            */
 
             case R.id.info_app:
                 Intent infoIntent = new Intent(this, InfoIntent.class);

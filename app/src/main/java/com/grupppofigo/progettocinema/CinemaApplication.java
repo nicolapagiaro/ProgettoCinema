@@ -56,7 +56,7 @@ public class CinemaApplication extends Application {
 
         // film random
         Film f1 = new Film(0,
-                "The Avenger",
+                "The Avengers",
                 124,
                 new Genere(1,""),
                 "Mitico film della marvel, supereroi wow",

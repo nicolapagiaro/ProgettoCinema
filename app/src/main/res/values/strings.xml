@@ -77,7 +77,7 @@
 
     <!-- SEZIONE INFO APP OPTIONS MENU -->
     <string name="titolo_app">ITS Cinema</string>
-    <string name="app_version">Versione 1.25.136</string>
+    <string name="app_version">Versione 1</string>
     <string name="reserved">© 2018 ITS Padova Inc.\n All rights reserved</string>
     <string name="account">Account</string>
     <string name="info">Info App</string>
