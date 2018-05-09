@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         ListView lv_film = findViewById(R.id.lv_film);
 
         final ArrayList<Film> films = FilmQueries.getAllFilms();
-        AdapterFilm adapterFilm = new AdapterFilm(MainActivity.this, R.layout.film_list_item, films);
+        AdapterFilm adapterFilm = new AdapterFilm(MainActivity.this, R.layout.film_item_card, films);
         lv_film.setAdapter(adapterFilm);
 
         Log.d("Films", films.toString());
