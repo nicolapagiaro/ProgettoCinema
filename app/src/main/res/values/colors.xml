@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#536DFE</color>
     <color name="colorPrimaryDark">#3D5AFE</color>
-    <color name="colorAccent">#536DFE</color>
+    <color name="colorAccent">#536dfe</color>
 
     <color name="background">#263238</color>
     <color name="dividerColor">#1f000000</color>
@@ -24,5 +24,14 @@
     <color name="new_colorPrimary">#536DFE</color>
     <color name="new_colorPrimaryDark">#3D5AFE</color>
     <color name="new_colorAccent">#536DFE</color>
+
+    <color name="new_colorBackground">#fafafa</color>
+
+    <color name="primaryTextLight">#de000000</color>
+    <color name="secondaryTextLight">#8a000000</color>
+    <color name="disabledTextLight">#61000000</color>
+
+    <color name="primaryIconLight">#8a000000</color>
+    <color name="disabledIconLight">#61000000</color>
 
 </resources>
