@@ -109,6 +109,8 @@ public class ResumeActivity extends AppCompatActivity {
         ConstraintLayout resumeContainer = findViewById(R.id.resumeContainer);
         prenotatoContainer = findViewById(R.id.doneReveal);
 
+        final ImageView paidTicket = findViewById(R.id.paidTicket);
+
         // prendo le robe
         Programmazione pr = ProgrammazioneQueries.getProgrammmazione(idProgrammazione);
         if (pr == null) {
@@ -214,6 +216,7 @@ public class ResumeActivity extends AppCompatActivity {
                                         }
 
                                         isBigliettoComprato = !isBigliettoComprato;
+                                        paidTicket.setVisibility(View.VISIBLE);
                                     }
                                     else {
                                         Snackbar.make(findViewById(R.id.resume_container_1), R.string.snackAnnullataPrenotazione, Snackbar.LENGTH_LONG).show();
