@@ -54,7 +54,7 @@ public class ResumeActivity extends AppCompatActivity {
     private String startSession;
     private int idUtente;
     private ArrayList<Integer> posti;
-    private boolean daAcquistare = true;
+    private boolean daAcquistare = true, isAnimating = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,6 +217,7 @@ public class ResumeActivity extends AppCompatActivity {
 
                                         isBigliettoComprato = !isBigliettoComprato;
                                         paidTicket.setVisibility(View.VISIBLE);
+                                        isAnimating = false;
                                     }
                                     else {
                                         Snackbar.make(findViewById(R.id.resume_container_1), R.string.snackAnnullataPrenotazione, Snackbar.LENGTH_LONG).show();
@@ -246,6 +247,8 @@ public class ResumeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if(isAnimating) return;
+
         if (!isBigliettoComprato) {
             // mostro un messaggio di avviso
             new AlertDialog.Builder(this)
@@ -280,6 +283,7 @@ public class ResumeActivity extends AppCompatActivity {
      * Fa l'animazione quando viene acquistato il biglietto
      */
     private void doRevealAnimation() {
+        isAnimating = true;
         final LinearLayout container = findViewById(R.id.resumeMainContainer);
 
         // get the center for the clipping circle
