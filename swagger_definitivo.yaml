@@ -21,9 +21,8 @@ tags:
   description: "Access to Petstore orders"
 - name: "user"
   description: "Operations about user"
-  externalDocs:
-    description: "Find out more about our store"
-    url: "http://swagger.io"
+- name: "Sale"
+  description: "Gestione delle sale"
 schemes:
 - "http"
 paths:
@@ -377,72 +376,49 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Order not found"
-  /registration:
+  /user:
     post:
       tags:
       - "user"
       summary: "Create user"
       description: "This can only be done by the logged in user."
-      operationId: "CreateUser"
+      operationId: "createUser"
       produces:
+      - "application/xml"
       - "application/json"
       parameters:
       - in: "body"
-        name: "user"
+        name: "body"
         description: "Created user object"
         required: true
         schema:
           $ref: "#/definitions/User"
       responses:
-          iduser:
+        default:
           description: "successful operation"
-  /login:
+  /user/createWithArray:
     post:
       tags:
-      - "login"
-      summary: "Create Login"
-      description: "login description"
-      operationId: "CreateLogin"
+      - "user"
+      summary: "Creates list of users with given input array"
+      description: ""
+      operationId: "createUsersWithArrayInput"
       produces:
+      - "application/xml"
       - "application/json"
       parameters:
       - in: "body"
-        name: "login"
-        description: "Created login"
+        name: "body"
+        description: "List of user object"
         required: true
         schema:
-            $ref: "#/definitions/Login"
-      
-      -out: "token"
-      name: "Session"
-      description: "Session"
-      required: true
-      schema:
-          $ref: "#/definitions/Token"
-      
+          type: "array"
+          items:
+            $ref: "#/definitions/User"
       responses:
-       idlogin:
+        default:
           description: "successful operation"
-/films:
-    get:
-      tags:
-      - developers
-      summary: searches inventory
-      operationId: searchInventory
-      description: |
-        By passing in the appropriate options, you can search for
-        available inventory in the system
-      produces:
-      - application/json
-      parameters:
-      responses:
-        filmList:
-          type: array
-          description: the list of films
-          schema:
-            $ref: '#/definitions/FilmListItem'
-
-  /response:
+  /user/createWithList:
     post:
       tags:
       - "user"
@@ -536,10 +512,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/User"
-        401:
-          description: "User not Found"
-        402:
-          description: "Invalid Credentials"
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
     put:
       tags:
       - "user"
@@ -566,7 +542,6 @@ paths:
           description: "Invalid user supplied"
         404:
           description: "User not found"
-          
     delete:
       tags:
       - "user"
@@ -587,6 +562,32 @@ paths:
           description: "Invalid username supplied"
         404:
           description: "User not found"
+  
+  /api/v1/room/{idProgrammazione}/seats:
+     get:
+      tags:
+      - "Sale"
+      summary: "Lista di posti prenotati"
+      description: "Restituisce una lista di posti prenotati per la programmazione passata"
+      operationId: "getPostiPrenotati"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "idProgrammazione"
+        in: "path"
+        description: "ID della prenotazione selezionato dall'utente"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ArrayPostiPrenotati"
+        400:
+          description: "ID non valido"
+        404:
+          description: "Errore"
+  
 securityDefinitions:
   petstore_auth:
     type: "oauth2"
@@ -600,6 +601,16 @@ securityDefinitions:
     name: "api_key"
     in: "header"
 definitions:
+  ArrayPostiPrenotati:
+    type: "object"
+    properties:
+      postiPrenotati:
+        type: "array"
+        items:
+          type: "integer"
+        example: [23,45,78]
+    xml:
+      name: "Order"
   Order:
     type: "object"
     properties:
@@ -637,53 +648,31 @@ definitions:
         type: "string"
     xml:
       name: "Category"
-
-  Login:
-    type: "object"
-    properties:
-      email:
-        type: "string"
-      password:
-        type: "string"
-    xml:
-      name: "Login"
-  FilmListItem:
+  User:
     type: "object"
     properties:
       id:
         type: "integer"
-        example: 1
-      titolo:
+        format: "int64"
+      username:
         type: "string"
-        example: "The Avengers"
-      durata:
-        type: "integer"
-        example: 137
-      genere:
+      firstName:
         type: "string"
-        example: "Azione" 
-      immagine:
-        type: "string"
-        example: "https://ia.media-imdb.com/images/M/MV5BMTk2NTI1MTU4N15BMl5BanBnXkFtZTcwODg0OTY0Nw@@._V1_UX182_CR0,0,182,268_AL_.jpg"
-      voto:
-        type: "integer"
-        example: 4
-
-
-  User:
-    type: "object"
-    properties:
-      name:
-        type: "string"
-      surname:
+      lastName:
         type: "string"
       email:
         type: "string"
       password:
         type: "string"
+      phone:
+        type: "string"
+      userStatus:
+        type: "integer"
+        format: "int32"
+        description: "User Status"
     xml:
       name: "User"
-  Token:
+  Tag:
     type: "object"
     properties:
       id:
