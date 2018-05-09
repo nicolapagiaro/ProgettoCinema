@@ -64,8 +64,9 @@
     <string name="btn_buy_label">Acquista</string>
     <string name="tvDurataFilm">%1$d minuti</string>
     <string name="tvNumeroPosto">Posto %1$d</string>
-    <string name="hintPrenotazione">Tieni premuto sul biglietto per acquistare</string>
-    <string name="promptPrenotatoText">Biglietto acquistato</string>
+    <string name="hintPrenotazione">Tieni premuto sul biglietto per acquistare!</string>
+    <string name="hintPrenotazioneEffettuata">Biglietto già acquistato!</string>
+    <string name="promptPrenotatoText">Biglietto acquistato!</string>
     <string name="exitPrenotazioneDialogTitle">Attenzione</string>
     <string name="exitPrenotazioneDialogDescr">Non hai ancora confermato la prenotazione, sicuro di tornare indietro?</string>
 

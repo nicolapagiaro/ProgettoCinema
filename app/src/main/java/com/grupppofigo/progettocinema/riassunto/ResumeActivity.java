@@ -185,14 +185,21 @@ public class ResumeActivity extends AppCompatActivity {
                     isBigliettoComprato = !isBigliettoComprato;
                 }
 
-                return false;
+                return true;
             }
         });
 
         container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(findViewById(R.id.resume_container_1), R.string.hintPrenotazione, Snackbar.LENGTH_LONG).show();
+
+                if (isBigliettoComprato) {
+                    Snackbar.make(findViewById(R.id.resume_container_1), R.string.hintPrenotazioneEffettuata, Snackbar.LENGTH_LONG).show();
+
+                } else {
+                    Snackbar.make(findViewById(R.id.resume_container_1), R.string.hintPrenotazione, Snackbar.LENGTH_LONG).show();
+
+                }
             }
         });
     }
