@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
 
 public class ResumeActivity extends AppCompatActivity {
+    private static final int VIBRATION_DURATE = 500;
     private ConstraintLayout prenotatoContainer;
     private boolean isBigliettoComprato = false;
     private long idSessione;
@@ -51,14 +52,10 @@ public class ResumeActivity extends AppCompatActivity {
     private int idUtente;
     private ArrayList<Integer> posti;
 
-    ConstraintLayout container;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resume_1);
-
-        container = findViewById(R.id.resumeContainer);
+        setContentView(R.layout.activity_resume);
 
         // id sessione
         idSessione = getIntent().getLongExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
@@ -172,11 +169,14 @@ public class ResumeActivity extends AppCompatActivity {
         resumeContainer.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                //vibrazione
-                Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                vibe.vibrate(500);
 
                 if (!isBigliettoComprato) {
+                    //vibrazione
+                    Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    if(vibe != null) {
+                        vibe.vibrate(VIBRATION_DURATE);
+                    }
+
                     // registro la PRENOTAZIONE
                     long idPrenotazione = PrenotazioneQueries.addPrenotazione(new Prenotazione(0, idProgrammazione, idUtente));
 
@@ -195,17 +195,15 @@ public class ResumeActivity extends AppCompatActivity {
             }
         });
 
-        container.setOnClickListener(new View.OnClickListener() {
+        resumeContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+            if (isBigliettoComprato) {
+                Snackbar.make(findViewById(R.id.resume_container_1), R.string.hintPrenotazioneEffettuata, Snackbar.LENGTH_LONG).show();
 
-                if (isBigliettoComprato) {
-                    Snackbar.make(findViewById(R.id.resume_container_1), R.string.hintPrenotazioneEffettuata, Snackbar.LENGTH_LONG).show();
-
-                } else {
-                    Snackbar.make(findViewById(R.id.resume_container_1), R.string.hintPrenotazione, Snackbar.LENGTH_LONG).show();
-
-                }
+            } else {
+                Snackbar.make(findViewById(R.id.resume_container_1), R.string.hintPrenotazione, Snackbar.LENGTH_LONG).show();
+            }
             }
         });
     }
