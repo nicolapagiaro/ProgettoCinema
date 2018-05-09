@@ -2,10 +2,12 @@ package com.grupppofigo.progettocinema.riassunto;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -170,6 +172,10 @@ public class ResumeActivity extends AppCompatActivity {
         resumeContainer.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                //vibrazione
+                Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                vibe.vibrate(500);
+
                 if (!isBigliettoComprato) {
                     // registro la PRENOTAZIONE
                     long idPrenotazione = PrenotazioneQueries.addPrenotazione(new Prenotazione(0, idProgrammazione, idUtente));
