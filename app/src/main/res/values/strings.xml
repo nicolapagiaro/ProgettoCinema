@@ -70,7 +70,7 @@
     <string name="exitPrenotazioneDialogTitle">Attenzione</string>
     <string name="exitPrenotazioneDialogDescr">Non hai ancora confermato la prenotazione, sicuro di tornare indietro?</string>
     <string name="snackAnnullataPrenotazione">Prenotazione annullata!</string>
-    <string name="snackConfermaPrenotazione">Biglietto comprato!</string>
+    <string name="snackConfermaPrenotazione">Biglietto acquistato!</string>
 
     <!-- SEZIONE TERMINI DEL CONTRATTO -->
     <string name="terms">Raccogliamo i contenuti, le comunicazioni e le altre informazioni che fornisci quando usi i nostri Prodotti, anche quando crei un account, prenoti un film. \n
