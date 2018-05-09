@@ -40,6 +40,7 @@ import com.grupppofigo.progettocinema.queries.SessioneQueries;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
 
@@ -97,6 +98,7 @@ public class ResumeActivity extends AppCompatActivity {
             // errore di qualosa
             SessionValidator.finishSession(this, idSessione);
         }
+        Collections.sort(posti);
 
         // riempio lo schermo con i dati
         TextView tvTitolo = findViewById(R.id.tvTitolo);
