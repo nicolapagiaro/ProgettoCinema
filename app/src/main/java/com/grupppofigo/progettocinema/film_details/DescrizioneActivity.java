@@ -10,39 +10,30 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.grupppofigo.progettocinema.R;
-import com.grupppofigo.progettocinema.SessionExpired;
 import com.grupppofigo.progettocinema.database.DatabaseContract;
 import com.grupppofigo.progettocinema.entities.Film;
-import com.grupppofigo.progettocinema.entities.Prenotazione;
-import com.grupppofigo.progettocinema.entities.Programmazione;
 import com.grupppofigo.progettocinema.entities.Programmazioni;
 import com.grupppofigo.progettocinema.helpers.DateParser;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
 import com.grupppofigo.progettocinema.helpers.SessionValidator;
-import com.grupppofigo.progettocinema.helpers.SnackBar;
 import com.grupppofigo.progettocinema.prenotazione_posti.PostiActivity;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
 import com.grupppofigo.progettocinema.queries.ProgrammazioneQueries;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
-import com.grupppofigo.progettocinema.riassunto.ResumeActivity;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.ID_PROGRAMMAZIONE;
@@ -140,7 +131,8 @@ public class DescrizioneActivity extends AppCompatActivity {
                 .into(mCopertina, new Callback() {
                     @Override
                     public void onSuccess() {
-                        showImage();
+                        if(ViewCompat.isAttachedToWindow(mCopertina))
+                            showImage();
                     }
 
                     @Override
@@ -195,18 +187,15 @@ public class DescrizioneActivity extends AppCompatActivity {
                         resume.putExtra(ID_UTENTE, idUtente);
                         resume.putExtra(ID_PROGRAMMAZIONE, idProgrammazione);
                         startActivity(resume);
-                        finish();
                     }
                     else {
                         ConstraintLayout layout = findViewById(R.id.bottomContainer);
-                        SnackBar.with(getApplicationContext())
-                                .show(layout, R.string.prompt_error_general, Snackbar.LENGTH_SHORT);
+                        Snackbar.make(layout, R.string.prompt_error_general, Snackbar.LENGTH_SHORT).show();
                     }
                 }
                 else {
                     ConstraintLayout layout = findViewById(R.id.bottomContainer);
-                    SnackBar.with(getApplicationContext())
-                            .show(layout, R.string.prompt_error_prenotazione, Snackbar.LENGTH_SHORT);
+                    Snackbar.make(layout, R.string.prompt_error_prenotazione, Snackbar.LENGTH_SHORT).show();
                 }
 
             }

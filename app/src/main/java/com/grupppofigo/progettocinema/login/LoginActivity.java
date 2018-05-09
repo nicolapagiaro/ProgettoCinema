@@ -22,13 +22,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.database.DatabaseContract;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
-import com.grupppofigo.progettocinema.helpers.SnackBar;
+import com.grupppofigo.progettocinema.helpers.SharedPrefHelper;
 import com.grupppofigo.progettocinema.lista_film.MainActivity;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
 import com.grupppofigo.progettocinema.queries.UtenteQueries;
@@ -54,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button mAccedi = findViewById(R.id.buttonAccedi);
         TextView mRegistrati = findViewById(R.id.linkRegistrati);
         final TextView getPsw = findViewById(R.id.textGetPsw);
+        final CheckBox chkRemind = findViewById(R.id.chRemember);
 
         mPassword.setTransformationMethod(new PasswordTransformationMethod());
 
@@ -96,18 +98,23 @@ public class LoginActivity extends AppCompatActivity {
                         long startTime = System.currentTimeMillis();
                         token = SessioneQueries.startSession((int) id, startTime);
 
+                        if(chkRemind.isChecked()) {
+                            SharedPrefHelper.with(getApplicationContext())
+                                    .rememberUser((int) id);
+                        }
+
                         // faccio partire l'altra activity
                         Intent postLoginAct = new Intent(LoginActivity.this, MainActivity.class);
                         postLoginAct.putExtra(ExtrasDefinition.START_SESSION, String.valueOf(startTime));
                         postLoginAct.putExtra(ExtrasDefinition.ID_TOKEN, token);
                         postLoginAct.putExtra(ExtrasDefinition.ID_UTENTE, (int) id);
                         startActivity(postLoginAct);
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                         finish();
                     }
                     else {
                         // l'utente non c'è
-                        SnackBar.with(getApplicationContext())
-                                .show(constraintLayout, R.string.err_user_not_found, Snackbar.LENGTH_SHORT);
+                        Snackbar.make(constraintLayout, R.string.err_user_not_found, Snackbar.LENGTH_SHORT).show();
 
                         // ANIMAZIONE BOTTONE
                         final Animation myAnim = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.milkshake);
@@ -124,13 +131,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(registerIntent);
-                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
     }
 
     /**
      * Metodo che verifica se i dati inseriti son validi
+     * fdfd
      * @return true/false
      */
     private boolean validateInput() {
@@ -206,7 +214,6 @@ public class LoginActivity extends AppCompatActivity {
                                 dialog.dismiss();
                             }
                         }, 2000);
-
                     }
                 });
             }

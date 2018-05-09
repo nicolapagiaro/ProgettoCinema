@@ -104,30 +104,23 @@ public class PostiActivity extends AppCompatActivity {
 
         //btn avanti --> registro la prenotazione nel database
         mBtnAvanti.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 if (postiDaPrenotare.size() == 0) {
                     Snackbar snack = Snackbar.make(findViewById(R.id.main_container),
                             R.string.error_posti_min, Snackbar.LENGTH_LONG);
                     snack.show();
-                    return;
                 }
-
-                // registro la PRENOTAZIONE
-                long idPrenotazione = PrenotazioneQueries.addPrenotazione(new Prenotazione(0, idProgrammazione, idUtente));
-
-
-                // faccio partire l'activity di riassunto
-                Intent riassunto = new Intent(getApplicationContext(), ResumeActivity.class);
-                riassunto.putExtra(ExtrasDefinition.START_SESSION, startSession);
-                riassunto.putExtra(ExtrasDefinition.ID_UTENTE, idUtente);
-                riassunto.putExtra(ExtrasDefinition.ID_TOKEN, idSessione);
-                riassunto.putExtra(ExtrasDefinition.ID_PRENOTAZIONE, idPrenotazione);
-                riassunto.putExtra(ExtrasDefinition.ID_PROGRAMMAZIONE, idProgrammazione);
-                riassunto.putIntegerArrayListExtra("postiDaPrenotare", postiDaPrenotare);
-                startActivity(riassunto);
-                finish();
+                else {
+                    // faccio partire l'activity di riassunto
+                    Intent riassunto = new Intent(getApplicationContext(), ResumeActivity.class);
+                    riassunto.putExtra(ExtrasDefinition.START_SESSION, startSession);
+                    riassunto.putExtra(ExtrasDefinition.ID_UTENTE, idUtente);
+                    riassunto.putExtra(ExtrasDefinition.ID_TOKEN, idSessione);
+                    riassunto.putExtra(ExtrasDefinition.ID_PROGRAMMAZIONE, idProgrammazione);
+                    riassunto.putIntegerArrayListExtra(ExtrasDefinition.POSTI_PRENOTARE, postiDaPrenotare);
+                    startActivity(riassunto);
+                }
             }
         });
     }

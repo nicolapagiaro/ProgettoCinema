@@ -1,7 +1,6 @@
 package com.grupppofigo.progettocinema.lista_film;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,12 +13,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.grupppofigo.progettocinema.R;
-import com.grupppofigo.progettocinema.SessionExpired;
 import com.grupppofigo.progettocinema.entities.Film;
 import com.grupppofigo.progettocinema.film_details.DescrizioneActivity;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
 import com.grupppofigo.progettocinema.helpers.SessionValidator;
-import com.grupppofigo.progettocinema.helpers.SnackBar;
+import com.grupppofigo.progettocinema.helpers.SharedPrefHelper;
+import com.grupppofigo.progettocinema.login.SplashScreen;
 import com.grupppofigo.progettocinema.menu_activities.AccountIntent;
 import com.grupppofigo.progettocinema.menu_activities.InfoIntent;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
@@ -68,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
         AdapterFilm adapterFilm = new AdapterFilm(MainActivity.this, R.layout.film_list_item, films);
         lv_film.setAdapter(adapterFilm);
 
-        Log.d("Films", films.toString());
-
         //per andare nell'altra activity cliccando sulla card
         lv_film.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -88,10 +85,9 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
-                    SnackBar.with(getApplicationContext())
-                            .show(findViewById(R.id.mainContainer),
-                                    R.string.error_film_click,
-                                    Snackbar.LENGTH_SHORT);
+                    Snackbar.make(findViewById(R.id.mainContainer),
+                            R.string.error_film_click,
+                            Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
@@ -115,6 +111,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.info_app:
                 Intent infoIntent = new Intent(this, InfoIntent.class);
                 startActivity(infoIntent);
+                return true;
+
+            case R.id.exit_app:
+                SharedPrefHelper.with(getApplicationContext())
+                        .removeUser();
+                Intent splash = new Intent(this, SplashScreen.class);
+                startActivity(splash);
+                finish();
                 return true;
 
             default: return super.onOptionsItemSelected(item);

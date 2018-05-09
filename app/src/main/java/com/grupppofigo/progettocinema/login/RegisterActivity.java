@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.entities.Utente;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
-import com.grupppofigo.progettocinema.helpers.SnackBar;
 import com.grupppofigo.progettocinema.lista_film.MainActivity;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
 import com.grupppofigo.progettocinema.queries.UtenteQueries;
@@ -81,6 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                     toPostLog.putExtra(ExtrasDefinition.START_SESSION, String.valueOf(startTime));
                     toPostLog.putExtra(ExtrasDefinition.ID_TOKEN, idSession);
                     startActivity(toPostLog);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     finish();
                 }
             }
@@ -93,6 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
             }
         });
@@ -116,8 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 contratto.setChecked(false);
-                                SnackBar.with(getApplicationContext())
-                                        .show(constraintLayout, R.string.must_accept_contrat, Snackbar.LENGTH_SHORT);
+                                Snackbar.make(constraintLayout, R.string.must_accept_contrat, Snackbar.LENGTH_SHORT).show();
                             }
                         })
                         .create()
@@ -196,20 +196,11 @@ public class RegisterActivity extends AppCompatActivity {
         // check box del contratto
         if (!contratto.isChecked()) {
             if(errCount == 0)
-                SnackBar.with(getApplicationContext())
-                        .show(constraintLayout, R.string.must_accept_contrat, Snackbar.LENGTH_SHORT);
+                Snackbar.make(constraintLayout, R.string.must_accept_contrat, Snackbar.LENGTH_SHORT).show();
             errCount++;
         }
 
         return errCount == 0;
-    }
-
-    @Override
-    public void onBackPressed() {
-        // se preme indietro torna al login
-        Intent login = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(login);
-        finish();
     }
 
     /**
