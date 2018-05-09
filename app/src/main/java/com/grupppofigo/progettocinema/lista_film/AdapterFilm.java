@@ -68,7 +68,7 @@ public class AdapterFilm extends ArrayAdapter<Film> {
     class FilmViewHolder {
         protected TextView tv_titolo;
         protected TextView tv_genere;
-        protected  TextView tv_durata;
+        protected TextView tv_durata;
         protected ImageView iv_film;
         protected RatingBar rb_stelle;
 
