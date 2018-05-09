@@ -80,6 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                     toPostLog.putExtra(ExtrasDefinition.START_SESSION, String.valueOf(startTime));
                     toPostLog.putExtra(ExtrasDefinition.ID_TOKEN, idSession);
                     startActivity(toPostLog);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     finish();
                 }
             }
@@ -92,6 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
             }
         });

@@ -40,6 +40,7 @@ public class SplashScreen extends AppCompatActivity {
             // parto col login/register
             Intent vToLoginPage = new Intent(SplashScreen.this, LoginActivity.class);
             startActivity(vToLoginPage);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
         else {
             // parto con la main activity
@@ -52,6 +53,7 @@ public class SplashScreen extends AppCompatActivity {
             postLoginAct.putExtra(ExtrasDefinition.ID_TOKEN, token);
             postLoginAct.putExtra(ExtrasDefinition.ID_UTENTE, idUtente);
             startActivity(postLoginAct);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             finish();
         }
     }

@@ -109,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                         postLoginAct.putExtra(ExtrasDefinition.ID_TOKEN, token);
                         postLoginAct.putExtra(ExtrasDefinition.ID_UTENTE, (int) id);
                         startActivity(postLoginAct);
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                         finish();
                     }
                     else {
