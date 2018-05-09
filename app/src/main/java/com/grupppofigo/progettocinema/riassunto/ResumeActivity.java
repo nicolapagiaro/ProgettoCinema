@@ -211,8 +211,9 @@ public class ResumeActivity extends AppCompatActivity {
                                         for (Integer index : posti) {
                                             PostoPrenotato p = new PostoPrenotato(0, (int) idPrenotazione, index);
                                             PostoPrenotatoQueries.addPostoPrenotato(p);
-                                            isBigliettoComprato = !isBigliettoComprato;
                                         }
+
+                                        isBigliettoComprato = !isBigliettoComprato;
                                     }
                                     else {
                                         Snackbar.make(findViewById(R.id.resume_container_1), R.string.snackAnnullataPrenotazione, Snackbar.LENGTH_LONG).show();
