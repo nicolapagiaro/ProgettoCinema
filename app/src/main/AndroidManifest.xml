@@ -44,9 +44,12 @@
         <activity
             android:name=".SessionExpired"
             android:label="@string/session_expired_label"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+
         <activity android:name=".menu_activities.AccountIntent" />
-        <activity android:name=".menu_activities.InfoIntent"></activity>
+
+        <activity android:name=".menu_activities.InfoIntent" />
     </application>
 
 </manifest>

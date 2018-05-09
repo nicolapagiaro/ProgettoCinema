@@ -7,7 +7,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="fontFamily">@font/app_font</item>
-        <item name="actionBarStyle">@style/CustumActionBar</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
@@ -26,15 +25,13 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowNoTitle">true</item>
         <item name="fontFamily">@font/app_font</item>
-        <item name="actionBarStyle">@style/CustumActionBar</item>
     </style>
 
-    <style name="CustumActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
-        <item name="titleTextStyle">@style/CustumTextActionBar</item>
-    </style>
-
-    <style name="CustumTextActionBar" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="fontFamily">@font/app_font</item>
+    <!-- Stile dei button -->
+    <style name="NewButtonWhite" parent="Base.Widget.AppCompat.Button.Colored">
+        <item name="android:padding">8dp</item>
+        <item name="android:background">@drawable/round_button_white</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
 </resources>
