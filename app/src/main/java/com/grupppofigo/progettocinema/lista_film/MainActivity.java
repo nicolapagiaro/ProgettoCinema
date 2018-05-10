@@ -3,12 +3,10 @@ package com.grupppofigo.progettocinema.lista_film;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,7 +26,6 @@ import com.grupppofigo.progettocinema.menu_activities.AccountIntent;
 import com.grupppofigo.progettocinema.menu_activities.InfoIntent;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
-import com.marcoscg.headerdialog.HeaderDialog;
 
 import java.lang.*;
 import java.util.ArrayList;
@@ -121,18 +118,13 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.exit_app:
 
-                new HeaderDialog(MainActivity.this)
-                        .setColor(getResources().getColor(R.color.background))
-                        .setElevation(false)
-                        .setIcon(getResources().getDrawable(R.drawable.x_button))
-                        .setMessage(R.string.msg_esci)
-                        .justifyContent(true)
-                        .setTitleColor(Color.parseColor("#212121"))
-                        .setTitleGravity(Gravity.CENTER_HORIZONTAL)
-                        .setMessageGravity(Gravity.CENTER_HORIZONTAL)
-                        .setTitleMultiline(false)
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder
+                        .setTitle(R.string.msg_esci)
+                        .setCancelable(true)
+                        .setPositiveButton(R.string.msg_si, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
                                 SharedPrefHelper.with(getApplicationContext())
                                         .removeUser();
                                 Intent splash = new Intent(MainActivity.this, SplashScreen.class);
@@ -141,8 +133,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         })
                         .setNegativeButton(R.string.msg_annulla, null)
-                        .show();
-
+                        .create().show();
                 return true;
 
             default: return super.onOptionsItemSelected(item);
