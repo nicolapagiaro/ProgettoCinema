@@ -1,5 +1,7 @@
 package com.grupppofigo.progettocinema.lista_film;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import com.grupppofigo.progettocinema.film_details.DescrizioneActivity;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
 import com.grupppofigo.progettocinema.helpers.SessionValidator;
 import com.grupppofigo.progettocinema.helpers.SharedPrefHelper;
+import com.grupppofigo.progettocinema.login.LoginActivity;
 import com.grupppofigo.progettocinema.login.SplashScreen;
 import com.grupppofigo.progettocinema.menu_activities.AccountIntent;
 import com.grupppofigo.progettocinema.menu_activities.InfoIntent;
@@ -114,11 +117,26 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.exit_app:
-                SharedPrefHelper.with(getApplicationContext())
-                        .removeUser();
-                Intent splash = new Intent(this, SplashScreen.class);
-                startActivity(splash);
-                finish();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle(R.string.msg_esci)
+                        .setCancelable(true)
+                        .setPositiveButton(R.string.msg_si, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                SharedPrefHelper.with(getApplicationContext())
+                                        .removeUser();
+                                Intent splash = new Intent(MainActivity.this, SplashScreen.class);
+                                startActivity(splash);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton(R.string.msg_annulla, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        });
+                builder.create().show();
                 return true;
 
             default: return super.onOptionsItemSelected(item);
