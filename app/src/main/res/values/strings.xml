@@ -89,5 +89,10 @@
     <string name="nomi">Creato da: \nAmbrosi, Baldan, Baruch, Bonin, Canova, Caviola, Ceretta, Cozza, Dal Santo, De Benetti, Lasta, Littamè, Ly, Marchi, Matvei, Miftah, Pagiaro, Pertile, Raimondi</string>
     <string name="info">Info App</string>
     <string name="esci">Esci</string>
+    
+    <!-- SEZIONE ALERT PER USCIRE -->
+    <string name="msg_esci">Sei sicuro di voler uscire?</string>
+    <string name="msg_si">SI</string>
+    <string name="msg_annulla">Annulla</string>
 
 </resources>
