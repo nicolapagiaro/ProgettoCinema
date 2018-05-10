@@ -1,3 +1,4 @@
+
 swagger: "2.0"
 info:
   description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
@@ -23,6 +24,8 @@ tags:
   description: "Operations about user"
 - name: "Sale"
   description: "Gestione delle sale"
+- name: "restore"
+  description: "Restore your password"
 schemes:
 - "http"
 paths:
@@ -611,6 +614,70 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
+  /api/v1/auth:
+    post:
+      tags:
+      - "auth"
+      summary: "Authentication page"
+      description: ""
+      operationId: "Authorization"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Authentication page"
+        required: true
+        schema:
+          $ref: "#/definitions/Auth"
+      responses:
+        401:
+          description: "Invalid input"
+  /api/v1/user:
+    put:
+      tags:
+      - "pet"
+      summary: ""
+      description: "Registration of a user"
+      operationId: "updatePet"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Registation of a user"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        500:
+          description: "Unable to register"
+  /api/v1/auth/restore:
+    get:
+      tags:
+      - "restore"
+      summary: "restore your password"
+      description: ""
+      operationId: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "email"
+        in: "query"
+        description: "Restore your password"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+        400:
+          description: "Invalid status value"
 securityDefinitions:
   petstore_auth:
     type: "oauth2"
@@ -624,6 +691,24 @@ securityDefinitions:
     name: "api_key"
     in: "header"
 definitions:
+  Auth:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+  User:
+    type: "object"
+    properties:
+      nome:
+        type: "string"
+      cognome:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
   Booking:
     type: "object"
     required:
