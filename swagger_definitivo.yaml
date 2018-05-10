@@ -562,7 +562,6 @@ paths:
           description: "Invalid username supplied"
         404:
           description: "User not found"
-  
   /api/v1/room/{idProgrammazione}/seats:
      get:
       tags:
@@ -587,7 +586,31 @@ paths:
           description: "ID non valido"
         404:
           description: "Errore"
-  
+  /api/v1/booking/:
+    post:
+      tags:
+      - "booking"
+      summary: "Add a new reservation"
+      description: ""
+      operationId: "addreservation"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Booking Data"
+        required: true
+        schema:
+          $ref: "#/definitions/Booking"
+      responses:
+        405:
+          description: "Invalid input"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
 securityDefinitions:
   petstore_auth:
     type: "oauth2"
@@ -601,6 +624,23 @@ securityDefinitions:
     name: "api_key"
     in: "header"
 definitions:
+  Booking:
+    type: "object"
+    required:
+    - "userid"
+    - "progid"
+    - "posti"
+    properties:
+      userid:
+        type: "integer"
+        format: "int64"
+      progid:
+        type: "integer"
+        format: "int64"
+      posti:
+        type: "array"
+        items:
+          type: "integer"
   ArrayPostiPrenotati:
     type: "object"
     properties:
