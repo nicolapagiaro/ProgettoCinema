@@ -122,7 +122,8 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.exit_app:
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this)
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder
                         .setTitle(R.string.msg_esci)
                         .setCancelable(true)
                         .setPositiveButton(R.string.msg_si, new DialogInterface.OnClickListener() {
@@ -135,12 +136,8 @@ public class MainActivity extends AppCompatActivity {
                                 finish();
                             }
                         })
-                        .setNegativeButton(R.string.msg_annulla, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                            }
-                        });
-                builder.create().show();
+                        .setNegativeButton(R.string.msg_annulla, null)
+                        .create().show();
                 return true;
 
             default: return super.onOptionsItemSelected(item);
