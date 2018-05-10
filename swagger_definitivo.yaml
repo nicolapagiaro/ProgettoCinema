@@ -678,6 +678,30 @@ paths:
             type: "string"
         400:
           description: "Invalid status value"
+   /api/v1/film:
+    get:
+      tags:
+      - developers
+      description: |
+        Get film by id
+      produces:
+      - application/json
+      parameters:
+      - name: getId
+        in: path
+        description: Id of film to return
+        required: true
+        type: integer
+        format: int64
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Film'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: ID Not found       
 securityDefinitions:
   petstore_auth:
     type: "oauth2"
@@ -691,6 +715,70 @@ securityDefinitions:
     name: "api_key"
     in: "header"
 definitions:
+  Film:
+    type: object
+    required:
+    - descrizione
+    - durata
+    - id
+    - id_genere
+    - immagine
+    - restrizione
+    - titolo
+    - voto
+    properties:
+      id:
+        type: integer
+        format: int32
+        example: 12
+      titolo:
+        type: string
+        example: Gigi la trottola
+      id_genere:
+        $ref: '#/definitions/Film_id_genere'
+      durata:
+        type: integer
+        format: int32
+        example: 120
+      descrizione:
+        type: string
+        example: Un bel film
+      voto:
+        type: integer
+        format: int32
+        example: 4
+      immagine:
+        type: string
+        example: https://www.frasimania.it/wp-content/uploads/2018/02/immagini-frasi-felicita.jpg
+      restrizione:
+        type: integer
+        format: int32
+        example: 2
+    example:
+      id_genere:
+        genere:
+        - Comico
+        - Thriller
+      descrizione: Un bel film
+      titolo: Gigi la trottola
+      voto: 4
+      durata: 120
+      id: 12
+      immagine: https://www.frasimania.it/wp-content/uploads/2018/02/immagini-frasi-felicita.jpg
+      restrizione: 2
+  Film_id_genere:
+    properties:
+      genere:
+        type: array
+        example:
+        - Comico
+        - Thriller
+        items:
+          type: string
+    example:
+      genere:
+      - Comico
+      - Thriller
   Auth:
     type: "object"
     properties:
