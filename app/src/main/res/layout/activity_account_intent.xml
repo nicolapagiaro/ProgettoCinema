@@ -24,6 +24,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/nome_utente"
                 android:layout_below="@+id/imageView5"
+                android:inputType="textPassword"
+                android:paddingLeft="8dp"
                 android:text="Password"
                 android:textSize="15sp" />
 
@@ -42,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/Account"
                 android:layout_toEndOf="@+id/imageView4"
+                android:paddingLeft="8dp"
                 android:text="Nome Cognome"
                 android:textSize="15sp" />
 
@@ -51,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/nome_utente"
                 android:layout_below="@+id/imageView4"
+                android:paddingLeft="8dp"
                 android:text="mail@domain.it"
                 android:textSize="15sp" />
 

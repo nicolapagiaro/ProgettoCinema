@@ -105,9 +105,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // id dell'utente passata dall'activity prima
+        final int idUtente = getIntent().getIntExtra(ExtrasDefinition.ID_UTENTE, EXTRA_DEFAULT_VALUE);
+
         switch (item.getItemId()){
             case R.id.account_user:
                 Intent accountIntent = new Intent(this, AccountIntent.class);
+                accountIntent.putExtra(ExtrasDefinition.ID_UTENTE, idUtente);
                 startActivity(accountIntent);
                 return true;
 

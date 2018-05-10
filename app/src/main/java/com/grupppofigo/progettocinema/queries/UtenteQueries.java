@@ -23,6 +23,7 @@ public class UtenteQueries {
 
     /**
      * Inserisce un utente nel database
+     *
      * @param u oggetto utente
      */
     public static long addUtente(Utente u) {
@@ -37,8 +38,7 @@ public class UtenteQueries {
             id = d.insert(DatabaseContract.UtentiContract.TABLE_NAME,
                     null,
                     cv);
-        }
-        catch (SQLiteException ex) {
+        } catch (SQLiteException ex) {
             ex.printStackTrace();
         }
 
@@ -47,6 +47,7 @@ public class UtenteQueries {
 
     /**
      * Converte un oggetto Utente in contentvalues
+     *
      * @param u oggetto utente
      * @return oggetto contentvalues
      */
@@ -64,6 +65,7 @@ public class UtenteQueries {
 
     /**
      * Restituisce una lista di utenti del database
+     *
      * @return lista di utenti
      */
     public static ArrayList<Utente> getAllUtenti() {
@@ -88,6 +90,7 @@ public class UtenteQueries {
 
     /**
      * Converte un cursore in un oggetto Utente
+     *
      * @param c oggetto cursor
      * @return oggetto utente
      */
@@ -106,6 +109,7 @@ public class UtenteQueries {
     /**
      * Metodo che effettua il login dell'utente, cioè verifica se c'è un utente
      * passato
+     *
      * @return restituisce un ID se c'è o -1 se non c'è
      */
     public static long loginUtente(String email, String pssw) {
@@ -120,7 +124,7 @@ public class UtenteQueries {
                 null,
                 null);
 
-        if(c.moveToNext()) {
+        if (c.moveToNext()) {
             id = c.getInt(c.getColumnIndex(UtentiContract._ID));
         }
 
@@ -131,6 +135,7 @@ public class UtenteQueries {
     /**
      * Metodo che restituisce la password di un utente registrato se se l'è
      * dimenticata
+     *
      * @param email email dell'utente
      * @return una stringa con la PASSWORD o NULL se niente
      */
@@ -141,16 +146,39 @@ public class UtenteQueries {
         Cursor c = d.query(UtentiContract.TABLE_NAME,
                 null,
                 UtentiContract.EMAIL + "= ?",
-                new String[] {email},
+                new String[]{email},
                 null,
                 null,
                 null);
 
-        if(c.moveToNext()) {
+        if (c.moveToNext()) {
             pssw = c.getString(c.getColumnIndex(UtentiContract.PASSW));
         }
 
         c.close();
         return pssw;
+    }
+
+    //query per prendere i dati di un utente
+    public static Utente getUtente(int id) {
+
+        SQLiteDatabase d = mDb.getReadableDatabase();
+
+        Cursor c = d.query(UtentiContract.TABLE_NAME,
+                null,
+                UtentiContract._ID + "=?",
+                new String[]{id + ""},
+                null,
+                null,
+                null);
+
+        Utente res = null;
+
+        if (c.moveToNext()) {
+            res = utenteFromCursor(c);
+        }
+
+        c.close();
+        return res;
     }
 }
