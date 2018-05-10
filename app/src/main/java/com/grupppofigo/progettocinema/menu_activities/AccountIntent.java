@@ -19,7 +19,7 @@ import com.grupppofigo.progettocinema.queries.UtenteQueries;
 
 public class AccountIntent extends AppCompatActivity {
 
-    TextView txNome, txCognome, txMail;
+    TextView txNomeUtente, txPassword, txMail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +27,9 @@ public class AccountIntent extends AppCompatActivity {
         setContentView(R.layout.activity_account_intent);
         setTitle("Account");
 
-        txNome = findViewById(R.id.textNomeAcc);
-        txCognome = findViewById(R.id.textCogAcc);
-        txMail = findViewById(R.id.textMailAcc);
+        txNomeUtente = findViewById(R.id.nome_utente);
+        txPassword = findViewById(R.id.password);
+        txMail = findViewById(R.id.mail);
 
     }
 }
