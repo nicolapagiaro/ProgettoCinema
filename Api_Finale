@@ -1,0 +1,353 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v2"
+tags:
+- name: "pet"
+  description: "Everything about your Pets"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+- name: "store"
+  description: "Access to Petstore orders"
+- name: "user"
+  description: "Operations about user"
+- name: "Sale"
+  description: "Gestione delle sale"
+- name: "restore"
+  description: "Restore your password"
+schemes:
+- "http"
+paths:
+  /api/v1/room/{idProgrammazione}/seats:
+     get:
+      tags:
+      - "Sale"
+      summary: "Lista di posti prenotati"
+      description: "Restituisce una lista di posti prenotati per la programmazione passata"
+      operationId: "getPostiPrenotati"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "idProgrammazione"
+        in: "path"
+        description: "ID della prenotazione selezionato dall'utente"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ArrayPostiPrenotati"
+        400:
+          description: "ID non valido"
+        404:
+          description: "Errore"
+  /api/v1/booking/:
+    post:
+      tags:
+      - "booking"
+      summary: "Add a new reservation"
+      description: ""
+      operationId: "addreservation"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Booking Data"
+        required: true
+        schema:
+          $ref: "#/definitions/Booking"
+      responses:
+        405:
+          description: "Invalid input"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+  /api/v1/auth:
+    post:
+      tags:
+      - "auth"
+      summary: "Authentication page"
+      description: ""
+      operationId: "Authorization"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Authentication page"
+        required: true
+        schema:
+          $ref: "#/definitions/Auth"
+      responses:
+        401:
+          description: "Invalid input"
+  /api/v1/user:
+    put:
+      tags:
+      - "pet"
+      summary: ""
+      description: "Registration of a user"
+      operationId: "updatePetl"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Registation of a user"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        500:
+          description: "Unable to register"
+  /api/v1/auth/restore:
+    get:
+      tags:
+      - "restore"
+      summary: "restore your password"
+      description: ""
+      operationId: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "email"
+        in: "query"
+        description: "Restore your password"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+        400:
+          description: "Invalid status value"
+  /api/v1/film/{getId}:
+    get:
+      tags:
+      - "developers"
+      description: |
+        Get film by id
+      produces:
+      - "application/json"
+      parameters:
+      - name: "getId"
+        in: "path"
+        description: "Id of film to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/Film'
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: ID Not found 
+  /api/v1/film/{getID}/plan:
+    get:
+      tags:
+      - developers
+      summary: get plan by film's ID
+      produces:
+      - application/json
+      parameters:
+      - name: getID
+        in: path
+        description: plan of film's ID sended
+        required: true
+        type: integer
+        format: int64
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Plan'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: ID Not found      
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Film:
+    type: object
+    required:
+    - descrizione
+    - durata
+    - id
+    - id_genere
+    - immagine
+    - restrizione
+    - titolo
+    - voto
+    properties:
+      id:
+        type: integer
+        format: int32
+        example: 12
+      titolo:
+        type: string
+        example: Gigi la trottola
+      id_genere:
+        $ref: '#/definitions/Film_id_genere'
+      durata:
+        type: integer
+        format: int32
+        example: 120
+      descrizione:
+        type: string
+        example: Un bel film
+      voto:
+        type: integer
+        format: int32
+        example: 4
+      immagine:
+        type: string
+        example: https://www.frasimania.it/wp-content/uploads/2018/02/immagini-frasi-felicita.jpg
+      restrizione:
+        type: integer
+        format: int32
+        example: 2
+    example:
+      id_genere:
+        genere:
+        - Comico
+        - Thriller
+      descrizione: Un bel film
+      titolo: Gigi la trottola
+      voto: 4
+      durata: 120
+      id: 12
+      immagine: https://www.frasimania.it/wp-content/uploads/2018/02/immagini-frasi-felicita.jpg
+      restrizione: 2
+  Plan:
+    type: object
+    required:
+    - data
+    - id
+    - id_sala
+    - ora
+    properties:
+      id:
+        type: integer
+        format: int32
+        example: 12
+      data:
+        type: string
+        example: 11/11/2018
+      ora:
+        type: string
+        example: "12.30"
+      id_sala:
+        type: integer
+        format: int32
+        example: 2
+    example:
+      data: 11/11/2018
+      id_sala: 2
+      id: 12
+      ora: "12.30"
+    
+  Film_id_genere:
+    properties:
+      genere:
+        type: array
+        example:
+        - Comico
+        - Thriller
+        items:
+          type: string
+    example:
+      genere:
+      - Comico
+      - Thriller
+  Auth:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+  User:
+    type: "object"
+    properties:
+      nome:
+        type: "string"
+      cognome:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+  Booking:
+    type: "object"
+    required:
+    - "userid"
+    - "progid"
+    - "posti"
+    properties:
+      userid:
+        type: "integer"
+        format: "int64"
+      progid:
+        type: "integer"
+        format: "int64"
+      posti:
+        type: "array"
+        items:
+          type: "integer"
+  ArrayPostiPrenotati:
+    type: "object"
+    properties:
+      postiPrenotati:
+        type: "array"
+        items:
+          type: "integer"
+        example: [23,45,78]
+    xml:
+      name: "Order"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
