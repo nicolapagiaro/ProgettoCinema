@@ -22,6 +22,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.grupppofigo.progettocinema.R;
+import com.grupppofigo.progettocinema.database.DatabaseContract;
 import com.grupppofigo.progettocinema.entities.Film;
 import com.grupppofigo.progettocinema.entities.PostoPrenotato;
 import com.grupppofigo.progettocinema.entities.Prenotazione;
@@ -45,7 +46,6 @@ import java.util.Collections;
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
 
 public class ResumeActivity extends AppCompatActivity {
-    private final int SNACKBAR_CONFERMA_DURATION = 2000;
     private final int ANIMATION_DURATION = 550;
     private final int SECOND_ANIM_DURATION = ANIMATION_DURATION + 2000;
     private static final int VIBRATION_DURATE = 500;
@@ -55,7 +55,7 @@ public class ResumeActivity extends AppCompatActivity {
     private String startSession;
     private int idUtente;
     private ArrayList<Integer> posti;
-    private boolean daAcquistare = true, isAnimating = false;
+    private boolean isAnimating = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +134,7 @@ public class ResumeActivity extends AppCompatActivity {
         }
 
         // cose con i posti con i posti
-        String charDelimit = "- ";
+        String charDelimit = " - ";
         StringBuilder postiString = new StringBuilder();
         for (int i = 0; i < posti.size(); i++) {
             postiString.append(posti.get(i));
@@ -179,8 +179,6 @@ public class ResumeActivity extends AppCompatActivity {
             public boolean onLongClick(View v) {
                 // se non è già acquistato
                 if (!isBigliettoComprato) {
-                    daAcquistare = true;
-
                     //vibrazione
                     Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                     if(vibe != null) {
@@ -189,7 +187,18 @@ public class ResumeActivity extends AppCompatActivity {
                     // faccio l'animazione
                     doRevealAnimation();
 
-                    //mostra la snackbar
+                    // prenoto i posti
+                    final long idPrenotazione = PrenotazioneQueries.addPrenotazione(new Prenotazione(0, idProgrammazione, idUtente));
+                    for (Integer index : posti) {
+                        PostoPrenotato p = new PostoPrenotato(0, (int) idPrenotazione, index);
+                        PostoPrenotatoQueries.addPostoPrenotato(p);
+                    }
+                    isBigliettoComprato = !isBigliettoComprato;
+                    paidTicket.setVisibility(View.VISIBLE);
+                    isAnimating = false;
+
+
+                    //mostra la snackbar per annullare la prenotazione
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -197,35 +206,18 @@ public class ResumeActivity extends AppCompatActivity {
                             snack.setAction(android.R.string.cancel, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    daAcquistare = false;
+                                    // annullo tutto
+                                    if(PrenotazioneQueries.removePrenotazione(idPrenotazione)) {
+                                        PostoPrenotatoQueries.removePostiPrenotazioe(idPrenotazione);
+                                    }
+                                    isBigliettoComprato = !isBigliettoComprato;
+                                    paidTicket.setVisibility(View.INVISIBLE);
+
+                                    // mostro avviso
+                                    Snackbar.make(findViewById(R.id.resume_container_1), R.string.snackAnnullataPrenotazione, Snackbar.LENGTH_LONG).show();
                                 }
                             });
-                            snack.setDuration(SNACKBAR_CONFERMA_DURATION);
                             snack.show();
-
-                            // prenoto veramente
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if(daAcquistare) {
-                                        // registro la PRENOTAZIONE
-                                        long idPrenotazione = PrenotazioneQueries.addPrenotazione(new Prenotazione(0, idProgrammazione, idUtente));
-
-                                        // scrivo nel db le modifiche
-                                        for (Integer index : posti) {
-                                            PostoPrenotato p = new PostoPrenotato(0, (int) idPrenotazione, index);
-                                            PostoPrenotatoQueries.addPostoPrenotato(p);
-                                        }
-
-                                        isBigliettoComprato = !isBigliettoComprato;
-                                        paidTicket.setVisibility(View.VISIBLE);
-                                        isAnimating = false;
-                                    }
-                                    else {
-                                        Snackbar.make(findViewById(R.id.resume_container_1), R.string.snackAnnullataPrenotazione, Snackbar.LENGTH_LONG).show();
-                                    }
-                                }
-                            }, SNACKBAR_CONFERMA_DURATION);
                         }
                     }, ANIMATION_DURATION + SECOND_ANIM_DURATION);
                 }

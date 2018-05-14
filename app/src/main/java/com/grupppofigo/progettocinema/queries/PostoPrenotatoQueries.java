@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
 import com.grupppofigo.progettocinema.database.DBHelper;
 import com.grupppofigo.progettocinema.database.DataStore;
@@ -41,6 +42,23 @@ public class PostoPrenotatoQueries {
         }
         finally {
             d.endTransaction();
+        }
+    }
+
+    /**
+     * Metodo che elimina i posti prenotati di una prenotazione eliminata
+     * @param idPrenotazione id della prenotazione
+     */
+    public static void removePostiPrenotazioe(long idPrenotazione) {
+        SQLiteDatabase d = mDb.getWritableDatabase();
+
+        try {
+            d.delete(DatabaseContract.PostiPrenotatiContract.TABLE_NAME,
+                    DatabaseContract.PostiPrenotatiContract.ID_PRENOTAZIONE + "=?",
+                    new String[]{idPrenotazione+""});
+        }
+        catch (SQLiteException ex) {
+            ex.printStackTrace();
         }
     }
 

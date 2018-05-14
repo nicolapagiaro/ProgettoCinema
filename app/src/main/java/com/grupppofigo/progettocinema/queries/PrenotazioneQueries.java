@@ -43,6 +43,27 @@ public class PrenotazioneQueries {
     }
 
     /**
+     * Metodo che elimina una prenotazione dal database passato l'id
+     * @param idPrenotazione id della prenotazione da eliminare
+     * @return true/false se eliminata o no
+     */
+    public static boolean removePrenotazione(long idPrenotazione) {
+        SQLiteDatabase d = mDb.getWritableDatabase();
+        int modifedRows = 0;
+
+        try {
+            modifedRows = d.delete(DatabaseContract.PrenotazioneContract.TABLE_NAME,
+                    DatabaseContract.PrenotazioneContract._ID + "=?",
+                    new String[]{idPrenotazione+""});
+        }
+        catch (SQLiteException ex) {
+            ex.printStackTrace();
+        }
+
+        return modifedRows != 0;
+    }
+
+    /**
      * Converte un oggetto Prenotazione in contentValues
      * @param p oggetto prenotazione
      * @return un contentvalues
