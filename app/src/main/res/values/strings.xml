@@ -28,6 +28,7 @@
     <string name="err_passw">La password deve essere minimo di 6 caratteri</string>
     <string name="err_passw_conf">Le due passowrd non coincidono</string>
     <string name="err_user_not_found">L\'utente non esiste, controllare i dati immessi</string>
+    <string name="chkRememberMe">Ricora le miei credenziali</string>
 
     <!-- DIALOG per il recupero password -->
     <string name="dialog_title">Recupera la tua password</string>
