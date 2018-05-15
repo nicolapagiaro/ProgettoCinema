@@ -82,4 +82,15 @@
     <string name="account">Account</string>
     <string name="info">Info App</string>
 
+
+    <!-- SEZIONE PAGINA ACCOUNT -->
+    <string name="infoAccountTitle">Profilo</string>
+    <string name="cardInfoAccountTitle">Account</string>
+    <string name="cardPrenotazioniTitle">I tuoi biglietti</string>
+    <string name="tvPsswText">Vedi password</string>
+    <string name="btnShowAll">Mostra tutto</string>
+
+    <!-- SEZIONE PAGINA TUTTI I BIGLIETTI -->
+    <string name="allBigliettiTitle">I tuoi biglietti</string>
+
 </resources>

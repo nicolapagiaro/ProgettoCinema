@@ -29,8 +29,14 @@ import java.lang.*;
 import java.util.ArrayList;
 
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
+import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.ID_TOKEN;
+import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.ID_UTENTE;
+import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.START_SESSION;
 
 public class MainActivity extends AppCompatActivity {
+    private long idSessione;
+    private int idUtente;
+    private String startSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +44,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // id sessione
-        final long idSessione = getIntent().getLongExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
+        idSessione = getIntent().getLongExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
         if(idSessione == EXTRA_DEFAULT_VALUE) {
             SessionValidator.finishSession(this, idSessione);
         }
 
         // start della sessione
-        final String startSession = getIntent().getStringExtra(ExtrasDefinition.START_SESSION);
+        startSession = getIntent().getStringExtra(ExtrasDefinition.START_SESSION);
         if(startSession == null) {
             SessionValidator.finishSession(this, idSessione);
         }
@@ -55,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // id dell'utente passata dall'activity prima
-        final int idUtente = getIntent().getIntExtra(ExtrasDefinition.ID_UTENTE, EXTRA_DEFAULT_VALUE);
+        idUtente = getIntent().getIntExtra(ExtrasDefinition.ID_UTENTE, EXTRA_DEFAULT_VALUE);
         if(idUtente == EXTRA_DEFAULT_VALUE) {
             // errore idUtente non passato passo al login
             SessionValidator.finishSession(this, idSessione);
@@ -68,15 +74,12 @@ public class MainActivity extends AppCompatActivity {
         AdapterFilm adapterFilm = new AdapterFilm(MainActivity.this, R.layout.film_item_card, films);
         lv_film.setAdapter(adapterFilm);
 
-        Log.d("Films", films.toString());
-
         //per andare nell'altra activity cliccando sulla card
         lv_film.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 int idFilm = films.get(position).getId();
-                Log.d("Id film", idFilm + "");
 
                 // se c'è un ID okey
                 if (idFilm != EXTRA_DEFAULT_VALUE) {
@@ -109,6 +112,9 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.account_user:
                 Intent accountIntent = new Intent(this, AccountIntent.class);
+                accountIntent.putExtra(ID_UTENTE, idUtente);
+                accountIntent.putExtra(ID_TOKEN, idSessione);
+                accountIntent.putExtra(START_SESSION, startSession);
                 startActivity(accountIntent);
                 return true;
 

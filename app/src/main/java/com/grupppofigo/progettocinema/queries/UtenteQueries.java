@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.provider.ContactsContract;
 
 import com.grupppofigo.progettocinema.database.DBHelper;
 import com.grupppofigo.progettocinema.database.DataStore;
@@ -85,6 +86,31 @@ public class UtenteQueries {
         c.close();
         return res;
     }
+
+    /**
+     * Restituisce un utente passato l'id
+     * @return l'oggetto utente se c'è se no NULL
+     */
+    public static Utente getUtente(int idUtente) {
+        Utente res = null;
+        SQLiteDatabase d = mDb.getReadableDatabase();
+
+        Cursor c = d.query(DatabaseContract.UtentiContract.TABLE_NAME,
+                null,
+                UtentiContract._ID + "=?",
+                new String[]{idUtente+""},
+                null,
+                null,
+                null);
+
+        if (c.moveToNext()) {
+            res = utenteFromCursor(c);
+        }
+
+        c.close();
+        return res;
+    }
+
 
     /**
      * Converte un cursore in un oggetto Utente

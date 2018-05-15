@@ -140,7 +140,8 @@ public class DescrizioneActivity extends AppCompatActivity {
                 .into(mCopertina, new Callback() {
                     @Override
                     public void onSuccess() {
-                        showImage();
+                        if(ViewCompat.isAttachedToWindow(mCopertina))
+                            showImage();
                     }
 
                     @Override

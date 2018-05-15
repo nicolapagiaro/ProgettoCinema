@@ -82,6 +82,58 @@ public class PrenotazioneQueries {
     }
 
     /**
+     * Restituisce una lista delle prenotazioni di un utente
+     * @param idUtente id dell'utente
+     * @param limit numero massimo di risultati
+     * @return una lista di prenotazioni
+     */
+    public static ArrayList<Prenotazione> getPrenotazioni(int idUtente, int limit) {
+        SQLiteDatabase d = mDb.getReadableDatabase();
+        ArrayList<Prenotazione> res = new ArrayList<>();
+
+        Cursor c = d.query(DatabaseContract.PrenotazioneContract.TABLE_NAME,
+                null,
+                DatabaseContract.PrenotazioneContract.ID_UTENTE + "=?",
+                new String[]{idUtente+""},
+                null,
+                null,
+                null,
+                limit + "");
+
+        while (c.moveToNext()) {
+            res.add(prenotazioneFromCursor(c));
+        }
+
+        c.close();
+        return res;
+    }
+
+    /**
+     * Restituisce una lista delle prenotazioni di un utente
+     * @param idUtente id dell'utente
+     * @return una lista di prenotazioni
+     */
+    public static ArrayList<Prenotazione> getPrenotazioni(int idUtente) {
+        SQLiteDatabase d = mDb.getReadableDatabase();
+        ArrayList<Prenotazione> res = new ArrayList<>();
+
+        Cursor c = d.query(DatabaseContract.PrenotazioneContract.TABLE_NAME,
+                null,
+                DatabaseContract.PrenotazioneContract.ID_UTENTE + "=?",
+                new String[]{idUtente+""},
+                null,
+                null,
+                null);
+
+        while (c.moveToNext()) {
+            res.add(prenotazioneFromCursor(c));
+        }
+
+        c.close();
+        return res;
+    }
+
+    /**
      * Converte il cursore in una prentoazione
      * @param c cursore
      * @return una prenotazione

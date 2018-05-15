@@ -44,12 +44,17 @@
         <activity
             android:name=".SessionExpired"
             android:label="@string/session_expired_label"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".menu_activities.AccountIntent" />
+        <activity
+            android:name=".menu_activities.AccountIntent"
+            android:label="@string/infoAccountTitle" />
 
         <activity android:name=".menu_activities.InfoIntent" />
+
+        <activity android:name=".menu_activities.MostraBiglietti"
+            android:theme="@style/AppTheme.MostraBiglietti"
+            android:label="@string/allBigliettiTitle"/>
     </application>
 
 </manifest>

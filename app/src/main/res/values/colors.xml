@@ -12,15 +12,12 @@
     <!-- colore dei testi -->
     <color name="primaryTextColorWhite">#ffffff</color>
     <color name="primaryTextColorBlack">#de000000</color>
-
     <color name="secondaryTextColorWhite">#8affffff</color>
     <color name="secondaryTextColorBlack">#8a000000</color>
-
     <color name="bg_image_mask">#40000000</color>
 
 
     <!-- New colors here -->
-
     <color name="new_colorPrimary">#536DFE</color>
     <color name="new_colorPrimaryDark">#3D5AFE</color>
     <color name="new_colorAccent">#536DFE</color>
@@ -33,5 +30,8 @@
 
     <color name="primaryIconLight">#8a000000</color>
     <color name="disabledIconLight">#61000000</color>
+
+    <color name="whiteDark">#eeeeee</color>
+    <color name="white">#fff</color>
 
 </resources>
