@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/new_colorBackground"
     tools:context=".login.RegisterActivity"
     tools:layout_editor_absoluteY="19dp">
 
@@ -25,14 +25,14 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/prompt_policy"
-            android:textColor="@color/primaryTextColorWhite"
+            android:textColor="@color/primaryTextLight"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputPasswConf" />
 
         <Button
             android:id="@+id/buttonRegistrati"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
@@ -50,7 +50,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:text="@string/registra_prompt"
-            android:textColor="@color/primaryTextColorWhite"
+            android:textColor="@color/primaryTextLight"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,6 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            android:textColorHint="@color/primaryTextColorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvPostiPrenotatiLabel">
@@ -73,8 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_nome"
-                android:inputType="text"
-                android:textColor="@color/primaryTextColorWhite" />
+                android:inputType="text"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -84,7 +82,6 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:textColorHint="@color/primaryTextColorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,8 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_cognome"
-                android:inputType="text"
-                android:textColor="@color/primaryTextColorWhite" />
+                android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -106,7 +102,6 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:textColorHint="@color/primaryTextColorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -117,8 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/primaryTextColorWhite" />
+                android:inputType="textEmailAddress"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -128,7 +122,6 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:textColorHint="@color/primaryTextColorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -142,8 +135,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password"
                 android:inputType="textPassword"
-                android:maxLength="16"
-                android:textColor="@color/primaryTextColorWhite" />
+                android:maxLength="16" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -153,7 +145,6 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:textColorHint="@color/primaryTextColorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -166,8 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password_repeat"
-                android:inputType="textPassword"
-                android:textColor="@color/primaryTextColorWhite" />
+                android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
         <TextView

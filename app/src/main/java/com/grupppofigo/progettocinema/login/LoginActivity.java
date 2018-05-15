@@ -106,8 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     else {
                         // l'utente non c'è
-                        SnackBar.with(getApplicationContext())
-                                .show(constraintLayout, R.string.err_user_not_found, Snackbar.LENGTH_SHORT);
+                        Snackbar.make(constraintLayout, R.string.err_user_not_found, Snackbar.LENGTH_SHORT).show();
 
                         // ANIMAZIONE BOTTONE
                         final Animation myAnim = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.milkshake);

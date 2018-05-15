@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -101,27 +102,30 @@ public class RegisterActivity extends AppCompatActivity {
         contratto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                builder
-                        .setTitle("Termini e Condizioni")
-                        .setMessage(R.string.terms)
-                        .setCancelable(false)
-                        .setPositiveButton("Accetto", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                contratto.setChecked(true);
-                            }
-                        })
-                        .setNegativeButton("Rifiuto", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                contratto.setChecked(false);
-                                SnackBar.with(getApplicationContext())
-                                        .show(constraintLayout, R.string.must_accept_contrat, Snackbar.LENGTH_SHORT);
-                            }
-                        })
-                        .create()
-                        .show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                        builder.setTitle(R.string.termsTitle)
+                                .setMessage(R.string.terms)
+                                .setCancelable(false)
+                                .setPositiveButton(R.string.termsOK, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        contratto.setChecked(true);
+                                    }
+                                })
+                                .setNegativeButton(R.string.termsNO, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        contratto.setChecked(false);
+                                        Snackbar.make(constraintLayout, R.string.must_accept_contrat, Snackbar.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .create()
+                                .show();
+                    }
+                }, 500);
             }
         });
     }
@@ -196,8 +200,7 @@ public class RegisterActivity extends AppCompatActivity {
         // check box del contratto
         if (!contratto.isChecked()) {
             if(errCount == 0)
-                SnackBar.with(getApplicationContext())
-                        .show(constraintLayout, R.string.must_accept_contrat, Snackbar.LENGTH_SHORT);
+                Snackbar.make(constraintLayout, R.string.must_accept_contrat, Snackbar.LENGTH_SHORT).show();
             errCount++;
         }
 

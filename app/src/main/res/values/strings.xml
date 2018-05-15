@@ -67,6 +67,7 @@
     <string name="promptPrenotatoText">Biglietto acquistato</string>
 
     <!-- SEZIONE TERMINI DEL CONTRATTO -->
+    <string name="termsTitle">"Termini e Condizioni"</string>
     <string name="terms">Raccogliamo i contenuti, le comunicazioni e le altre informazioni che fornisci quando usi i nostri Prodotti, anche quando crei un account, prenoti un film. \n
         Può trattarsi di informazioni presenti nei contenuti forniti o relative a essi (come i metadati), quali la posizione di una foto o la data in cui è stato creato un file. \n
         Ciò comprende anche gli elementi visualizzati attraverso le funzioni che offriamo (ad es. la nostra fotocamera), che ci consentono di effettuare azioni come suggerire maschere e filtri che potrebbero piacerti o fornirti consigli sull\'uso della modalità ritratto.\n
@@ -74,6 +75,8 @@
         Dati sottoposti a protezione speciale: puoi scegliere di fornire informazioni nei campi del profilo o negli avvenimenti importanti di Facebook in merito a orientamento religioso, orientamento politico, opzione \"Mi piacciono\" o salute. \n
         Queste e altre informazioni (ad es. origine razziale o etnica, credo filosofico o appartenenza a un sindacato) sono soggette a protezioni speciali ai sensi della legge UE.
     </string>
+    <string name="termsOK">Accetto</string>
+    <string name="termsNO">Rifiuto</string>
 
     <!-- SEZIONE INFO APP OPTIONS MENU -->
     <string name="titolo_app">ITS Cinema</string>
