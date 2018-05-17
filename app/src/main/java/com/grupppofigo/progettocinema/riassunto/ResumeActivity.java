@@ -11,7 +11,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
@@ -22,8 +21,6 @@ import android.widget.TextView;
 
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.entities.Film;
-import com.grupppofigo.progettocinema.entities.PostoPrenotato;
-import com.grupppofigo.progettocinema.entities.Prenotazione;
 import com.grupppofigo.progettocinema.entities.Programmazione;
 import com.grupppofigo.progettocinema.entities.Sala;
 import com.grupppofigo.progettocinema.helpers.DateParser;
@@ -31,8 +28,6 @@ import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
 import com.grupppofigo.progettocinema.helpers.SessionValidator;
 import com.grupppofigo.progettocinema.helpers.SnackBar;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
-import com.grupppofigo.progettocinema.queries.PostoPrenotatoQueries;
-import com.grupppofigo.progettocinema.queries.PrenotazioneQueries;
 import com.grupppofigo.progettocinema.queries.ProgrammazioneQueries;
 import com.grupppofigo.progettocinema.queries.SalaQueries;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
@@ -52,7 +47,7 @@ public class ResumeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resume_1);
+        setContentView(R.layout.activity_resume);
 
         // id sessione
         long idSessione = getIntent().getLongExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);

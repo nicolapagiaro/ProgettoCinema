@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/new_colorBackground"
     tools:context=".menu_activities.InfoIntent">
 
     <TextView
@@ -15,7 +15,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="84dp"
         android:text="@string/titolo_app"
-        android:textColor="@color/primaryTextColorWhite"
+        android:textColor="@color/primaryTextLight"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +29,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="28dp"
         android:text="@string/app_version"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/secondaryTextLight"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -57,7 +57,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/reserved"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/secondaryTextLight"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
