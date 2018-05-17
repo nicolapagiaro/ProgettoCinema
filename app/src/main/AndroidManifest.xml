@@ -37,7 +37,7 @@
             android:label="@string/posti_title" />
         <activity
             android:name=".film_details.DescrizioneActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".riassunto.ResumeActivity"
             android:label="@string/resume_title"
