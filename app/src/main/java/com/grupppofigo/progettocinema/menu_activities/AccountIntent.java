@@ -91,7 +91,7 @@ public class AccountIntent extends AppCompatActivity {
 
         // le sue prenotazioni
         for (int i = 0; i < films.size(); i++) {
-            View v = LayoutInflater.from(getApplicationContext())
+            View v = LayoutInflater.from(this)
                     .inflate(R.layout.info_biglietti_item, bigliettiContainer, false);
 
             ((TextView) v.findViewById(R.id.tvNomeFilm)).setText(films.get(i).getTitolo());

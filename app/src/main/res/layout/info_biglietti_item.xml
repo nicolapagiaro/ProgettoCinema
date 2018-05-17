@@ -2,8 +2,12 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/infoBigliettiItemContainer"
     android:layout_width="match_parent"
-    android:layout_height="72dp">
+    android:layout_height="72dp"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="?attr/selectableItemBackground">
 
     <TextView
         android:id="@+id/tvNomeFilm"
