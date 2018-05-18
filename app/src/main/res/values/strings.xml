@@ -97,4 +97,7 @@
     <!-- SEZIONE PAGINA TUTTI I BIGLIETTI -->
     <string name="allBigliettiTitle">I tuoi biglietti</string>
 
+    <!-- Stringa a caso -->
+    <string name="film_desc_desc_title">Descrizione</string>
+
 </resources>

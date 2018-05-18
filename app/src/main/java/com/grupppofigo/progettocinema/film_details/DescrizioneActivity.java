@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,23 +67,6 @@ public class DescrizioneActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_descrizione);
 
-        Toolbar t = findViewById(R.id.toolbar);
-        if(t != null) {
-            t.setTitle(R.string.film_details_title);
-            setSupportActionBar(t);
-
-            //this line shows back button
-            if(getSupportActionBar() != null)
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-            t.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onBackPressed();
-                }
-            });
-        }
-
         // id sessione
         final long idSessione = getIntent().getLongExtra(ExtrasDefinition.ID_TOKEN, EXTRA_DEFAULT_VALUE);
         if(idSessione == EXTRA_DEFAULT_VALUE) {
@@ -125,32 +109,19 @@ public class DescrizioneActivity extends AppCompatActivity {
 
 
         //Collego gli elementi del layout
-        mCopertina = findViewById(R.id.img_header);
         mSelectDate = findViewById(R.id.txt_data);
         mSelectTime = findViewById(R.id.txt_ora);
         Button mSumbit = findViewById(R.id.btn_submit);
         LinearLayout mLayoutOra = findViewById(R.id.oraContainer);
         LinearLayout mLayoutGiorno = findViewById(R.id.dataContainer);
 
-        //setto l'immagine di copertina
-        Picasso.get()
-                .load(vFilm.getImmagine())
-                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
-                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-                .into(mCopertina, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        if(ViewCompat.isAttachedToWindow(mCopertina))
-                            showImage();
-                    }
+        TextView mTitle = findViewById(R.id.title);
+        TextView mDescription = findViewById(R.id.description);
+        RatingBar mRatingBar = findViewById(R.id.stars);
 
-                    @Override
-                    public void onError(Exception e) {}
-                });
-
-        // descrizione del film
-        FragmentDesc vFrag = new FragmentDesc(vFilm);
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_zone, vFrag).commit();
+        mTitle.setText(vFilm.getTitolo());
+        mDescription.setText(vFilm.getDescrizione());
+        mRatingBar.setRating(vFilm.getVoto());
 
         // selezione del giorno
         mLayoutGiorno.setOnClickListener(new View.OnClickListener() {
@@ -252,7 +223,7 @@ public class DescrizioneActivity extends AppCompatActivity {
     /**
      * Mostra l'immagine con l'effetto
      */
-    private void showImage() {
+    /*private void showImage() {
         AppBarLayout app_bar = findViewById(R.id.app_bar);
 
         // get the center for the clipping circle
@@ -268,6 +239,6 @@ public class DescrizioneActivity extends AppCompatActivity {
         }
 
         mCopertina.setVisibility(View.VISIBLE);
-    }
+    }*/
 }
 
