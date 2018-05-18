@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".CinemaApplication"
@@ -30,7 +31,8 @@
 
         <activity
             android:name=".lista_film.MainActivity"
-            android:label="@string/film_list_title" />
+            android:label="@string/film_list_title" >
+        </activity>
         <activity
             android:name=".prenotazione_posti.PostiActivity"
             android:label="@string/posti_title" />

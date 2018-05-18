@@ -1,137 +1,271 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/resumeContainer"
+    android:id="@+id/resumeMainContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
     tools:context=".riassunto.ResumeActivity">
 
-    <TextView
-        android:id="@+id/tvTitolo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:text="@string/tvTitoloLabel"
-        android:textColor="@color/primaryTextColorWhite"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvGenere"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Genere"
-        android:textColor="@color/secondaryTextColorWhite"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitolo" />
-
-    <TextView
-        android:id="@+id/tvDurata"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Durata"
-        android:textColor="@color/secondaryTextColorWhite"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/tvGenere"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitolo" />
-
-    <TextView
-        android:id="@+id/tvDataLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Data"
-        android:textColor="@color/secondaryTextColorWhite"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/tvOrario"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitolo" />
-
-    <TextView
-        android:id="@+id/tvOrario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Orario"
-        android:textColor="@color/secondaryTextColorWhite"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitolo" />
-
-    <TextView
-        android:id="@+id/tvPostiPrenotatiLabel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/tvPostiPrenotatiLabel"
-        android:textColor="@color/primaryTextColorWhite"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGenere" />
-
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvIdSessione"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPostiPrenotatiLabel" />
-
-    <TextView
-        android:id="@+id/tvIdSessione"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp"
-        android:text="@string/tvIdSessioneLabel"
-        android:textColor="@color/secondaryTextColorWhite"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/qrBarcodeContainer"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tvId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="4dp"
-        android:textColor="@color/secondaryTextColorWhite"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/qrBarcodeContainer"
-        app:layout_constraintStart_toEndOf="@+id/tvIdSessione" />
-
-    <FrameLayout
-        android:id="@+id/qrBarcodeContainer"
+    <ScrollView
+        android:id="@+id/resume_container_1"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
-        <Button
-            android:id="@+id/btn"
-            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="@string/btn_buy_label"
-            android:textColor="@color/primaryTextColorWhite" />
-    </FrameLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="8dp">
 
-</android.support.constraint.ConstraintLayout>
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/resumeContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@string/img_content_descriptor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/intro_logo" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:gravity="center"
+                    android:text="@string/tvTitoloLabel"
+                    android:textColor="@color/primaryTextColorWhite"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/logo" />
+
+                <TextView
+                    android:id="@+id/tvTitolo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:gravity="center"
+                    android:textColor="@color/primaryTextColorWhite"
+                    android:textSize="30sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+                <TextView
+                    android:id="@+id/tvDataLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/tvDataLabel"
+                    android:textColor="@color/secondaryTextColorWhite"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitolo" />
+
+                <TextView
+                    android:id="@+id/tvData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textColor="@color/primaryTextColorWhite"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDataLabel" />
+
+                <TextView
+                    android:id="@+id/tvOrario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/tvOraLabel"
+                    android:textColor="@color/secondaryTextColorWhite"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvData" />
+
+                <TextView
+                    android:id="@+id/tvOrarioLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textColor="@color/primaryTextColorWhite"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvOrario" />
+
+                <TextView
+                    android:id="@+id/tvPostiPrenotatiLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/tvPostiPrenotatiLabel"
+                    android:textColor="@color/secondaryTextColorWhite"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvSala" />
+
+                <TextView
+                    android:id="@+id/tvSalalabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/tvSalaLabel"
+                    android:textColor="@color/secondaryTextColorWhite"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvOrarioLabel" />
+
+                <TextView
+                    android:id="@+id/tvSala"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/primaryTextColorWhite"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvSalalabel" />
+
+                <TextView
+                    android:id="@+id/tvPosti"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/primaryTextColorWhite"
+                    android:textSize="30sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPostiPrenotatiLabel" />
+
+                <TextView
+                    android:id="@+id/tvIdSessione"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/tvIdSessioneLabel"
+                    android:textColor="@color/secondaryTextColorWhite"
+                    android:textStyle="italic"
+                    app:layout_constraintBottom_toTopOf="@+id/qrBarcodeContainer"
+                    app:layout_constraintEnd_toStartOf="@+id/tvId"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPosti" />
+
+                <TextView
+                    android:id="@+id/tvId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:textColor="@color/secondaryTextColorWhite"
+                    android:textStyle="italic"
+                    app:layout_constraintBottom_toTopOf="@+id/qrBarcodeContainer"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/qrBarcodeContainer"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:background="@color/primaryTextColorWhite"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+
+                    <ImageView
+                        android:id="@+id/qrCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/img_content_descriptor"
+                        android:src="@drawable/qr_code" />
+
+                    <ImageView
+                        android:id="@+id/barcode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/img_content_descriptor"
+                        android:src="@drawable/barcode" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/paidTicket"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/paid_ticket" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+    </ScrollView>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/doneReveal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="98dp"
+            android:layout_height="98dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/img_content_descriptor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_check_circle_white_24dp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/promptPrenotatoText"
+            android:textColor="@color/primaryTextColorWhite"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
+
+

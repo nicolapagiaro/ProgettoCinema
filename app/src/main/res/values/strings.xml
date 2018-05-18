@@ -11,6 +11,7 @@
     <string name="accedi_prompt">Accedi</string>
     <string name="registra_prompt">Registrati</string>
     <string name="registra_successo">Registrato con successo!</string>
+    <string name="chkRemeberMe">Ricorda le mie credenziali</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_password_repeat">Conferma password</string>
@@ -40,7 +41,7 @@
 
     <!-- SEZIONE DETTAGLI FILM -->
     <string name="film_details_title">Dettaglio film</string>
-    <string name="btnPrenota">Prenota</string>
+    <string name="btnPrenota">Avanti</string>
     <string name="prompt_error_prenotazione">Seleziona il giorno e l\'ora</string>
     <string name="prompt_error_general">Ops, qualcosa non funziona</string>
     <string name="dialog_day_title">Seleziona la data</string>
@@ -58,13 +59,18 @@
     <string name="tvDataLabel">Data</string>
     <string name="tvSalaLabel">Sala</string>
     <string name="tvOraLabel">Ora</string>
-    <string name="tvPostiPrenotatiLabel">Posti prenotati</string>
+    <string name="tvPostiPrenotatiLabel">Prenotati i posti numero</string>
     <string name="tvIdSessioneLabel">ID sessione</string>
     <string name="btn_buy_label">Acquista</string>
     <string name="tvDurataFilm">%1$d minuti</string>
     <string name="tvNumeroPosto">Posto %1$d</string>
-    <string name="hintPrenotazione">Clicca sul biglietto per prenotare</string>
-    <string name="promptPrenotatoText">Biglietto acquistato</string>
+    <string name="hintPrenotazione">Tieni premuto sul biglietto per acquistare!</string>
+    <string name="hintPrenotazioneEffettuata">Biglietto già acquistato!</string>
+    <string name="promptPrenotatoText">Biglietto acquistato!</string>
+    <string name="exitPrenotazioneDialogTitle">Attenzione</string>
+    <string name="exitPrenotazioneDialogDescr">Non hai ancora confermato la prenotazione, sicuro di tornare indietro?</string>
+    <string name="snackAnnullataPrenotazione">Prenotazione annullata!</string>
+    <string name="snackConfermaPrenotazione">Biglietto acquistato!</string>
 
     <!-- SEZIONE TERMINI DEL CONTRATTO -->
     <string name="terms">Raccogliamo i contenuti, le comunicazioni e le altre informazioni che fornisci quando usi i nostri Prodotti, anche quando crei un account, prenoti un film. \n
@@ -80,6 +86,13 @@
     <string name="app_version">Versione 1</string>
     <string name="reserved">© 2018 ITS Padova Inc.\n All rights reserved</string>
     <string name="account">Account</string>
+    <string name="nomi">Creato da: \nAmbrosi, Baldan, Baruch, Bonin, Canova, Caviola, Ceretta, Cozza, Dal Santo, De Benetti, Lasta, Littamè, Ly, Marchi, Matvei, Miftah, Pagiaro, Pertile, Raimondi</string>
     <string name="info">Info App</string>
+    <string name="esci">Esci</string>
+    
+    <!-- SEZIONE ALERT PER USCIRE -->
+    <string name="msg_esci">Sei sicuro di voler uscire?</string>
+    <string name="msg_si">SI</string>
+    <string name="msg_annulla">Annulla</string>
 
 </resources>
