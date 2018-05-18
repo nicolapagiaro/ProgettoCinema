@@ -81,5 +81,102 @@ public class CinemaApplication extends Application {
         ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "5/05/2018", "18:25"));
         ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "5/05/2018", "18:55"));
         ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "5/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "6/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "6/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "6/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "7/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "7/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "7/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "8/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "8/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "8/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "9/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "9/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "9/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "10/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "10/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "10/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "11/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "11/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "11/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "12/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "12/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "12/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "13/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "13/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "13/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "14/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "14/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "14/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "15/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "15/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "15/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "16/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "16/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "16/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "17/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "17/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "17/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "18/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "18/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "18/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "19/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "19/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "19/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "20/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "20/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "20/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "21/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "21/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "21/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "22/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "22/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "22/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "23/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "23/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "23/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "24/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "24/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "24/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "25/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "25/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "25/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "26/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "26/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "26/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "27/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "27/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "27/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "28/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "28/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "28/05/2018", "19:45"));
+
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "29/05/2018", "18:25"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "29/05/2018", "18:55"));
+        ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "29/05/2018", "19:45"));
+
     }
 }

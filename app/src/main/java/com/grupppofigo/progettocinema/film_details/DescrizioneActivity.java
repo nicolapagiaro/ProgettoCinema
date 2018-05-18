@@ -1,8 +1,10 @@
 package com.grupppofigo.progettocinema.film_details;
 
 import android.animation.Animator;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
@@ -10,9 +12,16 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +29,7 @@ import android.widget.TextView;
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.database.DatabaseContract;
 import com.grupppofigo.progettocinema.entities.Film;
+import com.grupppofigo.progettocinema.entities.Giorno;
 import com.grupppofigo.progettocinema.entities.Programmazioni;
 import com.grupppofigo.progettocinema.helpers.DateParser;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
@@ -34,6 +44,10 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.ID_PROGRAMMAZIONE;
@@ -46,7 +60,8 @@ import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.START_SESS
  */
 public class DescrizioneActivity extends AppCompatActivity {
     private TimeDialog vTimeDialog;
-    private DayListDialog vDayListDialog;
+    private Dialog vDialog;
+    //private DayListDialog vDayListDialog;
     private TextView mSelectDate, mSelectTime;
     private ImageView mCopertina;
     private int selectedDatePosition;
@@ -147,9 +162,175 @@ public class DescrizioneActivity extends AppCompatActivity {
         mLayoutGiorno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vDayListDialog = new DayListDialog(DescrizioneActivity.this, progs.getGiorni());
-                vDayListDialog.show();
-            }
+                /*vDayListDialog = new DayListDialog(DescrizioneActivity.this, progs.getGiorni());
+                vDayListDialog.show();*/
+                vDialog = new Dialog(v.getContext()){
+
+                    @Override
+                    public boolean onTouchEvent(MotionEvent event)
+                    {
+
+                        if(event.getAction() == MotionEvent.ACTION_OUTSIDE){
+                            CalendarView view=this.findViewById(R.id.calendarView);
+                            Animation an = AnimationUtils.loadAnimation(view.getContext(),
+                                    R.anim.zoom_out);
+
+                            an.setAnimationListener(new Animation.AnimationListener() {
+                                @Override
+                                public void onAnimationStart(Animation animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+
+                                    vDialog.dismiss();
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animation animation) {
+
+                                }
+                            });
+                            view.startAnimation(an);
+                        }
+                        return false;
+                    }
+                };
+                Window window = vDialog.getWindow();
+                window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+                window.setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
+
+                vDialog.setContentView(R.layout.calendarl);
+                vDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                //vDialog.setCanceledOnTouchOutside(false);
+                //vDialog.getWindow().getAttributes().windowAnimations = R.anim.slide_up_anim;
+                CalendarView vCalendar = vDialog.findViewById(R.id.calendarView);
+                ArrayList<Giorno> giorni=progs.getGiorni();
+                SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+                Date d;
+                long milliseconds;
+
+                if(progs != null && progs.getGiorni().size() > 0) {
+                    try {
+                        d = f.parse(giorni.get(0).getData());
+                        milliseconds = d.getTime();
+                        long today = (new Date()).getTime();
+                        if (today > milliseconds)
+                            vCalendar.setMinDate(today);
+                        else
+                            vCalendar.setMinDate(milliseconds);
+
+                        d=f.parse(giorni.get(giorni.size()-1).getData());
+                        milliseconds = d.getTime();
+                        vCalendar.setMaxDate(milliseconds);
+
+                    } catch (ParseException e) {
+                        Log.e("DescrizioneActivity", "Error parsing data from giorni");
+                    }
+
+                    vCalendar.startAnimation(AnimationUtils.loadAnimation(v.getContext(),
+                            R.anim.zoom_in));
+                    vCalendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                        @Override
+                        public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                            SimpleDateFormat sdf = new SimpleDateFormat("EEEE");         // SI TRATTA DI UN GIORNO DELLA SETTIMANA
+                            SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");  // RECUPERARE DATA CHE SIA D/M/A
+                            Date d = new Date(year, (month + 1), dayOfMonth);
+                            try {
+                                d = sdf2.parse(dayOfMonth + "/" + (month + 1) + "/" + year);
+                            } catch (ParseException e) {
+                                Log.i("CalendarFragment: ", "Errore parsing data");
+                            }
+                            String dayOfWeek = sdf.format(d);
+                            Log.i("CalendarFragment", "year: " + year + ", month: " + (month + 1) + ", day: " + dayOfMonth + ", dayOfWeek: " + dayOfWeek);
+                            dayOfWeek = dayOfWeek.toUpperCase();
+                            String day = "";
+                            switch (dayOfWeek) {
+                                case "MONDAY":
+                                    day = "LUN";
+                                    break;
+                                case "TUESDAY":
+                                    day = "MAR";
+                                    break;
+                                case "WEDNESDAY":
+                                    day = "MER";
+                                    break;
+                                case "THURSDAY":
+                                    day = "GIO";
+                                    break;
+                                case "FRIDAY":
+                                    day = "VEN";
+                                    break;
+                                case "SATURDAY":
+                                    day = "SAB";
+                                    break;
+                                case "SUNDAY":
+                                    day = "DOM";
+                                    break;
+                            }
+                            //selectedDate=dayOfMonth+"/"+(month+1)+"/"+year;
+                            SimpleDateFormat f2 = new SimpleDateFormat("dd/MM/yyyy");
+                            try {
+                                d=f2.parse(selectedDate);
+                            } catch (ParseException e) {
+                                Log.e("DescrizioneActivity:","error parse date");
+                            }
+                            long selected= d.getTime();
+
+                            try {
+                                d = sdf2.parse(progs.getGiorni().get(0).getData());
+                            } catch (ParseException e) {
+                                Log.e("DescrizioneActivity:","error parse date");
+                            }
+                            long minDate=d.getTime();
+
+
+                            //PUO' CAUSARE ERRORE
+                            selectedDatePosition=(int) TimeUnit.DAYS.convert(selected-minDate, TimeUnit.MILLISECONDS);
+                            selectedDate=progs.getGiorni().get(selectedDatePosition).getData();
+                            Log.i("DescrizioneActivity:","selectedDatePosition= "+selectedDatePosition);
+                            Log.i("DescrizioneActivity:","selected= "+selected);
+                            Log.i("DescrizioneActivity:","minDate= "+minDate);
+
+
+                            mSelectDate.setText(day+ " " +dayOfMonth+"/"+(month+1));
+
+                            Animation an = AnimationUtils.loadAnimation(view.getContext(),
+                                    R.anim.zoom_out);
+
+                            an.setAnimationListener(new Animation.AnimationListener() {
+                                @Override
+                                public void onAnimationStart(Animation animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+                                    vDialog.dismiss();
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animation animation) {
+
+                                }
+                            });
+                            view.startAnimation(an);
+
+                        }
+
+
+                    });
+
+
+
+                    vDialog.show();
+
+                }//end if progs!=null
+                else
+                    vDialog.dismiss();
+
+            }//end onClick
         });
 
         // selezione dell'ora
@@ -162,14 +343,14 @@ public class DescrizioneActivity extends AppCompatActivity {
         });
 
         // metto il primo giorno selezionato ae la prima data
-        try {
+        /*try {
             if(progs != null && progs.getGiorni().size() > 0) {
                 mSelectDate.setText(DateParser.getFormattedDate(progs.getGiorni().get(0).getData()));
                 selectedDate = progs.getGiorni().get(0).getData();
             }
         } catch (ParseException e) {
             mSelectDate.setText("");
-        }
+        }*/
 
         // pulsante per andare avanti
         mSumbit.setOnClickListener(new View.OnClickListener() {
@@ -223,9 +404,9 @@ public class DescrizioneActivity extends AppCompatActivity {
         return vTimeDialog;
     }
 
-    public DayListDialog getvDayListDialog() {
+    /*public DayListDialog getvDayListDialog() {
         return vDayListDialog;
-    }
+    }*/
 
     public void changeDate(String aData) {
         mSelectDate.setText(aData);
