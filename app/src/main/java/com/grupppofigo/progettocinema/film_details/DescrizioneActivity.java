@@ -21,6 +21,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.SessionExpired;
 import com.grupppofigo.progettocinema.database.DatabaseContract;
@@ -54,13 +58,14 @@ import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.START_SESS
 /**
  * Activity che mostra le informazioni del film
  */
-public class DescrizioneActivity extends AppCompatActivity {
+public class DescrizioneActivity extends YouTubeBaseActivity {
     private TimeDialog vTimeDialog;
     private DayListDialog vDayListDialog;
     private TextView mSelectDate, mSelectTime;
-    private ImageView mCopertina;
     private int selectedDatePosition;
     private String selectedDate = "", selectedTime = "";
+    public static final String YT_API_KEY = "ENTER_YOUR_KEY_HERE";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,6 +188,26 @@ public class DescrizioneActivity extends AppCompatActivity {
 
             }
         });
+        YouTubePlayerView youTubePlayerView =
+                (YouTubePlayerView) findViewById(R.id.player);
+
+        youTubePlayerView.initialize(YT_API_KEY,
+                new YouTubePlayer.OnInitializedListener() {
+                    @Override
+                    public void onInitializationSuccess(YouTubePlayer.Provider provider,
+                                                        YouTubePlayer youTubePlayer, boolean b) {
+
+                        // do any work here to cue video, play video, etc.
+                        youTubePlayer.cueVideo("x8L6dcZCxnA");
+                        // or to play immediately
+                        // youTubePlayer.loadVideo("5xVh-7ywKpE");
+                    }
+                    @Override
+                    public void onInitializationFailure(YouTubePlayer.Provider provider,
+                                                        YouTubeInitializationResult youTubeInitializationResult) {
+                        Toast.makeText(DescrizioneActivity.this, "Youtube Failed!", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     public String getSelectedDate() {

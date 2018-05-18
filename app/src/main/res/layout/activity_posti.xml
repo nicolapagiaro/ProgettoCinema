@@ -5,7 +5,7 @@
     android:id="@+id/main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/new_colorBackground"
     tools:context="com.grupppofigo.progettocinema.prenotazione_posti.PostiActivity"
     tools:layout_editor_absoluteY="81dp">
 
@@ -16,11 +16,11 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
+        android:overScrollMode="never"
         app:layout_constraintBottom_toTopOf="@+id/qrBarcodeContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivCinema"
-        android:overScrollMode="never"/>
+        app:layout_constraintTop_toBottomOf="@+id/ivCinema" />
 
     <FrameLayout
         android:id="@+id/qrBarcodeContainer"
@@ -42,14 +42,12 @@
 
     <ImageView
         android:id="@+id/ivCinema"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:contentDescription="@string/img_content_descriptor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cinema"
-        android:contentDescription="@string/img_content_descriptor" />
+        app:srcCompat="@drawable/ic_cinema_screen" />
 
 </android.support.constraint.ConstraintLayout>
