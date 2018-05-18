@@ -29,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
      * Lunghezze minime per i campi di imput
      */
     public static final int MIN_CHAR_NOME_COGNOME = 4;
-    public static final int MIN_CHAR_PASSW = 5;
+    public static final int MIN_CHAR_PASSW = 7;
 
     private String psw;
     private String nome;

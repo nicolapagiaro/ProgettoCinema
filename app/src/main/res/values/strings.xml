@@ -26,7 +26,7 @@
     <string name="err_nome">Inserisci un nome</string>
     <string name="err_cognome">Inserisci un cognome</string>
     <string name="err_mail">Inserisci una mail valida</string>
-    <string name="err_passw">La password deve essere minimo di 6 caratteri</string>
+    <string name="err_passw">La password deve essere minimo di 8 caratteri</string>
     <string name="err_passw_conf">Le due passowrd non coincidono</string>
     <string name="err_user_not_found">L\'utente non esiste, controllare i dati immessi</string>
 
