@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.grupppofigo.progettocinema.R;
 import com.grupppofigo.progettocinema.entities.Utente;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
@@ -30,6 +31,9 @@ public class RegisterActivity extends AppCompatActivity {
      */
     public static final int MIN_CHAR_NOME_COGNOME = 4;
     public static final int MIN_CHAR_PASSW = 7;
+    String rangeNumeri = ".*[0-9].*";
+    String rangeLettereMaiuscole = ".*[A-Z].*";
+    String rangeLettereMinuscole = ".*[a-z].*";
 
     private String psw;
     private String nome;
@@ -44,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        if(getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
 
@@ -70,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
         registrati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validateInput()){
+                if (validateInput()) {
                     int id = (int) UtenteQueries.addUtente(new Utente(0, nome, cognome, email, psw));
                     long startTime = System.currentTimeMillis();
                     long idSession = SessioneQueries.startSession(id, startTime);
@@ -128,6 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**
      * Metodo che valida l'input immesso per la registrazione
+     *
      * @return true se puoi proseguire, false se no
      */
     private boolean validateInput() {
@@ -140,8 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
             layoutNome.setErrorEnabled(true);
             layoutNome.setError(getString(R.string.err_nome));
             errCount++;
-        }
-        else {
+        } else {
             layoutNome.setErrorEnabled(false);
         }
 
@@ -152,8 +156,7 @@ public class RegisterActivity extends AppCompatActivity {
             layoutCognome.setErrorEnabled(true);
             layoutCognome.setError(getString(R.string.err_cognome));
             errCount++;
-        }
-        else {
+        } else {
             layoutCognome.setErrorEnabled(false);
         }
 
@@ -164,8 +167,7 @@ public class RegisterActivity extends AppCompatActivity {
             layoutEmail.setErrorEnabled(true);
             layoutEmail.setError(getString(R.string.err_mail));
             errCount++;
-        }
-        else {
+        } else {
             layoutEmail.setErrorEnabled(false);
         }
 
@@ -176,9 +178,28 @@ public class RegisterActivity extends AppCompatActivity {
             layoutPssw.setErrorEnabled(true);
             layoutPssw.setError(getString(R.string.err_passw));
             errCount++;
-        }
-        else {
-            layoutPssw.setErrorEnabled(false);
+        } else {
+            if (psw.matches(rangeNumeri)) {
+                layoutPssw.setError(getString(R.string.err_passw_solo_numeri));
+            }
+            if (psw.matches(rangeLettereMinuscole)) {
+                layoutPssw.setError(getString(R.string.err_passw_solo_minuscole));
+            }
+            if (psw.matches(rangeLettereMaiuscole)) {
+                layoutPssw.setError(getString(R.string.err_passw_solo_maiuscole));
+            }
+            if (psw.matches(rangeNumeri) && psw.matches(rangeLettereMinuscole)) {
+                layoutPssw.setError(getString(R.string.err_passw_manca_maiuscola));
+            }
+            if (psw.matches(rangeNumeri) && psw.matches(rangeLettereMaiuscole)) {
+                layoutPssw.setError(getString(R.string.err_passw_manca_minuscola));
+            }
+            if (psw.matches(rangeLettereMinuscole) && psw.matches(rangeLettereMaiuscole)) {
+                layoutPssw.setError(getString(R.string.err_passw_manca_numero));
+            }
+            if (psw.matches(rangeNumeri) && psw.matches(rangeLettereMaiuscole) && psw.matches(rangeLettereMinuscole)) {
+                layoutPssw.setErrorEnabled(false);
+            }
         }
 
         // controllo la seconda password
@@ -188,14 +209,13 @@ public class RegisterActivity extends AppCompatActivity {
             layoutPsswConf.setErrorEnabled(true);
             layoutPsswConf.setError(getString(R.string.err_passw_conf));
             errCount++;
-        }
-        else {
+        } else {
             layoutPsswConf.setErrorEnabled(false);
         }
 
         // check box del contratto
         if (!contratto.isChecked()) {
-            if(errCount == 0)
+            if (errCount == 0)
                 Snackbar.make(constraintLayout, R.string.must_accept_contrat, Snackbar.LENGTH_SHORT).show();
             errCount++;
         }
@@ -205,6 +225,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**
      * Per fare andare via la tastiera
+     *
      * @param activity activity
      */
     public static void hideSoftKeyboard(Activity activity) {

@@ -27,8 +27,14 @@
     <string name="err_cognome">Inserisci un cognome</string>
     <string name="err_mail">Inserisci una mail valida</string>
     <string name="err_passw">La password deve essere minimo di 8 caratteri</string>
-    <string name="err_passw_conf">Le due passowrd non coincidono</string>
+    <string name="err_passw_conf">Le due password non coincidono</string>
     <string name="err_user_not_found">L\'utente non esiste, controllare i dati immessi</string>
+    <string name="err_passw_solo_numeri">La password deve contenere almeno una lettera maiuscola e minuscola</string>
+    <string name="err_passw_solo_minuscole">La password deve contenere almeno una lettera maiuscola e un numero</string>
+    <string name="err_passw_solo_maiuscole">La password deve contenere almeno una lettera minuscola e un numero</string>
+    <string name="err_passw_manca_maiuscola">La password deve contenere almeno una lettera maiuscola</string>
+    <string name="err_passw_manca_minuscola">La password deve contenere almeno una lettera minuscola</string>
+    <string name="err_passw_manca_numero">La password deve contenere almeno un numero</string>
 
     <!-- DIALOG per il recupero password -->
     <string name="dialog_title">Recupera la tua password</string>
