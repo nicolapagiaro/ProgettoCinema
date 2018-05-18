@@ -1,21 +1,11 @@
 package com.grupppofigo.progettocinema.film_details;
 
-import android.animation.Animator;
 import android.content.Intent;
-import android.os.Build;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -26,11 +16,8 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.grupppofigo.progettocinema.R;
-import com.grupppofigo.progettocinema.SessionExpired;
 import com.grupppofigo.progettocinema.database.DatabaseContract;
 import com.grupppofigo.progettocinema.entities.Film;
-import com.grupppofigo.progettocinema.entities.Prenotazione;
-import com.grupppofigo.progettocinema.entities.Programmazione;
 import com.grupppofigo.progettocinema.entities.Programmazioni;
 import com.grupppofigo.progettocinema.helpers.DateParser;
 import com.grupppofigo.progettocinema.helpers.ExtrasDefinition;
@@ -40,14 +27,8 @@ import com.grupppofigo.progettocinema.prenotazione_posti.PostiActivity;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
 import com.grupppofigo.progettocinema.queries.ProgrammazioneQueries;
 import com.grupppofigo.progettocinema.queries.SessioneQueries;
-import com.grupppofigo.progettocinema.riassunto.ResumeActivity;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.EXTRA_DEFAULT_VALUE;
 import static com.grupppofigo.progettocinema.helpers.ExtrasDefinition.ID_PROGRAMMAZIONE;
@@ -188,19 +169,15 @@ public class DescrizioneActivity extends YouTubeBaseActivity {
 
             }
         });
-        YouTubePlayerView youTubePlayerView =
-                (YouTubePlayerView) findViewById(R.id.player);
 
+        // player video
+        YouTubePlayerView youTubePlayerView = findViewById(R.id.player);
         youTubePlayerView.initialize(YT_API_KEY,
                 new YouTubePlayer.OnInitializedListener() {
                     @Override
                     public void onInitializationSuccess(YouTubePlayer.Provider provider,
                                                         YouTubePlayer youTubePlayer, boolean b) {
-
-                        // do any work here to cue video, play video, etc.
                         youTubePlayer.cueVideo("x8L6dcZCxnA");
-                        // or to play immediately
-                        // youTubePlayer.loadVideo("5xVh-7ywKpE");
                     }
                     @Override
                     public void onInitializationFailure(YouTubePlayer.Provider provider,
