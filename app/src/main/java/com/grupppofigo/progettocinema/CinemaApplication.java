@@ -9,12 +9,17 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.SharedPreferencesCompat;
 
 import com.grupppofigo.progettocinema.database.DataStore;
+import com.grupppofigo.progettocinema.database.DatabaseContract;
 import com.grupppofigo.progettocinema.entities.Film;
 import com.grupppofigo.progettocinema.entities.Genere;
+import com.grupppofigo.progettocinema.entities.PostoPrenotato;
+import com.grupppofigo.progettocinema.entities.Prenotazione;
 import com.grupppofigo.progettocinema.entities.Programmazione;
 import com.grupppofigo.progettocinema.entities.Sala;
 import com.grupppofigo.progettocinema.queries.FilmQueries;
 import com.grupppofigo.progettocinema.queries.GenereQueries;
+import com.grupppofigo.progettocinema.queries.PostoPrenotatoQueries;
+import com.grupppofigo.progettocinema.queries.PrenotazioneQueries;
 import com.grupppofigo.progettocinema.queries.ProgrammazioneQueries;
 import com.grupppofigo.progettocinema.queries.SalaQueries;
 
@@ -85,5 +90,7 @@ public class CinemaApplication extends Application {
         ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "5/05/2018", "18:25"));
         ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "5/05/2018", "18:55"));
         ProgrammazioneQueries.addProgrammazione(new Programmazione(0,1, 1, "5/05/2018", "19:45"));
+        PrenotazioneQueries.addPrenotazione(new Prenotazione(0,1,1));
+        PostoPrenotatoQueries.addPostoPrenotato(new PostoPrenotato(0,1 ,34));
     }
 }
